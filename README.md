@@ -1,11 +1,13 @@
 # [Material-UI](http://callemall.github.io/material-ui/) - Example Webpack Project
 
-This is an example project that uses [Material-UI](http://callemall.github.io/material-ui/).
+This is an example project that uses:
+  [Material-UI](http://callemall.github.io/material-ui/).
+  [React]().
+  [Relay]().
 
 ## Installation
 After cloning the repository, install dependencies:
 ```
-cd <project folder>/material-ui/examples/webpack-example
 npm install
 ```
 
@@ -29,3 +31,5 @@ These are plugins Webpack uses for more functionality. The HTML Webpack Plugin, 
 ###Modules:
 Modules and other things that are required will usually need to be loaded and interpreted by Webpack when bundling, and this is where Webpack looks for the different loaders.
 *Loading .js files in es6 and es7 will require a loader like babel-loader to interpret the files into es5.
+# mypage
+A website about me.
