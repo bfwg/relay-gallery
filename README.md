@@ -1,9 +1,9 @@
-# [Material-UI](http://callemall.github.io/material-ui/) - Example Webpack Project
+# About me page
 
 This is an example project that uses:
   [Material-UI](http://callemall.github.io/material-ui/).
-  [React]().
-  [Relay]().
+  [React](https://facebook.github.io/react/).
+  [Relay](https://facebook.github.io/relay/).
 
 ## Installation
 After cloning the repository, install dependencies:

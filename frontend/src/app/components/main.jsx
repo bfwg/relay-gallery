@@ -5,7 +5,7 @@ const Dialog = require('material-ui/lib/dialog');
 const ThemeManager = require('material-ui/lib/styles/theme-manager');
 const LightRawTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 const Colors = require('material-ui/lib/styles/colors');
-const {FullWidthSection} = require('../helper');
+const {FullWidthSection, MyCard} = require('../helper');
 
 const Main = React.createClass({
 
@@ -58,7 +58,9 @@ const Main = React.createClass({
 
           <h1>material-ui</h1>
           <h2>example project</h2>
-
+          <MyCard
+            heading="Get Started"
+            img="images/me.jpg"/>
           <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
         </FullWidthSection>
 
