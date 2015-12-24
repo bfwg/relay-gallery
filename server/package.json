@@ -4,11 +4,16 @@
   "description": "A Node server for mypage",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "node"
   ],
   "author": "Fan Jin",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "path": "^0.12.7"
+  }
 }

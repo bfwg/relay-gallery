@@ -6,6 +6,7 @@ const ThemeManager = require('material-ui/lib/styles/theme-manager');
 const LightRawTheme = require('material-ui/lib/styles/raw-themes/light-raw-theme');
 const Colors = require('material-ui/lib/styles/colors');
 const {FullWidthSection, MyCard} = require('../helper');
+const MyRawTheme = require('../helper/myRawTheme');
 
 const Main = React.createClass({
 
@@ -15,7 +16,7 @@ const Main = React.createClass({
 
   getInitialState () {
     return {
-      muiTheme: ThemeManager.getMuiTheme(LightRawTheme),
+      muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
     };
   },
 
@@ -38,7 +39,14 @@ const Main = React.createClass({
     let styles = {
       containerStyle: {
         textAlign: 'center',
-        paddingTop: '200px',
+        // paddingTop: '50px',
+      },
+      smallPic: {
+        maxWidth: '236px',
+        float: 'left',
+      },
+      bigPic: {
+        maxWidth: '400px',
       },
     };
 
@@ -54,14 +62,34 @@ const Main = React.createClass({
           ref="superSecretPasswordDialog">
           1-2-3-4-5
         </Dialog>
-        <FullWidthSection useContent={true}>
-
-          <h1>material-ui</h1>
-          <h2>example project</h2>
+        <FullWidthSection useContent={true} style={{textAlign: 'center'}}>
           <MyCard
-            heading="Get Started"
+            style={styles.bigPic}
+            heading="I'm Fan, I make things for the web."
             img="images/me.jpg"/>
-          <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
+        </FullWidthSection>
+        <FullWidthSection useContent={true} contentStyle={{textAlign: 'center'}} >
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
         </FullWidthSection>
 
       </div>

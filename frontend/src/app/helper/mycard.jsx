@@ -33,19 +33,23 @@ let HomeFeature = React.createClass({
   getStyles() {
     let desktopGutter = Spacing.desktopGutter;
     let desktopKeylineIncrement = Spacing.desktopKeylineIncrement;
+
     let styles = {
       root: {
         transition: Transitions.easeOut(),
         maxWidth: '300px',
+        float: 'none',
         margin: '0 auto ' + desktopGutter + 'px auto',
+        marginBottom: '4px',
       },
       rootWhenMedium: {
-        float: 'left',
         width: '33%',
-        marginRight: '4px',
-        marginBottom: '0px',
+        // maxWidth: maxWidth,
+        // marginRight: '4px',
+        marginBottom: '4px',
       },
       image: {
+        maxWidth: "100%",
         //Not sure why this is needed but it fixes a display
         //issue in chrome
         marginBottom: -6,
@@ -57,7 +61,7 @@ let HomeFeature = React.createClass({
         letterSpacing: 0,
         fontWeight: Typography.fontWeightMedium,
         color: Typography.textDarkBlack,
-        backgroundColor: Colors.grey200,
+        backgroundColor: Colors.grey50,
         textAlign: 'center',
         margin: '0px',
         padding: '0px',
@@ -80,6 +84,7 @@ let HomeFeature = React.createClass({
       styles.root = this.mergeAndPrefix(
         styles.root,
         styles.rootWhenMedium,
+        this.props.style,
         this.props.firstChild && styles.rootWhenMediumAndFirstChild,
         this.props.lastChild && styles.rootWhenMediumAndLastChild
       );
