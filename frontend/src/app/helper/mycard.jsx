@@ -40,13 +40,11 @@ let HomeFeature = React.createClass({
         maxWidth: '300px',
         float: 'none',
         margin: '0 auto ' + desktopGutter + 'px auto',
-        marginBottom: '4px',
+        marginRight: 'auto',
       },
       rootWhenMedium: {
         width: '33%',
         // maxWidth: maxWidth,
-        // marginRight: '4px',
-        marginBottom: '4px',
       },
       image: {
         maxWidth: "100%",

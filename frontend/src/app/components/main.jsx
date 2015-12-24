@@ -44,9 +44,11 @@ const Main = React.createClass({
       smallPic: {
         maxWidth: '236px',
         float: 'left',
+        marginRight: '3px',
       },
       bigPic: {
         maxWidth: '400px',
+        marginRight: 'auto',
       },
     };
 
@@ -69,6 +71,9 @@ const Main = React.createClass({
             img="images/me.jpg"/>
         </FullWidthSection>
         <FullWidthSection useContent={true} contentStyle={{textAlign: 'center'}} >
+          <MyCard
+            style={styles.smallPic}
+            img="images/me.jpg"/>
           <MyCard
             style={styles.smallPic}
             img="images/me.jpg"/>
