@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update-schema": "babel-node ./script/updateSchema.js"
   },
   "keywords": [
     "node"
@@ -13,7 +14,11 @@
   "author": "Fan Jin",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.1.1",
     "express": "^4.13.3",
-    "path": "^0.12.7"
+    "graphql": "^0.4.14",
+    "graphql-relay": "^0.3.6",
+    "path": "^0.12.7",
+    "redis": "^2.4.2"
   }
 }
