@@ -19,6 +19,7 @@ var config = {
   //Server Configuration options
   devServer:{
     contentBase: 'src/www',  //Relative directory for base of server
+    proxy: {'/graphql': 'http://localhost:3000'},
     devtool: 'eval',
     hot: true,        //Live-reload
     inline: true,
@@ -55,6 +56,16 @@ var config = {
         //React-hot loader and
         test: /\.(js|jsx)$/,  //All .js and .jsx files
         loaders: ['react-hot','babel-loader?optional=runtime&stage=0'], //react-hot is like browser sync and babel loads jsx and es6-7
+        exclude: [nodeModulesPath]
+      },
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        query: {
+          stage: 0,
+          optional: 'runtime',
+          plugins: ['./plugins/babelRelayPlugin']
+        },
         exclude: [nodeModulesPath]
       }
     ]

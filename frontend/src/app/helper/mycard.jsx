@@ -30,6 +30,37 @@ let HomeFeature = React.createClass({
     };
   },
 
+  _onMouseEnter() {
+    this.setState({
+      zDepth: 4,
+    });
+  },
+
+  _onMouseLeave() {
+    this.setState({
+      zDepth: 0,
+    });
+  },
+
+  render() {
+    let styles = this.getStyles();
+
+    return (
+      <Paper
+        zDepth={this.state.zDepth}
+        onMouseEnter={this._onMouseEnter}
+        onMouseLeave={this._onMouseLeave}
+        style={this.mergeAndPrefix(
+          styles.root,
+          this.props.lastChild && styles.rootWhenLastChild)}>
+        <img style={this.mergeAndPrefix(
+          styles.image,
+          this.props.imgStyle)} src={this.props.img} />
+        <h3 style={styles.heading}>{this.props.heading}</h3>
+      </Paper>
+    );
+  },
+
   getStyles() {
     let desktopGutter = Spacing.desktopGutter;
     let desktopKeylineIncrement = Spacing.desktopKeylineIncrement;
@@ -44,6 +75,7 @@ let HomeFeature = React.createClass({
       },
       rootWhenMedium: {
         width: '33%',
+
         // maxWidth: maxWidth,
       },
       image: {
@@ -91,35 +123,6 @@ let HomeFeature = React.createClass({
     return styles;
   },
 
-  render() {
-    let styles = this.getStyles();
-
-    return (
-      <Paper
-        zDepth={this.state.zDepth}
-        onMouseEnter={this._onMouseEnter}
-        onMouseLeave={this._onMouseLeave}
-        style={this.mergeAndPrefix(
-          styles.root,
-          this.props.lastChild && styles.rootWhenLastChild)}>
-        <img style={styles.image} src={this.props.img} />
-        <h3 style={styles.heading}>{this.props.heading}</h3>
-      </Paper>
-    );
-  },
-
-  _onMouseEnter() {
-    this.setState({
-      zDepth: 4,
-    });
-  },
-
-  _onMouseLeave() {
-    this.setState({
-      zDepth: 0,
-    });
-  },
-
 });
 
-export default HomeFeature;
+module.exports = HomeFeature;

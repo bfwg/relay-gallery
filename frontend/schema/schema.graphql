@@ -1,0 +1,50 @@
+type Image implements Node {
+  id: ID!
+  url: String
+}
+
+type ImageConnection {
+  pageInfo: PageInfo!
+  edges: [ImageEdge]
+}
+
+type ImageEdge {
+  node: Image
+  cursor: String!
+}
+
+type ImageList implements Node {
+  id: ID!
+  images(after: String, first: Int, before: String, last: Int): ImageConnection
+}
+
+input IntroduceImageInput {
+  imageName: String!
+  clientMutationId: String!
+}
+
+type IntroduceImagePayload {
+  newImageEdge: ImageEdge
+  imageList: ImageList
+  clientMutationId: String!
+}
+
+type Mutation {
+  introduceImage(input: IntroduceImageInput!): IntroduceImagePayload
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  imageList: ImageList
+  node(id: ID!): Node
+}

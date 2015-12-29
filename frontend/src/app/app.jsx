@@ -2,7 +2,10 @@
   let React = require('react');
   let ReactDOM = require('react-dom');
   let injectTapEventPlugin = require('react-tap-event-plugin');
-  let Main = require('./components/main.jsx'); // Our custom react component
+  let Main = require('./components/Main.jsx'); // Our custom react component
+
+  let Relay = require('react-relay');
+  let ImageListRoute = require('./routes/ImageListRoute');
 
   //Needed for React Developer Tools
   window.React = React;
@@ -15,6 +18,13 @@
 
   // Render the main app react component into the app div.
   // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-  ReactDOM.render(<Main />, document.getElementById('app'));
+  // ReactDOM.render(<Main />, document.getElementById('app'));
 
+  ReactDOM.render(
+    <Relay.RootContainer
+      Component={Main}
+      route={new ImageListRoute()}
+    />,
+    document.getElementById('app')
+  );
 })();

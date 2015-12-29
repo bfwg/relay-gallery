@@ -1,3 +1,4 @@
+'use strict';
 const fs = require('fs');
 const path = require('path');
 const schema = require('../schema/schema').schema;
@@ -15,7 +16,7 @@ graphql(schema, introspectionQuery).then(result => {
     );
   } else {
     fs.writeFileSync(
-      path.join(__dirname, '../../frontend/schema/schema.graphql'),
+      path.join(__dirname, '../../frontend/schema/schema.json'),
       JSON.stringify(result, null, 2)
     );
   }
