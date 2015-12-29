@@ -1,6 +1,7 @@
 "use strict";
 const React = require('react');
 const LinkedStateMixin = require('react-addons-linked-state-mixin');
+const {SERVER_HOST} = require('../config');
 const {
   TextField,
   RaisedButton,
@@ -31,15 +32,48 @@ const Login = React.createClass({
   getInitialState: function() {
     return {
       pending: false,
-      name: '',
+      email: '',
       password: '',
       error: '',
+      isLogin: false,
     };
   },
 
+
   onFormSubmit(e) {
     e.preventDefault();
-    //TODO
+
+    let email = this.state.email;
+    let password = this.state.password;
+    let loginFlag = false;
+    fetch(`${SERVER_HOST}/login`, {
+      body: JSON.stringify({email: email, password: password}),
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      method: 'post',
+    })
+    .then(response => {
+      if (response.status !== 200)
+        throw new Error('用户名或密码错误');
+      else {
+        // this.props.submit();
+        loginFlag = true;//mercy
+        this.setState({
+          pending: true,
+        });
+      }
+    })
+    .catch(error => {
+      this.setState({error: error});
+      this.focusInvalidField(error);
+    });
+
+    //will change this in the future
+    //due to dropzone bug
+    //
+    setTimeout(() => {
+      if(loginFlag)
+        this.props.submit();
+    }, 750);
   },
 
   focusInvalidField(error) {
@@ -97,6 +131,7 @@ const Login = React.createClass({
   render() {
     const styles = this.getStyles();
 
+
     return (
       <div style={styles.root}>
         <div style={styles.card}>
@@ -108,9 +143,9 @@ const Login = React.createClass({
               }
               <TextField
                 floatingLabelText="Username"
-                name="name"
+                name="email"
                 style={styles.textField}
-                valueLink={this.linkState('name')} />
+                valueLink={this.linkState('email')} />
               <TextField
                 floatingLabelText="Password"
                 name="password"

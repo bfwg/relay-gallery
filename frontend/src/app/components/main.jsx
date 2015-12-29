@@ -12,6 +12,7 @@ const {StylePropable, StyleResizable} = Mixins;
 const {FullWidthSection, MyCard} = require('../helper');
 const MyRawTheme = require('../helper/myRawTheme');
 const Login = require('./Login');
+const {SERVER_HOST} = require('../config');
 
 const Main = React.createClass({
 
@@ -57,11 +58,18 @@ const Main = React.createClass({
         Relay.Store.update(
           new AddImageMutation({
             fileName,
-            images: this.props.imageList,
+            images: this.props.User,
         })
       );
       });
     });
+  },
+
+  onSubmitLogin: function() {
+    this.setState({
+      loginDialogOpenFlag: false,
+    });
+    this.refs.dropzone.open();
   },
 
   onLoginCanel: function() {
@@ -70,6 +78,11 @@ const Main = React.createClass({
     });
   },
 
+  onUpload: function() {
+    this.setState({
+      loginDialogOpenFlag: true,
+    });
+  },
 
   render() {
 
@@ -78,7 +91,6 @@ const Main = React.createClass({
       { text: 'Okay' },
     ];
 
-      console.log(this.props);
     return (
       <div style={styles.containerStyle}>
         <Dialog
@@ -87,6 +99,7 @@ const Main = React.createClass({
           ref="loginDialog"
           onRequestClose={this.onLoginCanel}>
           <Login
+            submit={this.onSubmitLogin}
             onCancel={this.onLoginCanel} />
         </Dialog>
         <FullWidthSection useContent={true} style={{textAlign: 'center'}}>
@@ -95,21 +108,22 @@ const Main = React.createClass({
             heading="I'm Fan, I make things for the web."
             img="images/me.jpg"/>
         </FullWidthSection>
+
         <FullWidthSection useContent={true} contentStyle={{textAlign: 'center'}} >
-          {this.props.imageList.images.edges.map((ele, idx) => (
+          {this.props.User.images.edges.map((ele, idx) => (
             <MyCard
               key={idx}
               style={styles.smallPic}
               imgStyle={{height: 'auto'}}
-              img={'http://localhost:3000/images/' + ele.node.url} />
+              img={`${SERVER_HOST}/images/` + ele.node.url} />
           ))}
 
-            <MyCard
-              style={styles.smallPic}
-              imgStyle={{height: '280px'}}
-              img="images/upload.png"/>
-          <Dropzone ref="dropzone" onDrop={this.onDrop} >
-          </Dropzone>
+          <MyCard
+            onClick={this.onUpload}
+            style={styles.smallPic}
+            imgStyle={{height: '280px'}}
+            img="images/upload.png"/>
+          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop} />
           <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
         </FullWidthSection>
       </div>
@@ -132,6 +146,7 @@ const Main = React.createClass({
         marginRight: 'auto',
       },
       addImage: {
+        visible: 'none',
         float: 'none',
       },
       addImageWhenMedium: {
@@ -161,8 +176,8 @@ const Main = React.createClass({
 module.exports = Relay.createContainer(Main, {
 
   fragments: {
-    imageList: () => Relay.QL`
-      fragment on ImageList {
+    User: () => Relay.QL`
+      fragment on User {
         images(first: 1000) {
           edges {
             node {

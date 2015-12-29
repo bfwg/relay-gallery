@@ -5,7 +5,7 @@
   let Main = require('./components/Main.jsx'); // Our custom react component
 
   let Relay = require('react-relay');
-  let ImageListRoute = require('./routes/ImageListRoute');
+  let UserRoute = require('./routes/UserRoute');
 
   //Needed for React Developer Tools
   window.React = React;
@@ -23,7 +23,7 @@
   ReactDOM.render(
     <Relay.RootContainer
       Component={Main}
-      route={new ImageListRoute()}
+      route={new UserRoute()}
     />,
     document.getElementById('app')
   );

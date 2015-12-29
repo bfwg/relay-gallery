@@ -4,7 +4,7 @@ export default class AddImageMutation extends Relay.Mutation {
 
   static fragments = {
     images: () => Relay.QL`
-      fragment on ImageList {
+      fragment on User {
         id
       }`,
   };
@@ -22,7 +22,7 @@ export default class AddImageMutation extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on IntroduceImagePayload {
-        imageList {
+        User {
           images {
             edges {
               node {
@@ -40,7 +40,7 @@ export default class AddImageMutation extends Relay.Mutation {
     console.log(this.props);
     return [{
       type: 'RANGE_ADD',
-      parentName: 'imageList',
+      parentName: 'User',
       parentID: this.props.images.id,
       connectionName: 'images',
       edgeName: 'newImageEdge',

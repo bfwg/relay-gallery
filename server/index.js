@@ -6,7 +6,6 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const graphQLHTTP = require('express-graphql');
 const MyImages = require('./models/MyImages');
-const User = require('./models/User');
 const querySchema = require('./schema/schema').schema;
 
 const API = require('./api');
@@ -29,7 +28,6 @@ app.listen(PORT, () => {
 });
 
 
-console.log(__dirname);
 app.use(express.static(path.join(__dirname, 'static')));
 
 // (new MyImages()).add('abc.jpeg')

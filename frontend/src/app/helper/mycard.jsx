@@ -50,6 +50,7 @@ let HomeFeature = React.createClass({
         zDepth={this.state.zDepth}
         onMouseEnter={this._onMouseEnter}
         onMouseLeave={this._onMouseLeave}
+        onTouchTap={this.props.onClick || function(){}}
         style={this.mergeAndPrefix(
           styles.root,
           this.props.lastChild && styles.rootWhenLastChild)}>

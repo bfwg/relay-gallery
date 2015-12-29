@@ -13,11 +13,6 @@ type ImageEdge {
   cursor: String!
 }
 
-type ImageList implements Node {
-  id: ID!
-  images(after: String, first: Int, before: String, last: Int): ImageConnection
-}
-
 input IntroduceImageInput {
   imageName: String!
   clientMutationId: String!
@@ -25,7 +20,7 @@ input IntroduceImageInput {
 
 type IntroduceImagePayload {
   newImageEdge: ImageEdge
-  imageList: ImageList
+  User: User
   clientMutationId: String!
 }
 
@@ -45,6 +40,11 @@ type PageInfo {
 }
 
 type Query {
-  imageList: ImageList
+  User: User
   node(id: ID!): Node
+}
+
+type User implements Node {
+  id: ID!
+  images(after: String, first: Int, before: String, last: Int): ImageConnection
 }

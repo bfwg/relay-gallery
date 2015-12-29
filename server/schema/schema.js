@@ -39,11 +39,11 @@ var _connectionDefinitions = Relay.connectionDefinitions({ name: 'Image', nodeTy
 var ImageConnectionType = _connectionDefinitions.connectionType;
 var ImageEdge = _connectionDefinitions.edgeType;
 
-var ImageListType = new GraphQL.GraphQLObjectType({
-  name: 'ImageList',
-  description: 'A list of images',
+var UserType = new GraphQL.GraphQLObjectType({
+  name: 'User',
+  description: 'A User',
   fields: () => ({
-    id: Relay.globalIdField('ImageList'),
+    id: Relay.globalIdField('User'),
     images: {
       type: ImageConnectionType,
       description: 'A collection of images',
@@ -62,9 +62,9 @@ var ImageListType = new GraphQL.GraphQLObjectType({
 const queryType = new GraphQL.GraphQLObjectType({
   name: 'Query',
   fields: () => ({
-    imageList: {
-      type: ImageListType,
-      description: 'List of images',
+    User: {
+      type: UserType,
+      description: 'A User',
       resolve: () => ({type: 'image'}),
     },
     node: nodeDefinition.nodeField,
@@ -96,8 +96,8 @@ var imageMutation = Relay.mutationWithClientMutationId({
         });
       }
     },
-    imageList: {
-      type: ImageListType,
+    User: {
+      type: UserType,
       resolve: () => (new MyImages()).getAll()
     }
   },

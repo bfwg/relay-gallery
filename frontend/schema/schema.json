@@ -15,12 +15,12 @@
           "description": null,
           "fields": [
             {
-              "name": "imageList",
-              "description": "List of images",
+              "name": "User",
+              "description": "A User",
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageList",
+                "name": "User",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -61,8 +61,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ImageList",
-          "description": "A list of images",
+          "name": "User",
+          "description": "A User",
           "fields": [
             {
               "name": "id",
@@ -178,7 +178,7 @@
             },
             {
               "kind": "OBJECT",
-              "name": "ImageList",
+              "name": "User",
               "ofType": null
             }
           ]
@@ -512,12 +512,12 @@
               "deprecationReason": null
             },
             {
-              "name": "imageList",
+              "name": "User",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "ImageList",
+                "name": "User",
                 "ofType": null
               },
               "isDeprecated": false,
