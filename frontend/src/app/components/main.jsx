@@ -7,6 +7,7 @@ const Colors = require('material-ui/lib/styles/colors');
 const Dropzone = require('react-dropzone');
 const request = require('superagent');
 const AddImageMutation  = require('../mutation/AddImageMutation');
+const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
 const {RaisedButton, Mixins} = require('material-ui');
 const {StylePropable, StyleResizable} = Mixins;
 const {FullWidthSection, MyCard} = require('../helper');
@@ -45,30 +46,43 @@ const Main = React.createClass({
   },
 
   onDrop: function (files) {
-    console.log(files);
-    let req = request.post('http://localhost:3000/upload');
-    files.forEach((file)=> {
-      req.attach(file.type, file, file.name);
-    });
-    req.end(() => {
-      files.forEach((file)=> {
-        console.log(file.name, 'upload finished');
-        console.log(this.props);
-        let fileName = file.name;
-        Relay.Store.update(
-          new AddImageMutation({
-            fileName,
-            images: this.props.User,
-        })
-      );
+    console.log(arguments.length);
+    if (this.props.User.username === 'Guest') {
+      this.setState({
+        loginDialogOpenFlag: true,
       });
-    });
+    } else {
+      console.log(files);
+      let req = request.post('http://localhost:3000/upload');
+      files.forEach((file)=> {
+        req.attach(file.type, file, file.name);
+      });
+      req.end(() => {
+        files.forEach((file)=> {
+          console.log(file.name, 'upload finished');
+          console.log(this.props);
+          let fileName = file.name;
+          Relay.Store.update(
+            new AddImageMutation({
+              fileName,
+              images: this.props.User,
+          })
+        );
+        });
+      });
+    }
   },
 
-  onSubmitLogin: function() {
+  onSubmitLogin: function(username) {
     this.setState({
       loginDialogOpenFlag: false,
     });
+    console.log('submit', username);
+    Relay.Store.update(
+      new ChangeUserStatusMutation({
+        username,
+        user: this.props.User,
+    }));
     this.refs.dropzone.open();
   },
 
@@ -79,9 +93,13 @@ const Main = React.createClass({
   },
 
   onUpload: function() {
-    this.setState({
-      loginDialogOpenFlag: true,
-    });
+    if (this.props.User.username === 'Guest') {
+      this.setState({
+        loginDialogOpenFlag: true,
+      });
+    } else {
+      this.refs.dropzone.open();
+    }
   },
 
   render() {
@@ -90,6 +108,7 @@ const Main = React.createClass({
     let standardActions = [
       { text: 'Okay' },
     ];
+    console.log(this.props.User);
 
     return (
       <div style={styles.containerStyle}>
@@ -118,12 +137,13 @@ const Main = React.createClass({
               img={`${SERVER_HOST}/images/` + ele.node.url} />
           ))}
 
-          <MyCard
-            onClick={this.onUpload}
-            style={styles.smallPic}
-            imgStyle={{height: '280px'}}
-            img="images/upload.png"/>
-          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop} />
+          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
+            <MyCard
+              onClick={this.onUpload}
+              style={styles.smallPic}
+              imgStyle={{height: '280px'}}
+              img="images/upload.png"/>
+          </Dropzone>
           <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
         </FullWidthSection>
       </div>
@@ -146,7 +166,6 @@ const Main = React.createClass({
         marginRight: 'auto',
       },
       addImage: {
-        visible: 'none',
         float: 'none',
       },
       addImageWhenMedium: {
@@ -166,9 +185,12 @@ const Main = React.createClass({
 
 
   _handleTouchTap() {
-    this.setState({
-      loginDialogOpenFlag: true,
-    });
+    let username = 'testtest';
+    // Relay.store.update(
+      // new Changeuserstatusmutation({
+        // username,
+        // user: this.props.user,
+    // }));
   },
 
 });
@@ -178,6 +200,7 @@ module.exports = Relay.createContainer(Main, {
   fragments: {
     User: () => Relay.QL`
       fragment on User {
+        username,
         images(first: 1000) {
           edges {
             node {
@@ -186,6 +209,7 @@ module.exports = Relay.createContainer(Main, {
           }
         }
       ${AddImageMutation.getFragment('images')},
+      ${ChangeUserStatusMutation.getFragment('user')},
       }
     `,
   },

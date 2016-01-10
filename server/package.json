@@ -18,9 +18,12 @@
     "body-parser": "~1.14.1",
     "busboy": "^0.2.12",
     "connect-busboy": "0.0.2",
+    "cookie-parser": "^1.4.0",
+    "cookie-session": "^1.2.0",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "express-graphql": "^0.4.0",
+    "express-session": "^1.12.1",
     "graphql": "^0.4.7",
     "graphql-relay": "^0.3.4",
     "redis": "^2.2.3"

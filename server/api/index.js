@@ -1,24 +1,25 @@
 "use strict";
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const app = express();
 const busboy = require('connect-busboy');
 const fs = require('fs');
 const User = require('../models/User');
+const uploadAuth = require('../middleware/uploadAuth');
 
 
-app.use(cors());
+const app = express();
+
 app.use(busboy());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 
-app.post('/upload', (req, res) => {
+app.post('/upload', uploadAuth, (req, res) => {
   var fstream;
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
     console.log("Uploading: " + filename + " type: " + fieldname);
+    console.log("By", req.session.username);
     fstream = fs.createWriteStream(__dirname + '/../static/images/' + filename);
     file.pipe(fstream);
     fstream.on('close', function () {
@@ -33,7 +34,13 @@ app.post('/login', (req, res) => {
   let pass = req.body.password;
   (new User()).login(email, pass)
   .then(response => {
-    response ? res.send('ok') : res.status(503).end();
+    if (response) {
+      // res.cookie('mp', email, { expires: new Date(Date.now() + 900000), httpOnly: true });
+      req.session.username = email;
+      res.send(email);
+    } else {
+      res.status(503).end();
+    }
   });
 });
 

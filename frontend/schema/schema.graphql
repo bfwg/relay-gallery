@@ -26,6 +26,7 @@ type IntroduceImagePayload {
 
 type Mutation {
   introduceImage(input: IntroduceImageInput!): IntroduceImagePayload
+  changeUsername(input: UpdateUsernameInput!): UpdateUsernamePayload
 }
 
 interface Node {
@@ -44,7 +45,19 @@ type Query {
   node(id: ID!): Node
 }
 
+input UpdateUsernameInput {
+  id: ID!
+  username: String!
+  clientMutationId: String!
+}
+
+type UpdateUsernamePayload {
+  User: User
+  clientMutationId: String!
+}
+
 type User implements Node {
   id: ID!
+  username: String
   images(after: String, first: Int, before: String, last: Int): ImageConnection
 }

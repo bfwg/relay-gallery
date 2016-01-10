@@ -2,6 +2,8 @@
 const React = require('react');
 const LinkedStateMixin = require('react-addons-linked-state-mixin');
 const {SERVER_HOST} = require('../config');
+const request = require('superagent');
+const axios = require('axios');
 const {
   TextField,
   RaisedButton,
@@ -46,10 +48,17 @@ const Login = React.createClass({
     let email = this.state.email;
     let password = this.state.password;
     let loginFlag = false;
-    fetch(`${SERVER_HOST}/login`, {
-      body: JSON.stringify({email: email, password: password}),
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+    let resEmail = '';
+
+    this.setState({
+      pending: true,
+    });
+
+    axios({
       method: 'post',
+      data: {email: email, password: password},
+      url: `${SERVER_HOST}/login`,
+      withCredentials: true,
     })
     .then(response => {
       if (response.status !== 200)
@@ -57,8 +66,9 @@ const Login = React.createClass({
       else {
         // this.props.submit();
         loginFlag = true;//mercy
+        resEmail = response.data;
         this.setState({
-          pending: true,
+          pending: false,
         });
       }
     })
@@ -69,10 +79,10 @@ const Login = React.createClass({
 
     //will change this in the future
     //due to dropzone bug
-    //
+    //https://github.com/paramaggarwal/react-dropzone/issues/122
     setTimeout(() => {
       if(loginFlag)
-        this.props.submit();
+        this.props.submit(resEmail);
     }, 750);
   },
 

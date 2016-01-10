@@ -44,6 +44,14 @@ var UserType = new GraphQL.GraphQLObjectType({
   description: 'A User',
   fields: () => ({
     id: Relay.globalIdField('User'),
+    username: {
+      type: GraphQL.GraphQLString,
+      description: 'the User name',
+      resolve: (_) => {
+        console.log(_.viewer);
+        return _.viewer;
+      }
+    },
     images: {
       type: ImageConnectionType,
       description: 'A collection of images',
@@ -65,7 +73,9 @@ const queryType = new GraphQL.GraphQLObjectType({
     User: {
       type: UserType,
       description: 'A User',
-      resolve: () => ({type: 'image'}),
+      resolve: (_, args, options) => {
+        return {viewer: options.rootValue.session || 'Guest'};
+      },
     },
     node: nodeDefinition.nodeField,
   }),
@@ -113,12 +123,38 @@ var imageMutation = Relay.mutationWithClientMutationId({
 });
 
 
+var usernameMutation = Relay.mutationWithClientMutationId({
+  name: 'UpdateUsername',
+  inputFields: {
+    id: {
+      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLID)
+    },
+    username: {
+      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLString)
+    },
+  },
+  outputFields: {
+    User: {
+      type: UserType,
+      resolve: (payload) => {
+        return {viewer: payload.username };
+      },
+    }
+  },
+  mutateAndGetPayload: (input) => {
+    var localUserId = Relay.fromGlobalId(input.id).id;
+    return {id: localUserId, username: input.username};
+  }
+});
+
 var mutationType = new GraphQL.GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    introduceImage: imageMutation
+    introduceImage: imageMutation,
+    changeUsername: usernameMutation,
   })
 });
+
 
 module.exports.schema = new GraphQL.GraphQLSchema({
   query: queryType,
