@@ -13,8 +13,9 @@ npm install
 
 Now you can run your local server:
 ```
-npm start
+run npm start in both frontend and server folder
 ```
+
 Server is located at http://localhost:3000
 
 #Description of [Webpack](http://webpack.github.io/docs/)

@@ -83,6 +83,7 @@ const Main = React.createClass({
         username,
         user: this.props.User,
     }));
+    //not opening
     this.refs.dropzone.open();
   },
 
@@ -118,7 +119,7 @@ const Main = React.createClass({
           ref="loginDialog"
           onRequestClose={this.onLoginCanel}>
           <Login
-            submit={this.onSubmitLogin}
+            submit={this.onSubmitLogin.bind(this)}
             onCancel={this.onLoginCanel} />
         </Dialog>
         <FullWidthSection useContent={true} style={{textAlign: 'center'}}>
@@ -133,18 +134,17 @@ const Main = React.createClass({
             <MyCard
               key={idx}
               style={styles.smallPic}
-              imgStyle={{height: 'auto'}}
+              imgStyle={{height: 'inherit'}}
               img={`${SERVER_HOST}/images/` + ele.node.url} />
           ))}
 
-          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
+          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop.bind(this)}>
             <MyCard
-              onClick={this.onUpload}
+              onClick={this.onUpload.bind(this)}
               style={styles.smallPic}
-              imgStyle={{height: '280px'}}
+              imgStyle={{height: '180px'}}
               img="images/upload.png"/>
           </Dropzone>
-          <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
         </FullWidthSection>
       </div>
     );
@@ -157,7 +157,8 @@ const Main = React.createClass({
         // paddingTop: '50px',
       },
       smallPic: {
-        width: '280px',
+        width: '180px',
+        height: '180px',
         float: 'left',
         marginRight: '5px',
       },

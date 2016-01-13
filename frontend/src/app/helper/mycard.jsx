@@ -76,7 +76,6 @@ let HomeFeature = React.createClass({
       },
       rootWhenMedium: {
         width: '33%',
-
         // maxWidth: maxWidth,
       },
       image: {

@@ -64,12 +64,12 @@ const Login = React.createClass({
       if (response.status !== 200)
         throw new Error('用户名或密码错误');
       else {
-        // this.props.submit();
-        loginFlag = true;//mercy
         resEmail = response.data;
-        this.setState({
-          pending: false,
-        });
+        this.props.submit(resEmail);
+        // loginFlag = true;//mercy
+        // this.setState({
+          // pending: false,
+        // });
       }
     })
     .catch(error => {
@@ -80,10 +80,10 @@ const Login = React.createClass({
     //will change this in the future
     //due to dropzone bug
     //https://github.com/paramaggarwal/react-dropzone/issues/122
-    setTimeout(() => {
-      if(loginFlag)
-        this.props.submit(resEmail);
-    }, 750);
+    // setTimeout(() => {
+      // if(loginFlag)
+        // this.props.submit(resEmail);
+    // }, 750);
   },
 
   focusInvalidField(error) {
@@ -140,7 +140,6 @@ const Login = React.createClass({
 
   render() {
     const styles = this.getStyles();
-
 
     return (
       <div style={styles.root}>
