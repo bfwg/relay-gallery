@@ -24,6 +24,7 @@ const Main = React.createClass({
       loginDialogOpenFlag: false,
       muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
       files: null,
+      selectedImageIdx: null,
     };
   },
 
@@ -106,22 +107,19 @@ const Main = React.createClass({
   render() {
 
     let styles = this.getStyles();
-    let standardActions = [
-      { text: 'Okay' },
-    ];
-    console.log(this.props.User);
 
     return (
       <div style={styles.containerStyle}>
         <Dialog
           open={this.state.loginDialogOpenFlag}
           contentStyle={{width: 430, textAlign: 'center'}}
-          ref="loginDialog"
           onRequestClose={this.onLoginCanel}>
           <Login
-            submit={this.onSubmitLogin.bind(this)}
+            submit={this.onSubmitLogin}
             onCancel={this.onLoginCanel} />
+
         </Dialog>
+
         <FullWidthSection useContent={true} style={{textAlign: 'center'}}>
           <MyCard
             style={styles.bigPic}
@@ -134,13 +132,15 @@ const Main = React.createClass({
             <MyCard
               key={idx}
               style={styles.smallPic}
-              imgStyle={{height: 'inherit'}}
+              imgStyle={{height: 'inherit', maxHeight: 500}}
+              imgIdx={idx}
+              imgList={this.props.User.images.edges}
               img={`${SERVER_HOST}/images/` + ele.node.url} />
           ))}
 
-          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop.bind(this)}>
+          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
             <MyCard
-              onClick={this.onUpload.bind(this)}
+              onClick={this.onUpload}
               style={styles.smallPic}
               imgStyle={{height: '180px'}}
               img="images/upload.png"/>
@@ -186,12 +186,6 @@ const Main = React.createClass({
 
 
   _handleTouchTap() {
-    let username = 'testtest';
-    // Relay.store.update(
-      // new Changeuserstatusmutation({
-        // username,
-        // user: this.props.user,
-    // }));
   },
 
 });

@@ -1,8 +1,13 @@
+"use strict";
 const React = require('react');
-const {Paper, Mixins, Styles} = require('material-ui');
+const {FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
 
 let {StylePropable, StyleResizable} = Mixins;
 let {Colors, Spacing, Transitions, Typography} = Styles;
+
+const AppLeftNav = require('./LeftArrow');
+const AppRightNav = require('./RightArrow');
+const {SERVER_HOST} = require('../config');
 
 
 let HomeFeature = React.createClass({
@@ -26,8 +31,23 @@ let HomeFeature = React.createClass({
 
   getInitialState() {
     return {
+      imageDialogOpenFlag: false,
+      currentImage: null,
+      offset: 0,
+      leftNav: false,
+      rigthNav: false,
       zDepth: 0,
     };
+  },
+
+  componentDidMount() {
+
+    this.checkLeftNav(0);
+    this.checkRightNav(0);
+
+    this.setState({
+      currentImage: this.props.img,
+    });
   },
 
   _onMouseEnter() {
@@ -42,23 +62,113 @@ let HomeFeature = React.createClass({
     });
   },
 
+  onImageCanel: function() {
+    this.setState({
+      imageDialogOpenFlag: false,
+      currentImage: this.props.img,
+      offset: 0,
+    });
+  },
+
+  checkLeftNav: function(offset) {
+    if (this.props.imgIdx + offset !== 0) {
+      this.setState({
+        leftNav: true,
+      });
+    } else {
+      this.setState({
+        leftNav: false,
+      });
+    }
+  },
+
+  checkRightNav: function(offset) {
+    console.log(this.props.imgIdx + offset);
+    console.log(this.props.imgList && this.props.imgList.length - 1);
+    if (this.props.imgList && this.props.imgIdx + offset !== this.props.imgList.length - 1) {
+      this.setState({
+        rightNav: true,
+      });
+    } else {
+      this.setState({
+        rightNav: false,
+      });
+    }
+  },
+
+  getPreImg: function() {
+    this.setState({
+      offset: this.state.offset - 1,
+    });
+
+    let index = this.props.imgIdx + this.state.offset - 1;
+    if (this.props.imgList && this.props.imgList[index]) {
+      this.setState({
+        currentImage: `${SERVER_HOST}/images/` + this.props.imgList[index].node.url,
+      });
+      this.checkLeftNav(this.state.offset - 1);
+      this.checkRightNav(this.state.offset - 1);
+    }
+  },
+
+  getNextImg: function() {
+
+    this.setState({
+      offset: this.state.offset + 1,
+    });
+    let index = this.props.imgIdx + this.state.offset + 1;
+    if (this.props.imgList && this.props.imgList[index]) {
+      this.setState({
+        currentImage: `${SERVER_HOST}/images/` + this.props.imgList[index].node.url,
+      });
+      this.checkLeftNav(this.state.offset + 1);
+      this.checkRightNav(this.state.offset + 1);
+    }
+  },
+
   render() {
     let styles = this.getStyles();
 
     return (
-      <Paper
-        zDepth={this.state.zDepth}
-        onMouseEnter={this._onMouseEnter}
-        onMouseLeave={this._onMouseLeave}
-        onTouchTap={this.props.onClick || function(){}}
-        style={this.mergeAndPrefix(
-          styles.root,
-          this.props.lastChild && styles.rootWhenLastChild)}>
-        <img style={this.mergeAndPrefix(
-          styles.image,
-          this.props.imgStyle)} src={this.props.img} />
-        <h3 style={styles.heading}>{this.props.heading}</h3>
-      </Paper>
+      <div>
+        <Dialog
+          open={this.state.imageDialogOpenFlag}
+          contentStyle={{width: 'auto', textAlign: 'center'}}
+          onRequestClose={this.onImageCanel}>
+          <FloatingActionButton secondary={true} mini={true} linkButton={true}
+            style={this.mergeAndPrefix(styles.navButton, {left: 0})}
+            disabled={!this.state.leftNav}
+            onTouchTap={this.getPreImg} >
+            <AppLeftNav />
+          </FloatingActionButton>
+          <img style={this.mergeAndPrefix(
+            styles.image,
+            this.props.imgStyle)} src={this.state.currentImage} />
+          <FloatingActionButton secondary={false} mini={true} linkButton={true}
+            style={this.mergeAndPrefix(styles.navButton, {right: 0})}
+            disabled={!this.state.rightNav}
+            onTouchTap={this.getNextImg} >
+            <AppRightNav />
+          </FloatingActionButton>
+        </Dialog>
+        <Paper
+          zDepth={this.state.zDepth}
+          onMouseEnter={this._onMouseEnter}
+          onMouseLeave={this._onMouseLeave}
+          onTouchTap={this.props.onClick || function(){
+            this.setState({
+              imageDialogOpenFlag: true,
+            });
+          }.bind(this)}
+          style={this.mergeAndPrefix(
+            styles.root,
+            this.props.lastChild && styles.rootWhenLastChild)}>
+          <img style={this.mergeAndPrefix(
+            styles.image,
+            this.props.imgStyle)} src={this.props.img} />
+          <h3 style={styles.heading}>{this.props.heading}</h3>
+        </Paper>
+      </div>
     );
   },
 
@@ -79,6 +189,7 @@ let HomeFeature = React.createClass({
         // maxWidth: maxWidth,
       },
       image: {
+        verticalAlign: "middle",
         maxWidth: "100%",
         //Not sure why this is needed but it fixes a display
         //issue in chrome
@@ -106,6 +217,11 @@ let HomeFeature = React.createClass({
       },
       rootWhenMediumAndFirstChild: {
         marginLeft: '0px',
+      },
+      navButton: {
+        position: 'absolute',
+        top: '50%',
+        marginTop: '-17px',
       },
     };
 

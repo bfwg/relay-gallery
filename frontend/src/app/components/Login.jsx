@@ -2,12 +2,10 @@
 const React = require('react');
 const LinkedStateMixin = require('react-addons-linked-state-mixin');
 const {SERVER_HOST} = require('../config');
-const request = require('superagent');
 const axios = require('axios');
 const {
   TextField,
   RaisedButton,
-  Card,
   CardActions,
   CardTitle,
   Styles,
@@ -47,7 +45,7 @@ const Login = React.createClass({
 
     let email = this.state.email;
     let password = this.state.password;
-    let loginFlag = false;
+    // let loginFlag = false;
     let resEmail = '';
 
     this.setState({
