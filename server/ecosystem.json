@@ -3,25 +3,25 @@
 
     // First application
     {
-      name      : "fanjin-web",
-      script    : "index.js",
-      env: {
-        COMMON_VARIABLE: "true"
+      "name"      : "fanjin-web",
+      "script"    : "index.js",
+      "env": {
+        "COMMON_VARIABLE": "true"
       },
-      env_production : {
-        NODE_ENV: "production"
+      "env_production" : {
+        "NODE_ENV": "production"
       }
     },
   ],
 
   deploy : {
-    production : {
-      user : "root",
-      host : "159.203.31.187",
-      ref  : "origin/master",
-      repo : "git@github.com:bfwg/mypage.git",
-      path : "/var/www/production",
-      post-deploy : "pm2 restart 0"
+    "production" : {
+      "user" : "root",
+      "host" : "159.203.31.187",
+      "ref"  : "origin/master",
+      "repo" : "git@github.com:bfwg/mypage.git",
+      "path" : "/var/www/production",
+      "post-deploy" : "pm2 restart 0"
     },
   }
 }
