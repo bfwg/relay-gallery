@@ -5,8 +5,8 @@ const {FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-
 let {StylePropable, StyleResizable} = Mixins;
 let {Colors, Spacing, Transitions, Typography} = Styles;
 
-const AppLeftNav = require('./LeftArrow');
-const AppRightNav = require('./RightArrow');
+const {LeftArrow, RightArrow} = require('../svgIcons');
+
 const {SERVER_HOST} = require('../config');
 
 
@@ -42,8 +42,9 @@ let HomeFeature = React.createClass({
 
   componentDidMount() {
 
-    this.checkLeftNav(0);
-    this.checkRightNav(0);
+    // this.checkLeftNav(0);
+    // this.checkRightNav(0);
+
 
     this.setState({
       currentImage: this.props.img,
@@ -83,8 +84,8 @@ let HomeFeature = React.createClass({
   },
 
   checkRightNav: function(offset) {
-    console.log(this.props.imgIdx + offset);
-    console.log(this.props.imgList && this.props.imgList.length - 1);
+    // console.log(this.props.imgIdx + offset);
+    // console.log(this.props.imgList && this.props.imgList.length - 1);
     if (this.props.imgList && this.props.imgIdx + offset !== this.props.imgList.length - 1) {
       this.setState({
         rightNav: true,
@@ -101,13 +102,13 @@ let HomeFeature = React.createClass({
       offset: this.state.offset - 1,
     });
 
-    let index = this.props.imgIdx + this.state.offset - 1;
+    let index = (this.props.imgIdx + this.state.offset - 1 + this.props.imgList.length) % this.props.imgList.length;
     if (this.props.imgList && this.props.imgList[index]) {
       this.setState({
         currentImage: `${SERVER_HOST}/images/` + this.props.imgList[index].node.url,
       });
-      this.checkLeftNav(this.state.offset - 1);
-      this.checkRightNav(this.state.offset - 1);
+      // this.checkLeftNav(this.state.offset - 1);
+      // this.checkRightNav(this.state.offset - 1);
     }
   },
 
@@ -116,13 +117,13 @@ let HomeFeature = React.createClass({
     this.setState({
       offset: this.state.offset + 1,
     });
-    let index = this.props.imgIdx + this.state.offset + 1;
+    let index = (this.props.imgIdx + this.state.offset + 1) % this.props.imgList.length;
     if (this.props.imgList && this.props.imgList[index]) {
       this.setState({
         currentImage: `${SERVER_HOST}/images/` + this.props.imgList[index].node.url,
       });
-      this.checkLeftNav(this.state.offset + 1);
-      this.checkRightNav(this.state.offset + 1);
+      // this.checkLeftNav(this.state.offset + 1);
+      // this.checkRightNav(this.state.offset + 1);
     }
   },
 
@@ -133,22 +134,23 @@ let HomeFeature = React.createClass({
       <div>
         <Dialog
           open={this.state.imageDialogOpenFlag}
-          contentStyle={{width: 'auto', textAlign: 'center'}}
+          contentStyle={{width: "100%", textAlign: 'center'}}
+          bodyStyle={{padding: '0px'}}
           onRequestClose={this.onImageCanel}>
           <FloatingActionButton secondary={true} mini={true} linkButton={true}
             style={this.mergeAndPrefix(styles.navButton, {left: 0})}
-            disabled={!this.state.leftNav}
+            disabled={this.state.leftNav}
             onTouchTap={this.getPreImg} >
-            <AppLeftNav />
+            <LeftArrow />
           </FloatingActionButton>
           <img style={this.mergeAndPrefix(
             styles.image,
-            this.props.imgStyle)} src={this.state.currentImage} />
+            {maxHeight: window.innerHeight - 200})} src={this.state.currentImage} />
           <FloatingActionButton secondary={false} mini={true} linkButton={true}
             style={this.mergeAndPrefix(styles.navButton, {right: 0})}
-            disabled={!this.state.rightNav}
+            disabled={this.state.rightNav}
             onTouchTap={this.getNextImg} >
-            <AppRightNav />
+            <RightArrow />
           </FloatingActionButton>
         </Dialog>
         <Paper
@@ -166,7 +168,7 @@ let HomeFeature = React.createClass({
           <img style={this.mergeAndPrefix(
             styles.image,
             this.props.imgStyle)} src={this.props.img} />
-          <h3 style={styles.heading}>{this.props.heading}</h3>
+            {this.props.heading && <h3 style={styles.heading} dangerouslySetInnerHTML={{__html: this.props.heading}}></h3>}
         </Paper>
       </div>
     );
@@ -179,25 +181,19 @@ let HomeFeature = React.createClass({
     let styles = {
       root: {
         transition: Transitions.easeOut(),
-        maxWidth: '300px',
-        float: 'none',
         margin: '0 auto ' + desktopGutter + 'px auto',
-        marginRight: 'auto',
       },
       rootWhenMedium: {
-        width: '33%',
-        // maxWidth: maxWidth,
       },
       image: {
         verticalAlign: "middle",
         maxWidth: "100%",
         //Not sure why this is needed but it fixes a display
         //issue in chrome
-        marginBottom: -6,
+        // marginBottom: -6,
       },
       heading: {
         fontSize: '20px',
-        paddingTop: 19,
         marginBottom: '13',
         letterSpacing: 0,
         fontWeight: Typography.fontWeightMedium,
@@ -205,8 +201,9 @@ let HomeFeature = React.createClass({
         backgroundColor: Colors.grey50,
         textAlign: 'center',
         margin: '0px',
-        padding: '0px',
-        lineHeight: desktopKeylineIncrement + 'px',
+        padding: '0px 10px 10px 10px',
+        paddingTop: 19,
+        lineHeight: desktopKeylineIncrement - 15 + 'px',
       },
       rootWhenLastChild: {
         marginBottom: '0px',
@@ -225,16 +222,8 @@ let HomeFeature = React.createClass({
       },
     };
 
-    if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
-        this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-      styles.root = this.mergeAndPrefix(
-        styles.root,
-        styles.rootWhenMedium,
-        this.props.style,
-        this.props.firstChild && styles.rootWhenMediumAndFirstChild,
-        this.props.lastChild && styles.rootWhenMediumAndLastChild
-      );
-    }
+    styles.root = this.mergeAndPrefix(styles.root, this.props.style);
+
 
     return styles;
   },

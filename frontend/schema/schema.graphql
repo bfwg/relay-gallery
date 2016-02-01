@@ -1,6 +1,7 @@
 type Image implements Node {
   id: ID!
   url: String
+  createTime: String
 }
 
 type ImageConnection {

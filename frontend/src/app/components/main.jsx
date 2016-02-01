@@ -8,10 +8,11 @@ const Dropzone = require('react-dropzone');
 const request = require('superagent');
 const AddImageMutation  = require('../mutation/AddImageMutation');
 const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
-const {RaisedButton, Mixins} = require('material-ui');
+const {FontIcon, IconButton, FloatingActionButton, Mixins, Styles} = require('material-ui');
+const {Spacing, Typography} = Styles;
 const {StylePropable, StyleResizable} = Mixins;
-const {FullWidthSection, MyCard} = require('../helper');
-const MyRawTheme = require('../helper/myRawTheme');
+const {FullWidthSection, MyCard, MyRawTheme} = require('../helper');
+const {GitHubIcon, FaceBook, Linkedin} = require('../svgIcons');
 const Login = require('./Login');
 const {SERVER_HOST} = require('../config');
 
@@ -104,9 +105,54 @@ const Main = React.createClass({
     }
   },
 
+  _getLinkIconButtonGroup: function() {
+    let iconSize = 48;
+    let iconStyle = {
+      width: iconSize + 'px',
+      height: iconSize + 'px',
+    };
+    let style = {
+      width: iconSize * 2 + 'px',
+      height: iconSize * 2 + 'px',
+      padding: iconSize / 2 + 'px',
+    };
+    return (
+      <div>
+        <IconButton
+          iconStyle={iconStyle}
+          href="https://github.com/bfwg"
+          linkButton={true}
+          style={style}
+          touch={true} >
+          <GitHubIcon/>
+        </IconButton>
+        <IconButton
+          iconStyle={iconStyle}
+          style={style}
+          href="https://www.facebook.com/people/Fan-Jin/100008957509461"
+          linkButton={true}
+          touch={true} >
+          <FaceBook/>
+        </IconButton>
+        <IconButton
+          iconStyle={iconStyle}
+          style={style}
+          href="https://ca.linkedin.com/in/fan-jin-a65b03a0"
+          linkButton={true}
+          touch={true} >
+          <Linkedin/>
+        </IconButton>
+      </div>
+    );
+
+  },
+
   render() {
 
     let styles = this.getStyles();
+    let myAvatar = "images/me.jpg";
+    let myTitle = "Hi, My name is <span style='color: purple;'>Fan Jin</span> I make things for the web and designs awesome user experiences that enrich people's lives";
+    let desktopKeylineIncrement = Spacing.desktopKeylineIncrement;
 
     return (
       <div style={styles.containerStyle}>
@@ -117,32 +163,46 @@ const Main = React.createClass({
           <Login
             submit={this.onSubmitLogin}
             onCancel={this.onLoginCanel} />
-
         </Dialog>
 
-        <FullWidthSection useContent={true} style={{textAlign: 'center'}}>
+        <FullWidthSection style={styles.avatarContainer} useContent={false}>
           <MyCard
             style={styles.bigPic}
-            heading="I'm Fan, I make things for the web."
-            img="images/me.jpg"/>
+            imgStyle={{width: '100%', maxWidth: '420px'}}
+            heading={myTitle}
+            img={myAvatar} />
+            {this._getLinkIconButtonGroup()}
         </FullWidthSection>
 
-        <FullWidthSection useContent={true} contentStyle={{textAlign: 'center'}} >
-          {this.props.User.images.edges.map((ele, idx) => (
+        <FullWidthSection useContent={false} style={this.mergeAndPrefix(
+                    styles.imgContainer, {
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                  })}>
+          <hr/>
+        </FullWidthSection>
+
+        <FullWidthSection style={styles.imgContainer}>
+          <h1>Memory Archive</h1>
+          {this.props.User.images.edges.map((ele, idx) => {
+            return (
             <MyCard
               key={idx}
               style={styles.smallPic}
-              imgStyle={{height: 'inherit', maxHeight: 500}}
+              imgStyle={{maxHeight: '100%'}}
+              lineHeight={styles.imageWH}
               imgIdx={idx}
               imgList={this.props.User.images.edges}
               img={`${SERVER_HOST}/images/` + ele.node.url} />
-          ))}
+            );
+          })}
 
           <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
             <MyCard
               onClick={this.onUpload}
               style={styles.smallPic}
-              imgStyle={{height: '180px'}}
+              imgStyle={{maxHeight: '100%'}}
+              lineHeight={styles.imageWH}
               img="images/upload.png"/>
           </Dropzone>
         </FullWidthSection>
@@ -151,20 +211,53 @@ const Main = React.createClass({
   },
 
   getStyles() {
+    let windowWidth = window.innerWidth - 16;
+    let imageMargin = 2;
+    let imageWH;
+    let imageContainerPadding = Spacing.desktopGutter * 3;
+    if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
+        this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
+        imageWH = 180;
+    } else {
+        imageContainerPadding = 0;
+        imageWH = windowWidth / 2 - imageMargin * 2;
+    }
+    let imgContainerWidth = windowWidth - ((windowWidth - imageContainerPadding * 2) % (imageWH + imageMargin * 2));
     let styles = {
       containerStyle: {
         textAlign: 'center',
         // paddingTop: '50px',
       },
+      avatarContainer: {
+        padding: '0px 0px 48px 0px !important',
+      },
+      avatarContainerWhenMedium: {
+        padding: '24px',
+        paddingTop: '48px',
+      },
+      imgContainer: {
+        paddingRight: imageContainerPadding,
+        paddingLeft: imageContainerPadding,
+        width: imgContainerWidth,
+        marginLeft: (windowWidth - imgContainerWidth) / 2,
+      },
       smallPic: {
-        width: '180px',
-        height: '180px',
         float: 'left',
-        marginRight: '5px',
+        width: imageWH + 'px',
+        height: imageWH + 'px',
+        lineHeight: imageWH + 'px',
+        marginLeft: imageMargin + 'px',
+        marginRight: imageMargin + 'px',
       },
       bigPic: {
-        maxWidth: '400px',
+        width: '100%',
+        maxWidth: '600px',
         marginRight: 'auto',
+        padding: '0px',
+      },
+      bigPicWhenMedium: {
+        width: '33%',
+        maxWidth: '420px',
       },
       addImage: {
         float: 'none',
@@ -178,8 +271,17 @@ const Main = React.createClass({
         this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
       styles.addImage = this.mergeAndPrefix(
         styles.addImage,
-        styles.addImageWhenMediu
+        styles.addImageWhenMedium
       );
+      styles.bigPic = this.mergeAndPrefix(
+        styles.bigPic,
+        styles.bigPicWhenMedium
+      );
+      styles.avatarContainer = this.mergeAndPrefix(
+        styles.avatarContainer,
+        styles.avatarContainerWhenMedium
+      );
+
     }
     return styles;
   },
@@ -200,6 +302,7 @@ module.exports = Relay.createContainer(Main, {
           edges {
             node {
               url,
+              createTime,
             }
           }
         }

@@ -1,0 +1,241 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/fanjin/.nvm/versions/node/v4.2.1/bin/node',
+1 verbose cli   '/Users/fanjin/.nvm/versions/node/v4.2.1/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'react-dom' ]
+2 info using npm@2.14.7
+3 info using node@v4.2.1
+4 verbose install initial load of /Users/fanjin/Projects/gitmepage/frontend/package.json
+5 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/axios/package.json
+6 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-core/package.json
+7 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-eslint/package.json
+8 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-loader/package.json
+9 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-relay-plugin/package.json
+10 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-runtime/package.json
+11 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/classnames/package.json
+12 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/eslint/package.json
+13 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/eslint-loader/package.json
+14 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/eslint-plugin-react/package.json
+15 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/html-webpack-plugin/package.json
+16 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/material-ui/package.json
+17 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react/package.json
+18 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-addons-linked-state-mixin/package.json
+19 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-addons-pure-render-mixin/package.json
+20 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom/package.json
+21 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dropzone/package.json
+22 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-hot-loader/package.json
+23 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-relay/package.json
+24 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-slick/package.json
+25 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-tap-event-plugin/package.json
+26 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/superagent/package.json
+27 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/transfer-webpack-plugin/package.json
+28 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/webpack/package.json
+29 verbose installManyTop reading scoped package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/webpack-dev-server/package.json
+30 info package.json babel-core@5.8.35 No README data
+31 info package.json react-tap-event-plugin@0.2.1 No license field.
+32 verbose readDependencies loading dependencies from /Users/fanjin/Projects/gitmepage/frontend/package.json
+33 verbose install react-dom is installed as 0.14.7
+34 silly cache add args [ 'react-dom@^0.14.0', null ]
+35 verbose cache add spec react-dom@^0.14.0
+36 silly cache add parsed spec Result {
+36 silly cache add   raw: 'react-dom@^0.14.0',
+36 silly cache add   scope: null,
+36 silly cache add   name: 'react-dom',
+36 silly cache add   rawSpec: '^0.14.0',
+36 silly cache add   spec: '>=0.14.0 <0.15.0',
+36 silly cache add   type: 'range' }
+37 silly addNamed react-dom@>=0.14.0 <0.15.0
+38 verbose addNamed ">=0.14.0 <0.15.0" is a valid semver range for react-dom
+39 silly addNameRange { name: 'react-dom', range: '>=0.14.0 <0.15.0', hasData: false }
+40 silly mapToRegistry name react-dom
+41 silly mapToRegistry using default registry
+42 silly mapToRegistry registry https://registry.npmjs.org/
+43 silly mapToRegistry uri https://registry.npmjs.org/react-dom
+44 verbose addNameRange registry:https://registry.npmjs.org/react-dom not in flight; fetching
+45 verbose request uri https://registry.npmjs.org/react-dom
+46 verbose request no auth needed
+47 info attempt registry request try #1 at 8:23:15 PM
+48 verbose request id e3f3460fc5b9930b
+49 verbose etag "4OY1O5J8B8MTN98KPZ9MQVADE"
+50 http request GET https://registry.npmjs.org/react-dom
+51 http 304 https://registry.npmjs.org/react-dom
+52 verbose headers { date: 'Sun, 31 Jan 2016 04:23:16 GMT',
+52 verbose headers   via: '1.1 varnish',
+52 verbose headers   'cache-control': 'max-age=300',
+52 verbose headers   etag: '"4OY1O5J8B8MTN98KPZ9MQVADE"',
+52 verbose headers   age: '52',
+52 verbose headers   connection: 'keep-alive',
+52 verbose headers   'x-served-by': 'cache-sjc3127-SJC',
+52 verbose headers   'x-cache': 'HIT',
+52 verbose headers   'x-cache-hits': '1',
+52 verbose headers   'x-timer': 'S1454214196.006483,VS0,VE0',
+52 verbose headers   vary: 'Accept' }
+53 silly get cb [ 304,
+53 silly get   { date: 'Sun, 31 Jan 2016 04:23:16 GMT',
+53 silly get     via: '1.1 varnish',
+53 silly get     'cache-control': 'max-age=300',
+53 silly get     etag: '"4OY1O5J8B8MTN98KPZ9MQVADE"',
+53 silly get     age: '52',
+53 silly get     connection: 'keep-alive',
+53 silly get     'x-served-by': 'cache-sjc3127-SJC',
+53 silly get     'x-cache': 'HIT',
+53 silly get     'x-cache-hits': '1',
+53 silly get     'x-timer': 'S1454214196.006483,VS0,VE0',
+53 silly get     vary: 'Accept' } ]
+54 verbose etag https://registry.npmjs.org/react-dom from cache
+55 verbose get saving react-dom to /Users/fanjin/.npm/registry.npmjs.org/react-dom/.cache.json
+56 silly addNameRange number 2 { name: 'react-dom', range: '>=0.14.0 <0.15.0', hasData: true }
+57 silly addNameRange versions [ 'react-dom',
+57 silly addNameRange   [ '0.1.0',
+57 silly addNameRange     '0.14.0-beta1',
+57 silly addNameRange     '0.14.0-beta2',
+57 silly addNameRange     '0.14.0-beta3',
+57 silly addNameRange     '0.14.0-rc1',
+57 silly addNameRange     '0.14.0',
+57 silly addNameRange     '0.14.1',
+57 silly addNameRange     '0.14.2',
+57 silly addNameRange     '0.14.3',
+57 silly addNameRange     '0.14.4',
+57 silly addNameRange     '0.14.5',
+57 silly addNameRange     '0.14.6',
+57 silly addNameRange     '0.15.0-alpha.1',
+57 silly addNameRange     '0.14.7' ] ]
+58 silly addNamed react-dom@0.14.7
+59 verbose addNamed "0.14.7" is a plain semver version for react-dom
+60 silly cache afterAdd react-dom@0.14.7
+61 verbose afterAdd /Users/fanjin/.npm/react-dom/0.14.7/package/package.json not in flight; writing
+62 verbose afterAdd /Users/fanjin/.npm/react-dom/0.14.7/package/package.json written
+63 silly install resolved [ { name: 'react-dom',
+63 silly install resolved     version: '0.14.7',
+63 silly install resolved     description: 'React package for working with the DOM.',
+63 silly install resolved     main: 'index.js',
+63 silly install resolved     repository:
+63 silly install resolved      { type: 'git',
+63 silly install resolved        url: 'git+https://github.com/facebook/react.git' },
+63 silly install resolved     keywords: [ 'react' ],
+63 silly install resolved     license: 'BSD-3-Clause',
+63 silly install resolved     bugs: { url: 'https://github.com/facebook/react/issues' },
+63 silly install resolved     homepage: 'https://facebook.github.io/react/',
+63 silly install resolved     dependencies: {},
+63 silly install resolved     peerDependencies: { react: '^0.14.7' },
+63 silly install resolved     scripts: { start: 'node server.js' },
+63 silly install resolved     _id: 'react-dom@0.14.7',
+63 silly install resolved     _shasum: '973c302110b3a680c9afe69d07c623b9c0952d82',
+63 silly install resolved     _resolved: 'https://registry.npmjs.org/react-dom/-/react-dom-0.14.7.tgz',
+63 silly install resolved     _from: 'react-dom@>=0.14.0 <0.15.0',
+63 silly install resolved     _npmVersion: '2.14.12',
+63 silly install resolved     _nodeVersion: '4.2.6',
+63 silly install resolved     _npmUser: { name: 'graue', email: 'scott@oceanbase.org' },
+63 silly install resolved     dist:
+63 silly install resolved      { shasum: '973c302110b3a680c9afe69d07c623b9c0952d82',
+63 silly install resolved        tarball: 'http://registry.npmjs.org/react-dom/-/react-dom-0.14.7.tgz' },
+63 silly install resolved     maintainers: [ [Object], [Object], [Object] ],
+63 silly install resolved     directories: {},
+63 silly install resolved     readme: 'ERROR: No README data found!' } ]
+64 info install react-dom@0.14.7 into /Users/fanjin/Projects/gitmepage/frontend
+65 info installOne react-dom@0.14.7
+66 verbose installOne of react-dom to /Users/fanjin/Projects/gitmepage/frontend not in flight; installing
+67 verbose lock using /Users/fanjin/.npm/_locks/react-dom-0f13b90e632851f0.lock for /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+68 silly install write writing react-dom 0.14.7 to /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+69 verbose unbuild node_modules/react-dom
+70 info preuninstall react-dom@0.14.7
+71 info uninstall react-dom@0.14.7
+72 verbose unbuild rmStuff react-dom@0.14.7 from /Users/fanjin/Projects/gitmepage/frontend/node_modules
+73 info postuninstall react-dom@0.14.7
+74 silly gentlyRm /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom is being purged from base /Users/fanjin/Projects/gitmepage/frontend
+75 verbose gentlyRm don't care about contents; nuking /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+76 silly vacuum-fs purging /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+77 silly vacuum-fs quitting because other entries in /Users/fanjin/Projects/gitmepage/frontend/node_modules
+78 verbose tar unpack /Users/fanjin/.npm/react-dom/0.14.7/package.tgz
+79 verbose tar unpacking to /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+80 silly gentlyRm /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom is being purged
+81 verbose gentlyRm don't care about contents; nuking /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+82 silly gunzTarPerm modes [ '755', '644' ]
+83 silly gunzTarPerm extractEntry package.json
+84 silly gunzTarPerm extractEntry README.md
+85 silly gunzTarPerm extractEntry LICENSE
+86 silly gunzTarPerm extractEntry index.js
+87 silly gunzTarPerm extractEntry server.js
+88 silly gunzTarPerm extractEntry PATENTS
+89 silly gunzTarPerm extractEntry dist/react-dom-server.js
+90 silly gunzTarPerm extractEntry dist/react-dom-server.min.js
+91 silly gunzTarPerm extractEntry dist/react-dom.js
+92 silly gunzTarPerm extractEntry dist/react-dom.min.js
+93 verbose write writing to /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom/package.json
+94 info preinstall react-dom@0.14.7
+95 verbose readDependencies loading dependencies from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom/package.json
+96 silly prepareForInstallMany adding react@^0.14.7 from react-dom peerDependencies
+97 warn peerDependencies The peer dependency react@^0.14.7 included from react-dom will no
+98 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+99 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+100 verbose readDependencies loading dependencies from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom/package.json
+101 silly install resolved []
+102 verbose about to build /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+103 info build /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+104 info linkStuff react-dom@0.14.7
+105 silly linkStuff react-dom@0.14.7 has /Users/fanjin/Projects/gitmepage/frontend/node_modules as its parent node_modules
+106 verbose linkBins react-dom@0.14.7
+107 verbose linkMans react-dom@0.14.7
+108 verbose rebuildBundles react-dom@0.14.7
+109 info install react-dom@0.14.7
+110 info postinstall react-dom@0.14.7
+111 verbose readDependencies loading dependencies from /Users/fanjin/Projects/gitmepage/frontend/package.json
+112 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/axios/package.json
+113 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-core/package.json
+114 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-eslint/package.json
+115 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-loader/package.json
+116 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-relay-plugin/package.json
+117 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/babel-runtime/package.json
+118 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/classnames/package.json
+119 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/eslint/package.json
+120 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/eslint-loader/package.json
+121 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/eslint-plugin-react/package.json
+122 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/html-webpack-plugin/package.json
+123 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/material-ui/package.json
+124 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react/package.json
+125 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-addons-linked-state-mixin/package.json
+126 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-addons-pure-render-mixin/package.json
+127 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom/package.json
+128 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dropzone/package.json
+129 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-hot-loader/package.json
+130 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-relay/package.json
+131 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-slick/package.json
+132 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-tap-event-plugin/package.json
+133 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/superagent/package.json
+134 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/transfer-webpack-plugin/package.json
+135 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/webpack/package.json
+136 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/webpack-dev-server/package.json
+137 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/.bin/eslint/package.json
+138 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/.bin/webpack/package.json
+139 verbose targetResolver reading package data from /Users/fanjin/Projects/gitmepage/frontend/node_modules/.bin/webpack-dev-server/package.json
+140 verbose already installed skipping react@^0.14.7 /Users/fanjin/Projects/gitmepage/frontend
+141 silly install resolved []
+142 verbose unlock done using /Users/fanjin/.npm/_locks/react-dom-0f13b90e632851f0.lock for /Users/fanjin/Projects/gitmepage/frontend/node_modules/react-dom
+143 verbose validateInstall loading /Users/fanjin/Projects/gitmepage/frontend/package.json for validation
+144 verbose stack Error: The package react@0.14.6 does not satisfy its siblings' peerDependencies requirements!
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/lib/install.js:125:32
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/lib/install.js:268:7
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+144 verbose stack     at cb (/Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+144 verbose stack     at cb (/Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+144 verbose stack     at cb (/Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+144 verbose stack     at /Users/fanjin/.nvm/versions/node/v4.2.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+145 verbose cwd /Users/fanjin/Projects/gitmepage/frontend
+146 error Darwin 14.5.0
+147 error argv "/Users/fanjin/.nvm/versions/node/v4.2.1/bin/node" "/Users/fanjin/.nvm/versions/node/v4.2.1/bin/npm" "install" "react-dom"
+148 error node v4.2.1
+149 error npm  v2.14.7
+150 error code EPEERINVALID
+151 error peerinvalid The package react@0.14.6 does not satisfy its siblings' peerDependencies requirements!
+151 error peerinvalid Peer material-ui@0.14.2 wants react@^0.14.0
+151 error peerinvalid Peer react-addons-linked-state-mixin@0.14.6 wants react@^0.14.6
+151 error peerinvalid Peer react-addons-pure-render-mixin@0.14.6 wants react@^0.14.6
+151 error peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+151 error peerinvalid Peer react-dropzone@3.3.2 wants react@^0.14.0
+151 error peerinvalid Peer react-relay@0.4.0 wants react@^0.14.0
+151 error peerinvalid Peer react-slick@0.9.3 wants react@^0.13.0 || ^0.14.0
+151 error peerinvalid Peer react-tap-event-plugin@0.2.1 wants react@^0.14.0
+152 verbose exit [ 1, true ]

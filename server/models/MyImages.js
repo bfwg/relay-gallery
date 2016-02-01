@@ -30,6 +30,7 @@ MyImages.prototype.add = function(imageName) {
       var obj = {};
       obj.id = id;
       obj.url = imageName;
+      obj.createTime = Date.now();
       this.rpush(this.namespace, JSON.stringify(obj));
       return id;
     }));

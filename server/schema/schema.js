@@ -28,6 +28,10 @@ var ImageType = new GraphQL.GraphQLObjectType({
     url: {
       type: GraphQL.GraphQLString,
       description: 'Image url',
+    },
+    createTime: {
+      type: GraphQL.GraphQLString,
+      description: 'The date image is created',
     }
   }),
   interfaces: [nodeDefinition.nodeInterface],
@@ -94,11 +98,13 @@ var imageMutation = Relay.mutationWithClientMutationId({
       resolve: (payload) => {
         return Promise.all([(new MyImages()).getAll(), (new MyImages()).getById(payload.insertId)])
         .spread((allImages, newImage) => {
+
           var newImageStr = JSON.stringify(newImage);
           var offset = allImages.reduce((pre, ele, idx) => {
             if (JSON.stringify(ele) === newImageStr)
               return idx;
           }, -1);
+
           return {
             cursor: offset !== -1 ? Relay.offsetToCursor(offset) : null,
             node: newImage,

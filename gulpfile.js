@@ -7,12 +7,6 @@ var gulp = require('gulp'),
 var FRONTEND_ROOT = 'frontend';
 
 
-//rebuild
-// gulp.task('rebuild', shell.task([
-  // 'echo hello',
-  // 'echo world'
-// ]));
-
 gulp.task('rebuild', shell.task([
   "cd frontend/ && npm run build"
 ]));
@@ -31,4 +25,4 @@ gulp.task('nodemon', function() {
 });
 
 
-gulp.task('default', ['watch', 'nodemon']);
+gulp.task('default', ['rebuild', 'watch', 'nodemon']);

@@ -1,0 +1,17 @@
+/* custom font icons */
+@import "font.css";
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+
+.slick-prev:before, .slick-next:before {
+  color: #2196F3 !important;
+}
+
