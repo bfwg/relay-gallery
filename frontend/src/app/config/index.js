@@ -4,8 +4,10 @@ function getHost() {
   console.log('1234');
   switch(process.env.NODE_ENV) {
     case 'production':
-      return 'http://159.203.31.187';
+      console.log('production');
+      return "http://159.203.31.187";
     default:
+      console.log('div');
       return 'http://localhost:3000';
   }
 }
