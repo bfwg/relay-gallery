@@ -3,9 +3,9 @@
 function getHost() {
   switch(process.env.NODE_ENV) {
     case 'production':
-      return 'http://localhost:3000';
+      return 'http://159.203.31.187';
     default:
-      return 'http://localhost';
+      return 'http://localhost:3000';
   }
 }
 
