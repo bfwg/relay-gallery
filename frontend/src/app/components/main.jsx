@@ -55,7 +55,7 @@ const Main = React.createClass({
       });
     } else {
       console.log(files);
-      let req = request.post('http://localhost:3000/upload');
+      let req = request.post(`${SERVER_HOST}/upload`);
       files.forEach((file)=> {
         req.attach(file.type, file, file.name);
       });
