@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = {
-  SERVER_HOST: 'http://localhost:3000',
+  SERVER_HOST: window.location.origin,
 };
 
 
