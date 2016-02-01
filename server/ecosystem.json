@@ -21,7 +21,6 @@
       ref  : "origin/master",
       repo : "git@github.com:bfwg/mypage.git",
       path : "/var/www/production",
-      "post-deploy" : "npm install ; pm2 startOrRestart ecosystem.json --env production"
     },
   }
 }
