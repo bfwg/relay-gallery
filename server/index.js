@@ -37,9 +37,10 @@ app.use(API);
 
 app.use((req, res, next) => {
   USERNAME = req.session.username || USERNAME;
-  if (USERNAME)
+  if (USERNAME) {
     req.username = USERNAME;
-  USERNAME = null;
+    USERNAME = null;
+  }
   next();
 });
 
