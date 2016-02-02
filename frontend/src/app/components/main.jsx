@@ -184,8 +184,10 @@ const Main = React.createClass({
         {this._getSeparator()}
 
         <FullWidthSection style={styles.imgContainer}>
-          <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
-          <img src="images/gallery.png" />
+          <div>
+            <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
+            <img src="images/gallery.png" />
+          </div>
           {this.props.User.images.edges.map((ele, idx) => {
             return (
             <MyCard

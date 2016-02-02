@@ -1,7 +1,7 @@
 {
-  "name": "gitmepage",
+  "name": "mypage",
   "version": "1.0.0",
-  "description": "About me page",
+  "description": "Simple my protfolio page",
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp",
