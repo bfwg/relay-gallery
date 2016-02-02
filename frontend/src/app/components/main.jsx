@@ -105,38 +105,42 @@ const Main = React.createClass({
     }
   },
 
+  _getSeparator: function() {
+    let styles = this.getStyles();
+    return (
+      <FullWidthSection useContent={false} style={this.mergeAndPrefix(
+                  styles.imgContainer, {
+                    paddingTop: '0px',
+                    paddingBottom: '0px',
+                })}>
+        <hr/>
+      </FullWidthSection>
+    );
+  },
+
   _getLinkIconButtonGroup: function() {
-    let iconSize = 48;
-    let iconStyle = {
-      width: iconSize + 'px',
-      height: iconSize + 'px',
-    };
-    let style = {
-      width: iconSize * 2 + 'px',
-      height: iconSize * 2 + 'px',
-      padding: iconSize / 2 + 'px',
-    };
+    let styles = this.getStyles();
     return (
       <div>
         <IconButton
-          iconStyle={iconStyle}
+          iconStyle={styles.icon}
           href="https://github.com/bfwg"
           linkButton={true}
-          style={style}
+          style={styles.iconStyle}
           touch={true} >
           <GitHubIcon/>
         </IconButton>
         <IconButton
-          iconStyle={iconStyle}
-          style={style}
+          iconStyle={styles.icon}
+          style={styles.iconStyle}
           href="https://www.facebook.com/people/Fan-Jin/100008957509461"
           linkButton={true}
           touch={true} >
           <FaceBook/>
         </IconButton>
         <IconButton
-          iconStyle={iconStyle}
-          style={style}
+          iconStyle={styles.icon}
+          style={styles.iconStyle}
           href="https://ca.linkedin.com/in/fan-jin-a65b03a0"
           linkButton={true}
           touch={true} >
@@ -152,7 +156,7 @@ const Main = React.createClass({
     let styles = this.getStyles();
     let myAvatar = "images/me.jpg";
     let myTitle = "Hi, My name is <span style='color: purple;'>Fan Jin</span> I make things for the web and designs awesome user experiences that enrich people's lives";
-    let desktopKeylineIncrement = Spacing.desktopKeylineIncrement;
+    let footerIconSize = 38;
 
     return (
       <div style={styles.containerStyle}>
@@ -169,21 +173,19 @@ const Main = React.createClass({
           <MyCard
             style={styles.bigPic}
             imgStyle={{width: '100%', maxWidth: '420px'}}
+            onClick={() => {
+              window.location.replace('https://github.com/bfwg/mypage');
+            }}
             heading={myTitle}
             img={myAvatar} />
             {this._getLinkIconButtonGroup()}
         </FullWidthSection>
 
-        <FullWidthSection useContent={false} style={this.mergeAndPrefix(
-                    styles.imgContainer, {
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                  })}>
-          <hr/>
-        </FullWidthSection>
+        {this._getSeparator()}
 
         <FullWidthSection style={styles.imgContainer}>
-          <h1>Memory Archive</h1>
+          <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
+          <img src="images/gallery.png" />
           {this.props.User.images.edges.map((ele, idx) => {
             return (
             <MyCard
@@ -206,24 +208,49 @@ const Main = React.createClass({
               img="images/upload.png"/>
           </Dropzone>
         </FullWidthSection>
+
+        {this._getSeparator()}
+
+        <div style={styles.footer}>
+          <p style={this.prepareStyles(styles.p)}>
+            {'Hand crafted with love by Fan Jin'}
+          </p>
+          <a href="https://github.com/bfwg">
+            <GitHubIcon style={{
+              color: Colors.grey400,
+              width: footerIconSize,
+              height: footerIconSize,
+            }}/>
+          </a>
+        </div>
       </div>
     );
   },
 
   getStyles() {
+    let iconSize = 48;
     let windowWidth = window.innerWidth - 16;
-    let imageMargin = 2;
+    let imageMargin = 6;
     let imageWH;
-    let imageContainerPadding = Spacing.desktopGutter * 3;
+    let imageContainerPadding = Spacing.desktopGutter * 4;
     if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
         this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-        imageWH = 180;
+        imageWH = 200;
     } else {
         imageContainerPadding = 0;
         imageWH = windowWidth / 2 - imageMargin * 2;
     }
     let imgContainerWidth = windowWidth - ((windowWidth - imageContainerPadding * 2) % (imageWH + imageMargin * 2));
     let styles = {
+      icon: {
+        width: iconSize + 'px',
+        height: iconSize + 'px',
+      },
+      iconStyle : {
+        width: iconSize * 2 + 'px',
+        height: iconSize * 2 + 'px',
+        padding: iconSize / 2 + 'px',
+      },
       containerStyle: {
         textAlign: 'center',
         // paddingTop: '50px',
@@ -265,7 +292,20 @@ const Main = React.createClass({
       addImageWhenMedium: {
         float: 'left',
       },
+      footer: {
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        textAlign: 'center',
+      },
+      p: {
+        padding: 0,
+        color: Colors.grey600,
+      },
+      a: {
+        color: Colors.darkWhite,
+      },
     };
+
 
     if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
         this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
