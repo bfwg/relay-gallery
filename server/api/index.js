@@ -39,7 +39,7 @@ app.post('/login', (req, res) => {
       req.session.username = email;
       res.send(email);
     } else {
-      res.status(503).end();
+      res.status(503).send('Incorrect Username or Password').end();
     }
   });
 });

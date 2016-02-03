@@ -86,7 +86,6 @@ const Main = React.createClass({
     this.setState({
       loginDialogOpenFlag: false,
     });
-    console.log('submit', username);
     Relay.Store.update(
       new ChangeUserStatusMutation({
         username,

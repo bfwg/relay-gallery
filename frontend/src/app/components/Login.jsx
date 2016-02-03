@@ -60,18 +60,14 @@ const Login = React.createClass({
       withCredentials: true,
     })
     .then(response => {
-      if (response.status !== 200)
-        throw new Error('用户名或密码错误');
-      else {
         resEmail = response.data;
         this.props.submit(resEmail);
         // loginFlag = true;//mercy
-      }
     })
     .catch(error => {
       console.log(error);
       this.setState({
-        error: error.statusText,
+        error: error.data,
         pending: false,
       });
     });
