@@ -21,7 +21,7 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:bfwg/mypage.git",
       "path" : "/var/www/production",
-      "post-deploy" : "pm2 restart 0"
+      "post-deploy" : "echo deploy success!"
     },
   }
 }
