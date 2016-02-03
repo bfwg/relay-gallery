@@ -5,7 +5,6 @@
     {
       "name"      : "fanjin-web",
       "script"    : "index.js",
-      "watch"     : true,
       "env": {
         "COMMON_VARIABLE": "true"
       },
