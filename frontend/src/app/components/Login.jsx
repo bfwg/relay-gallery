@@ -52,6 +52,7 @@ const Login = React.createClass({
       pending: true,
     });
 
+
     axios({
       method: 'post',
       data: {email: email, password: password},
@@ -65,14 +66,14 @@ const Login = React.createClass({
         resEmail = response.data;
         this.props.submit(resEmail);
         // loginFlag = true;//mercy
-        // this.setState({
-          // pending: false,
-        // });
       }
     })
     .catch(error => {
-      this.setState({error: error});
-      this.focusInvalidField(error);
+      console.log(error);
+      this.setState({
+        error: error.statusText,
+        pending: false,
+      });
     });
 
     //will change this in the future
@@ -84,17 +85,6 @@ const Login = React.createClass({
     // }, 750);
   },
 
-  focusInvalidField(error) {
-    if (error instanceof Error) {
-      if (!error.prop) return;
-      const node = React.findDOMNode(this);
-      if (!node) return;
-      const el = node.querySelector(`[name=${error.prop}]`);
-      if (!el) return;
-      el.focus();
-      return;
-    }
-  },
 
   redirectAfterLogin() {
     //TODO
@@ -146,7 +136,7 @@ const Login = React.createClass({
             <fieldset disabled={this.state.pending} style={styles.fieldset}>
               <CardTitle title="Login to Upload" />
               {this.state.error &&
-                <div style={styles.error}>{this.state.error.message}</div>
+                <div style={styles.error}>{this.state.error}</div>
               }
               <TextField
                 floatingLabelText="Username"

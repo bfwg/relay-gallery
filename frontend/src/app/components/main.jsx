@@ -8,13 +8,20 @@ const Dropzone = require('react-dropzone');
 const request = require('superagent');
 const AddImageMutation  = require('../mutation/AddImageMutation');
 const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
-const {FontIcon, IconButton, FloatingActionButton, Mixins, Styles} = require('material-ui');
-const {Spacing, Typography} = Styles;
+const {IconButton, Mixins, Styles} = require('material-ui');
+const {Spacing} = Styles;
 const {StylePropable, StyleResizable} = Mixins;
 const {FullWidthSection, MyCard, MyRawTheme} = require('../helper');
 const {GitHubIcon, FaceBook, Linkedin} = require('../svgIcons');
 const Login = require('./Login');
 const {SERVER_HOST} = require('../config');
+
+
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer(`${SERVER_HOST}/graphql`, {
+    credentials: 'same-origin',
+  })
+);
 
 const Main = React.createClass({
 

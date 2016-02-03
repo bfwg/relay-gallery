@@ -78,7 +78,7 @@ const queryType = new GraphQL.GraphQLObjectType({
       type: UserType,
       description: 'A User',
       resolve: (_, args, options) => {
-        return {viewer: options.rootValue.session || 'Guest'};
+        return {viewer: options.rootValue || 'Guest'};
       },
     },
     node: nodeDefinition.nodeField,

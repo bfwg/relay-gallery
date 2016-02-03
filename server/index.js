@@ -15,11 +15,11 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 //mercy due to issue https://github.com/graphql/express-graphql/issues/40
-var USERNAME = null;
 
 app.use(cors());
 app.use(cookieParser());
 app.use(session({
+  name: 'c.sid',
   store: new RedisStore(),
   secret: 'keyboard cat',
   cookie: { maxAge: 600000 },
@@ -35,20 +35,11 @@ app.listen(PORT, () => {
 app.use(API);
 
 
-app.use((req, res, next) => {
-  USERNAME = req.session.username || USERNAME;
-  if (USERNAME) {
-    req.username = USERNAME;
-    USERNAME = null;
-  }
-  next();
-});
-
 
 app.use('/graphql', graphQLHTTP(request => {
   return ({
       schema: querySchema,
-      rootValue: { session: request.username },
+      rootValue: request.session.username,
       graphiql: true,
       pretty: true,
   });
