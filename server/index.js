@@ -27,7 +27,6 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-//test
 
 app.listen(PORT, () => {
   console.log('node ' + process.version + ' listen on port ' + PORT + '(' + process.env.NODE_ENV + ')');
