@@ -96,9 +96,10 @@ const Login = React.createClass({
         textAlign: 'center',
       },
       card: {
-        maxWidth: Spacing.desktopKeylineIncrement * 7,
+        maxWidth: "100%",
       },
       cardWhenMedium: {
+        maxWidth: Spacing.desktopKeylineIncrement * 7,
       },
       fieldset: {
         border: 'none',
@@ -119,9 +120,9 @@ const Login = React.createClass({
       },
     };
 
-    // if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
-        // this.isDeviceSize(StyleResizable.statics.Sizes.LARGE))
-      // styles.card = this.mergeStyles(styles.card, styles.cardWhenMedium);
+    if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
+        this.isDeviceSize(StyleResizable.statics.Sizes.LARGE))
+      styles.card = this.mergeStyles(styles.card, styles.cardWhenMedium);
 
     return styles;
   },

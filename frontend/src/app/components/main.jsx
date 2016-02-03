@@ -169,8 +169,13 @@ const Main = React.createClass({
       <div style={styles.containerStyle}>
         <Dialog
           open={this.state.loginDialogOpenFlag}
-          contentStyle={{width: 430, textAlign: 'center'}}
-          onRequestClose={this.onLoginCanel}>
+          contentStyle={{
+            maxWidth: 430,
+            width: '100%',
+            textAlign: 'center',
+          }}
+          onRequestClose={this.onLoginCanel}
+          autoScrollBodyContent={true}>
           <Login
             submit={this.onSubmitLogin}
             onCancel={this.onLoginCanel} />
