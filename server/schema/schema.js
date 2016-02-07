@@ -5,6 +5,7 @@ const Relay = require('graphql-relay');
 const MyImages = require('../models/MyImages');
 const Promise = require("bluebird");
 const fs = require('fs');
+const uploadAuth = require('../middleware/uploadAuth');
 
 
 
@@ -106,12 +107,19 @@ var imageMutation = Relay.mutationWithClientMutationId({
         var filename = file.originalname;
         // var filetype = file.mimetype;
         // console.log("Uploading: " + filename + " type: " + filetype);
+        //check if user has the Authtifcation to upload
+        // if (!uploadAuth(options.rootValue.request)) {
+          // (new MyImages()).pop();
+          // throw Error('Upload Access Denined');
+        // }
         fs.writeFile(__dirname + '/../static/images/' + filename, file.buffer, function (err){
-            if (err) {
-              (new MyImages()).removeById(payload.insertId);
-              throw err;
-            }
-            // console.log('File saved.');
+          //if somehow the file upload files we
+          //remove the img from database
+          if (err) {
+            (new MyImages()).pop();
+            throw err;
+          }
+          // console.log('File saved.');
         });
 
         //prepare for update view

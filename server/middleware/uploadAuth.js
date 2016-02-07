@@ -2,7 +2,8 @@
 /*
  * Make sure user is login to upload
  * */
-module.exports = (req, res, next) => {
+module.exports = (req) => {
   if (req.session.username)
-    next();
+    return true;
+    return false;
 };

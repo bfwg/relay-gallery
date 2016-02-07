@@ -61,7 +61,6 @@ const Main = React.createClass({
         loginDialogOpenFlag: true,
       });
     } else {
-      console.log(files);
       // let req = request.post(`${SERVER_HOST}/upload`);
       // files.forEach((file)=> {
         // req.attach(file.type, file, file.name);
@@ -79,6 +78,13 @@ const Main = React.createClass({
         // );
         // });
       // });
+      // let onSuccess = () => {
+        // console.log('Mutation successful!');
+      // };
+      // let onFailure = (transaction) => {
+        // let error = transaction.getError() || new Error('Mutation failed.');
+        // console.error(error);
+      // };
       files.forEach((file)=> {
         Relay.Store.commitUpdate(
           new AddImageMutation({

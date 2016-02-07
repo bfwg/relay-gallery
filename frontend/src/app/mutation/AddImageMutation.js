@@ -29,7 +29,7 @@ export default class AddImageMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceImagePayload {
         User {
-          images(first: 50) {
+          images(first: 100) {
             edges {
               node {
                 url,
@@ -52,6 +52,8 @@ export default class AddImageMutation extends Relay.Mutation {
       rangeBehaviors: {
         '': 'append',
         'orderby(oldest)': 'prepend',
+        'status(active)': 'append',
+        'status(completed)': null,
       },
     }];
   }

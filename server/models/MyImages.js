@@ -23,8 +23,8 @@ MyImages.prototype.getById = function(index) {
   .then(res => JSON.parse(res));
 };
 
-MyImages.prototype.removeById = function(index) {
-  return this.delAsync(this.namespace, index - 1)
+MyImages.prototype.pop = function() {
+  return this.rpopAsync(this.namespace)
   .then(res => JSON.parse(res));
 };
 
