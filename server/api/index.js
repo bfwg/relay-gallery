@@ -14,20 +14,20 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 
-app.post('/upload', uploadAuth, (req, res) => {
-  var fstream;
-  req.pipe(req.busboy);
-  req.busboy.on('file', function (fieldname, file, filename) {
-    console.log("Uploading: " + filename + " type: " + fieldname);
-    console.log("By", req.session.username);
-    fstream = fs.createWriteStream(__dirname + '/../static/images/' + filename);
-    file.pipe(fstream);
-    fstream.on('close', function () {
-      res.send('Image upload complete');
-      // res.redirect('back');
-    });
-  });
-});
+// app.post('/upload', uploadAuth, (req, res) => {
+  // var fstream;
+  // req.pipe(req.busboy);
+  // req.busboy.on('file', function (fieldname, file, filename) {
+    // console.log("Uploading: " + filename + " type: " + fieldname);
+    // console.log("By", req.session.username);
+    // fstream = fs.createWriteStream(__dirname + '/../static/images/' + filename);
+    // file.pipe(fstream);
+    // fstream.on('close', function () {
+      // res.send('Image upload complete');
+      // // res.redirect('back');
+    // });
+  // });
+// });
 
 app.post('/login', (req, res) => {
   let email = req.body.email;

@@ -4,6 +4,7 @@ const Relay = require('graphql-relay');
 
 const MyImages = require('../models/MyImages');
 const Promise = require("bluebird");
+const fs = require('fs');
 
 
 
@@ -51,9 +52,9 @@ var UserType = new GraphQL.GraphQLObjectType({
     username: {
       type: GraphQL.GraphQLString,
       description: 'the User name',
-      resolve: (_) => {
-        console.log(_.viewer);
-        return _.viewer;
+      resolve: (user) => {
+        console.log(user);
+        return user;
       }
     },
     images: {
@@ -70,15 +71,18 @@ var UserType = new GraphQL.GraphQLObjectType({
 });
 
 
-
 const queryType = new GraphQL.GraphQLObjectType({
   name: 'Query',
   fields: () => ({
     User: {
       type: UserType,
       description: 'A User',
-      resolve: (_, args, options) => {
-        return {viewer: options.rootValue || 'Guest'};
+      resolve: (rootValue) => {
+        if (rootValue.request.session && rootValue.request.session.username) {
+          return rootValue.request.session.username;
+        } else {
+          return 'Guest';
+        }
       },
     },
     node: nodeDefinition.nodeField,
@@ -89,16 +93,32 @@ var imageMutation = Relay.mutationWithClientMutationId({
   name: 'IntroduceImage',
   inputFields: {
     imageName: {
-      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLString)
+      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLString),
     },
   },
   outputFields: {
     newImageEdge: {
       type: ImageEdge,
-      resolve: (payload) => {
-        return Promise.all([(new MyImages()).getAll(), (new MyImages()).getById(payload.insertId)])
-        .spread((allImages, newImage) => {
+      resolve: (payload, args, options) => {
+        //test first file
+        var file = options.rootValue.request.file;
 
+        var filename = file.originalname;
+        // var filetype = file.mimetype;
+        // console.log("Uploading: " + filename + " type: " + filetype);
+        fs.writeFile(__dirname + '/../static/images/' + filename, file.buffer, function (err){
+            if (err) {
+              (new MyImages()).removeById(payload.insertId);
+              throw err;
+            }
+            // console.log('File saved.');
+        });
+
+        //prepare for update view
+        return Promise.all(
+          [(new MyImages()).getAll(),
+            (new MyImages()).getById(payload.insertId)])
+        .spread((allImages, newImage) => {
           var newImageStr = JSON.stringify(newImage);
           var offset = allImages.reduce((pre, ele, idx) => {
             if (JSON.stringify(ele) === newImageStr)
@@ -118,14 +138,14 @@ var imageMutation = Relay.mutationWithClientMutationId({
     }
   },
   mutateAndGetPayload: (input) => {
-    var name = input.imageName;
-    return (new MyImages()).add(name)
+    //break the names to array.
+    return (new MyImages()).add(input.imageName)
     .then((id) => {
       return {
         insertId: id,
       };
     });
-  }
+  },
 });
 
 
@@ -143,7 +163,7 @@ var usernameMutation = Relay.mutationWithClientMutationId({
     User: {
       type: UserType,
       resolve: (payload) => {
-        return {viewer: payload.username };
+        return payload.username;
       },
     }
   },

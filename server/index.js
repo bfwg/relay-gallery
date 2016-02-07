@@ -14,6 +14,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const multer = require('multer');
 //mercy due to issue https://github.com/graphql/express-graphql/issues/40
 
 app.use(cors());
@@ -35,12 +36,13 @@ app.listen(PORT, () => {
 
 app.use(API);
 
+var storage = multer.memoryStorage();
+app.use('/graphql', multer({ storage }).single('file'));
 
-
-app.use('/graphql', graphQLHTTP(request => {
+app.use('/graphql', graphQLHTTP(req => {
   return ({
       schema: querySchema,
-      rootValue: request.session.username,
+      rootValue: {request: req},
       graphiql: true,
       pretty: true,
   });

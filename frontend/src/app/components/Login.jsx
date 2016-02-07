@@ -112,7 +112,7 @@ const Login = React.createClass({
       },
       error: {
         color: Colors.pinkA200,
-        fontSize: 20,
+        fontSize: 14,
       },
     };
 

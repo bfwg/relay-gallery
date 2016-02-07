@@ -23,6 +23,11 @@ MyImages.prototype.getById = function(index) {
   .then(res => JSON.parse(res));
 };
 
+MyImages.prototype.removeById = function(index) {
+  return this.delAsync(this.namespace, index - 1)
+  .then(res => JSON.parse(res));
+};
+
 MyImages.prototype.add = function(imageName) {
   return (
     this.incrAsync(this.IDCountPrefix)

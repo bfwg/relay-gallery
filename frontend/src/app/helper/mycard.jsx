@@ -138,16 +138,16 @@ let HomeFeature = React.createClass({
           bodyStyle={{padding: '0px'}}
           onRequestClose={this.onImageCanel}>
           <FloatingActionButton secondary={true} mini={true} linkButton={true}
-            style={this.mergeAndPrefix(styles.navButton, {left: 0})}
+            style={this.mergeStyles(styles.navButton, {left: 0})}
             disabled={this.state.leftNav}
             onTouchTap={this.getPreImg} >
             <LeftArrow />
           </FloatingActionButton>
-          <img style={this.mergeAndPrefix(
+          <img style={this.mergeStyles(
             styles.image,
             {maxHeight: window.innerHeight - 200})} src={this.state.currentImage} />
           <FloatingActionButton secondary={false} mini={true} linkButton={true}
-            style={this.mergeAndPrefix(styles.navButton, {right: 0})}
+            style={this.mergeStyles(styles.navButton, {right: 0})}
             disabled={this.state.rightNav}
             onTouchTap={this.getNextImg} >
             <RightArrow />
@@ -162,10 +162,10 @@ let HomeFeature = React.createClass({
               imageDialogOpenFlag: true,
             });
           }.bind(this)}
-          style={this.mergeAndPrefix(
+          style={this.mergeStyles(
             styles.root,
             this.props.lastChild && styles.rootWhenLastChild)}>
-          <img style={this.mergeAndPrefix(
+          <img style={this.mergeStyles(
             styles.image,
             this.props.imgStyle)} src={this.props.img} />
             {this.props.heading && <h3 style={styles.heading} dangerouslySetInnerHTML={{__html: this.props.heading}}></h3>}
@@ -222,7 +222,7 @@ let HomeFeature = React.createClass({
       },
     };
 
-    styles.root = this.mergeAndPrefix(styles.root, this.props.style);
+    styles.root = this.mergeStyles(styles.root, this.props.style);
 
 
     return styles;

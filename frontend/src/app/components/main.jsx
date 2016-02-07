@@ -62,22 +62,30 @@ const Main = React.createClass({
       });
     } else {
       console.log(files);
-      let req = request.post(`${SERVER_HOST}/upload`);
+      // let req = request.post(`${SERVER_HOST}/upload`);
+      // files.forEach((file)=> {
+        // req.attach(file.type, file, file.name);
+      // });
+      // req.end(() => {
+        // files.forEach((file)=> {
+          // console.log(file.name, 'upload finished');
+          // console.log(this.props);
+          // let fileName = file.name;
+          // Relay.Store.commitUpdate(
+            // new AddImageMutation({
+              // fileName,
+              // images: this.props.User,
+          // })
+        // );
+        // });
+      // });
       files.forEach((file)=> {
-        req.attach(file.type, file, file.name);
-      });
-      req.end(() => {
-        files.forEach((file)=> {
-          console.log(file.name, 'upload finished');
-          console.log(this.props);
-          let fileName = file.name;
-          Relay.Store.update(
-            new AddImageMutation({
-              fileName,
-              images: this.props.User,
+        Relay.Store.commitUpdate(
+          new AddImageMutation({
+            file,
+            images: this.props.User,
           })
         );
-        });
       });
     }
   },
@@ -86,7 +94,7 @@ const Main = React.createClass({
     this.setState({
       loginDialogOpenFlag: false,
     });
-    Relay.Store.update(
+    Relay.Store.commitUpdate(
       new ChangeUserStatusMutation({
         username,
         user: this.props.User,
@@ -114,7 +122,7 @@ const Main = React.createClass({
   _getSeparator: function() {
     let styles = this.getStyles();
     return (
-      <FullWidthSection useContent={false} style={this.mergeAndPrefix(
+      <FullWidthSection useContent={false} style={this.mergeStyles(
                   styles.imgContainer, {
                     paddingTop: '0px',
                     paddingBottom: '0px',
@@ -130,19 +138,19 @@ const Main = React.createClass({
       <div>
         <IconButton
           iconStyle={styles.icon}
-          href="https://github.com/bfwg"
-          linkButton={true}
-          style={styles.iconStyle}
-          touch={true} >
-          <GitHubIcon/>
-        </IconButton>
-        <IconButton
-          iconStyle={styles.icon}
           style={styles.iconStyle}
           href="https://www.facebook.com/people/Fan-Jin/100008957509461"
           linkButton={true}
           touch={true} >
           <FaceBook/>
+        </IconButton>
+        <IconButton
+          iconStyle={styles.icon}
+          href="https://github.com/bfwg"
+          linkButton={true}
+          style={styles.iconStyle}
+          touch={true} >
+          <GitHubIcon/>
         </IconButton>
         <IconButton
           iconStyle={styles.icon}
@@ -174,6 +182,7 @@ const Main = React.createClass({
             textAlign: 'center',
           }}
           onRequestClose={this.onLoginCanel}
+          underlineShow={false}
           autoScrollBodyContent={true}>
           <Login
             submit={this.onSubmitLogin}
@@ -322,15 +331,15 @@ const Main = React.createClass({
 
     if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
         this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-      styles.addImage = this.mergeAndPrefix(
+      styles.addImage = this.mergeStyles(
         styles.addImage,
         styles.addImageWhenMedium
       );
-      styles.bigPic = this.mergeAndPrefix(
+      styles.bigPic = this.mergeStyles(
         styles.bigPic,
         styles.bigPicWhenMedium
       );
-      styles.avatarContainer = this.mergeAndPrefix(
+      styles.avatarContainer = this.mergeStyles(
         styles.avatarContainer,
         styles.avatarContainerWhenMedium
       );

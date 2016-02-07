@@ -13,9 +13,15 @@ export default class AddImageMutation extends Relay.Mutation {
     return Relay.QL`mutation{ introduceImage }`;
   }
 
+  getFiles() {
+    return {
+      file: this.props.file,
+    };
+  }
+
   getVariables() {
     return {
-      imageName: this.props.fileName,
+      imageName: this.props.file.name,
     };
   }
 
@@ -23,7 +29,7 @@ export default class AddImageMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceImagePayload {
         User {
-          images {
+          images(first: 50) {
             edges {
               node {
                 url,
@@ -31,13 +37,12 @@ export default class AddImageMutation extends Relay.Mutation {
             }
           }
         },
-        newImageEdge
+        newImageEdge,
       }
     `;
   }
 
   getConfigs() {
-    console.log(this.props);
     return [{
       type: 'RANGE_ADD',
       parentName: 'User',
