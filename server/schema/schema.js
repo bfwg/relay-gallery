@@ -1,7 +1,7 @@
 'use strict';
 const GraphQL = require('graphql');
 const Relay = require('graphql-relay');
-
+const User = require('../models/User');
 const MyImages = require('../models/MyImages');
 const Promise = require("bluebird");
 const fs = require('fs');
@@ -54,8 +54,8 @@ var UserType = new GraphQL.GraphQLObjectType({
       type: GraphQL.GraphQLString,
       description: 'the User name',
       resolve: (user) => {
-        console.log(user);
-        return user;
+        // console.log(user.username);
+        return user.username;
       }
     },
     images: {
@@ -79,11 +79,10 @@ const queryType = new GraphQL.GraphQLObjectType({
       type: UserType,
       description: 'A User',
       resolve: (rootValue) => {
-        if (rootValue.request.session && rootValue.request.session.username) {
-          return rootValue.request.session.username;
-        } else {
-          return 'Guest';
-        }
+        if (rootValue.request.session && rootValue.request.session.username)
+          return {username: rootValue.request.session.username};
+        else
+          return {username: 'Guest'};
       },
     },
     node: nodeDefinition.nodeField,
@@ -108,15 +107,16 @@ var imageMutation = Relay.mutationWithClientMutationId({
         // var filetype = file.mimetype;
         // console.log("Uploading: " + filename + " type: " + filetype);
         //check if user has the Authtifcation to upload
-        // if (!uploadAuth(options.rootValue.request)) {
-          // (new MyImages()).pop();
-          // throw Error('Upload Access Denined');
-        // }
-        fs.writeFile(__dirname + '/../static/images/' + filename, file.buffer, function (err){
+        if (!uploadAuth(options.rootValue.request)) {
+          (new MyImages()).rewind();
+          throw Error('Upload Access Denined');
+        }
+
+        fs.writeFile(__dirname + '/../static/images/' + filename, file.buffer, function (err) {
           //if somehow the file upload files we
           //remove the img from database
           if (err) {
-            (new MyImages()).pop();
+            (new MyImages()).rewind();
             throw err;
           }
           // console.log('File saved.');
@@ -157,27 +157,40 @@ var imageMutation = Relay.mutationWithClientMutationId({
 });
 
 
-var usernameMutation = Relay.mutationWithClientMutationId({
-  name: 'UpdateUsername',
+var userStatucMutation = Relay.mutationWithClientMutationId({
+  name: 'UpdateUserStatus',
   inputFields: {
-    id: {
-      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLID)
-    },
-    username: {
+    userData: {
       type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLString)
     },
   },
   outputFields: {
     User: {
       type: UserType,
-      resolve: (payload) => {
-        return payload.username;
+      resolve: (payload, args, options) => {
+        //if pass auth put username into session
+        console.log(payload);
+        // if (payload.username) {
+          options.rootValue.request.session.username = payload.username;
+          return {username: payload.username};
+        // } else {
+          // throw Error('Incorrect Username or Password');
+        // }
       },
     }
   },
   mutateAndGetPayload: (input) => {
-    var localUserId = Relay.fromGlobalId(input.id).id;
-    return {id: localUserId, username: input.username};
+    let userDataArray = input.userData.split(':');
+    let username = userDataArray[0];
+    let pass = userDataArray[1];
+    return (new User()).login(username, pass)
+    .then(response => {
+      if (response) {
+        return {username: username};
+      } else {
+        throw Error('Incorrect Username or Password');
+      }
+    });
   }
 });
 
@@ -185,7 +198,7 @@ var mutationType = new GraphQL.GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
     introduceImage: imageMutation,
-    changeUsername: usernameMutation,
+    changeUserStatus: userStatucMutation,
   })
 });
 

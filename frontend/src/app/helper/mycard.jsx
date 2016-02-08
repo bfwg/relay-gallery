@@ -10,7 +10,7 @@ const {LeftArrow, RightArrow} = require('../svgIcons');
 const {SERVER_HOST} = require('../config');
 
 
-let HomeFeature = React.createClass({
+let MyCard = React.createClass({
 
   mixins: [StylePropable, StyleResizable],
 
@@ -127,6 +127,27 @@ let HomeFeature = React.createClass({
     }
   },
 
+  _getNavButton: function(leftOrRight) {
+    let styles = this.getStyles();
+    let Icon, nav = {}, getImage;
+    if (leftOrRight === 'left') {
+      Icon = <LeftArrow />;
+      nav.left = 0;
+      getImage = this.getPreImg;
+    } else {
+      Icon = <RightArrow />;
+      nav.right = 0;
+      getImage = this.getNextImg;
+    }
+    return <FloatingActionButton mini={true} linkButton={true}
+            style={this.mergeStyles(styles.navButton, nav)}
+            backgroundColor={Colors.grey700}
+            disabled={this.state.leftNav}
+            onTouchTap={getImage} >
+            {Icon}
+          </FloatingActionButton>;
+  },
+
   render() {
     let styles = this.getStyles();
 
@@ -137,21 +158,11 @@ let HomeFeature = React.createClass({
           contentStyle={{width: "100%", textAlign: 'center'}}
           bodyStyle={{padding: '0px'}}
           onRequestClose={this.onImageCanel}>
-          <FloatingActionButton secondary={true} mini={true} linkButton={true}
-            style={this.mergeStyles(styles.navButton, {left: 0})}
-            disabled={this.state.leftNav}
-            onTouchTap={this.getPreImg} >
-            <LeftArrow />
-          </FloatingActionButton>
+          {this._getNavButton('left')}
           <img style={this.mergeStyles(
             styles.image,
             {maxHeight: window.innerHeight - 200})} src={this.state.currentImage} />
-          <FloatingActionButton secondary={false} mini={true} linkButton={true}
-            style={this.mergeStyles(styles.navButton, {right: 0})}
-            disabled={this.state.rightNav}
-            onTouchTap={this.getNextImg} >
-            <RightArrow />
-          </FloatingActionButton>
+          {this._getNavButton('right')}
         </Dialog>
         <Paper
           zDepth={this.state.zDepth}
@@ -230,4 +241,4 @@ let HomeFeature = React.createClass({
 
 });
 
-module.exports = HomeFeature;
+module.exports = MyCard;

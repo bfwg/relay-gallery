@@ -52,8 +52,6 @@ export default class AddImageMutation extends Relay.Mutation {
       rangeBehaviors: {
         '': 'append',
         'orderby(oldest)': 'prepend',
-        'status(active)': 'append',
-        'status(completed)': null,
       },
     }];
   }

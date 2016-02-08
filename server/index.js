@@ -6,7 +6,6 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const graphQLHTTP = require('express-graphql');
 const querySchema = require('./schema/schema').schema;
-const API = require('./api');
 
 const cors = require('cors');
 
@@ -34,7 +33,7 @@ app.listen(PORT, () => {
 });
 
 
-app.use(API);
+// app.use(API);
 
 var storage = multer.memoryStorage();
 app.use('/graphql', multer({ storage }).single('file'));

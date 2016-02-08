@@ -474,7 +474,7 @@
               "deprecationReason": null
             },
             {
-              "name": "changeUsername",
+              "name": "changeUserStatus",
               "description": null,
               "args": [
                 {
@@ -485,7 +485,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "UpdateUsernameInput",
+                      "name": "UpdateUserStatusInput",
                       "ofType": null
                     }
                   },
@@ -494,7 +494,7 @@
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "UpdateUsernamePayload",
+                "name": "UpdateUserStatusPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -598,26 +598,12 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "UpdateUsernameInput",
+          "name": "UpdateUserStatusInput",
           "description": null,
           "fields": null,
           "inputFields": [
             {
-              "name": "id",
-              "description": null,
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "username",
+              "name": "userData",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -651,7 +637,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "UpdateUsernamePayload",
+          "name": "UpdateUserStatusPayload",
           "description": null,
           "fields": [
             {

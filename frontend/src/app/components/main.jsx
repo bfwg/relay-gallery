@@ -5,7 +5,6 @@ const Dialog = require('material-ui/lib/dialog');
 const ThemeManager = require('material-ui/lib/styles/theme-manager');
 const Colors = require('material-ui/lib/styles/colors');
 const Dropzone = require('react-dropzone');
-const request = require('superagent');
 const AddImageMutation  = require('../mutation/AddImageMutation');
 const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
 const {IconButton, Mixins, Styles} = require('material-ui');
@@ -29,10 +28,12 @@ const Main = React.createClass({
 
   getInitialState () {
     return {
-      loginDialogOpenFlag: false,
       muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
       files: null,
       selectedImageIdx: null,
+      loginDialogOpenFlag: false,
+      loginError: '',
+      loginPending: false,
     };
   },
 
@@ -61,57 +62,64 @@ const Main = React.createClass({
         loginDialogOpenFlag: true,
       });
     } else {
-      // let req = request.post(`${SERVER_HOST}/upload`);
-      // files.forEach((file)=> {
-        // req.attach(file.type, file, file.name);
-      // });
-      // req.end(() => {
-        // files.forEach((file)=> {
-          // console.log(file.name, 'upload finished');
-          // console.log(this.props);
-          // let fileName = file.name;
-          // Relay.Store.commitUpdate(
-            // new AddImageMutation({
-              // fileName,
-              // images: this.props.User,
-          // })
-        // );
-        // });
-      // });
-      // let onSuccess = () => {
-        // console.log('Mutation successful!');
-      // };
-      // let onFailure = (transaction) => {
-        // let error = transaction.getError() || new Error('Mutation failed.');
-        // console.error(error);
-      // };
+      let onSuccess = () => {
+        console.log('Mutation successful!');
+      };
+      let onFailure = (transaction) => {
+        let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
+        console.log(error);
+      };
       files.forEach((file)=> {
         Relay.Store.commitUpdate(
           new AddImageMutation({
             file,
             images: this.props.User,
-          })
+          }),
+          {onSuccess, onFailure}
         );
       });
     }
   },
 
-  onSubmitLogin: function(username) {
+  onSubmitLogin: function(userData) {
+
     this.setState({
-      loginDialogOpenFlag: false,
+      loginPending: true,
     });
+
+    let onSuccess = () => {
+      this.setState({
+        loginDialogOpenFlag: false,
+        loginPending: false,
+        loginError: '',
+      });
+      this.refs.dropzone.open();
+      console.log('Login successful!');
+    };
+
+    let onFailure = (transaction) => {
+      let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
+      console.log(transaction.getError().source.errors[0].message);
+      this.setState({
+        loginError: error,
+        loginPending: false,
+      });
+    };
+
     Relay.Store.commitUpdate(
       new ChangeUserStatusMutation({
-        username,
+        userData,
         user: this.props.User,
-    }));
-    //not opening
-    this.refs.dropzone.open();
+      }),
+      {onSuccess, onFailure}
+    );
   },
 
   onLoginCanel: function() {
     this.setState({
       loginDialogOpenFlag: false,
+      loginPending: false,
+      loginError: '',
     });
   },
 
@@ -125,6 +133,76 @@ const Main = React.createClass({
     }
   },
 
+  _getLoginDialog: function() {
+    return (
+        <Dialog
+          open={this.state.loginDialogOpenFlag}
+          contentStyle={{
+            maxWidth: 430,
+            width: '100%',
+            textAlign: 'center',
+          }}
+          onRequestClose={this.onLoginCanel}
+          underlineShow={false}
+          autoScrollBodyContent={true}>
+          <Login
+            pending={this.state.loginPending}
+            error={this.state.loginError}
+            submit={this.onSubmitLogin}
+            onCancel={this.onLoginCanel} />
+        </Dialog>
+
+    );
+  },
+
+  _getAvatar: function() {
+    let styles = this.getStyles();
+    let myAvatar = "images/me.jpg";
+    let myTitle = "Hi, My name is <span style='color: purple;'>Fan Jin</span> I make things for the web and designs awesome user experiences that enrich people's lives";
+    return  <FullWidthSection style={styles.avatarContainer} useContent={false}>
+        <MyCard
+          style={styles.bigPic}
+          imgStyle={{width: '100%', maxWidth: '420px'}}
+          onClick={() => {
+            window.location.href = 'https://github.com/bfwg/mypage';
+          }}
+          heading={myTitle}
+          img={myAvatar} />
+          {this._getLinkIconButtonGroup()}
+      </FullWidthSection>;
+  },
+
+  _getImages: function() {
+    let styles = this.getStyles();
+    return <FullWidthSection style={styles.imgContainer}>
+        <div>
+          <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
+          <img src="images/gallery.png" />
+        </div>
+        {this.props.User.images.edges.map((ele, idx) => {
+          return (
+          <MyCard
+            key={idx}
+            style={styles.smallPic}
+            imgStyle={{maxHeight: '100%'}}
+            lineHeight={styles.imageWH}
+            imgIdx={idx}
+            imgList={this.props.User.images.edges}
+            img={`${SERVER_HOST}/images/` + ele.node.url} />
+          );
+        })}
+
+        <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
+          <MyCard
+            onClick={this.onUpload}
+            style={styles.smallPic}
+            imgStyle={{maxHeight: '100%'}}
+            lineHeight={styles.imageWH}
+            img="images/upload.png"/>
+        </Dropzone>
+      </FullWidthSection>;
+  },
+
   _getSeparator: function() {
     let styles = this.getStyles();
     return (
@@ -135,6 +213,25 @@ const Main = React.createClass({
                 })}>
         <hr/>
       </FullWidthSection>
+    );
+  },
+
+  _getFooter: function() {
+    let footerIconSize = 38;
+    let styles = this.getStyles();
+    return (
+      <div style={styles.footer}>
+        <p style={this.prepareStyles(styles.p)}>
+          {'Hand crafted with love by Fan Jin'}
+        </p>
+        <a href="https://github.com/bfwg">
+          <GitHubIcon style={{
+            color: Colors.grey400,
+            width: footerIconSize,
+            height: footerIconSize,
+          }}/>
+        </a>
+      </div>
     );
   },
 
@@ -174,83 +271,15 @@ const Main = React.createClass({
   render() {
 
     let styles = this.getStyles();
-    let myAvatar = "images/me.jpg";
-    let myTitle = "Hi, My name is <span style='color: purple;'>Fan Jin</span> I make things for the web and designs awesome user experiences that enrich people's lives";
-    let footerIconSize = 38;
 
     return (
       <div style={styles.containerStyle}>
-        <Dialog
-          open={this.state.loginDialogOpenFlag}
-          contentStyle={{
-            maxWidth: 430,
-            width: '100%',
-            textAlign: 'center',
-          }}
-          onRequestClose={this.onLoginCanel}
-          underlineShow={false}
-          autoScrollBodyContent={true}>
-          <Login
-            submit={this.onSubmitLogin}
-            onCancel={this.onLoginCanel} />
-        </Dialog>
-
-        <FullWidthSection style={styles.avatarContainer} useContent={false}>
-          <MyCard
-            style={styles.bigPic}
-            imgStyle={{width: '100%', maxWidth: '420px'}}
-            onClick={() => {
-              window.location.replace('https://github.com/bfwg/mypage');
-            }}
-            heading={myTitle}
-            img={myAvatar} />
-            {this._getLinkIconButtonGroup()}
-        </FullWidthSection>
-
+        {this._getLoginDialog()}
+        {this._getAvatar()}
         {this._getSeparator()}
-
-        <FullWidthSection style={styles.imgContainer}>
-          <div>
-            <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
-            <img src="images/gallery.png" />
-          </div>
-          {this.props.User.images.edges.map((ele, idx) => {
-            return (
-            <MyCard
-              key={idx}
-              style={styles.smallPic}
-              imgStyle={{maxHeight: '100%'}}
-              lineHeight={styles.imageWH}
-              imgIdx={idx}
-              imgList={this.props.User.images.edges}
-              img={`${SERVER_HOST}/images/` + ele.node.url} />
-            );
-          })}
-
-          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
-            <MyCard
-              onClick={this.onUpload}
-              style={styles.smallPic}
-              imgStyle={{maxHeight: '100%'}}
-              lineHeight={styles.imageWH}
-              img="images/upload.png"/>
-          </Dropzone>
-        </FullWidthSection>
-
+        {this._getImages()}
         {this._getSeparator()}
-
-        <div style={styles.footer}>
-          <p style={this.prepareStyles(styles.p)}>
-            {'Hand crafted with love by Fan Jin'}
-          </p>
-          <a href="https://github.com/bfwg">
-            <GitHubIcon style={{
-              color: Colors.grey400,
-              width: footerIconSize,
-              height: footerIconSize,
-            }}/>
-          </a>
-        </div>
+        {this._getFooter()}
       </div>
     );
   },
@@ -366,7 +395,7 @@ module.exports = Relay.createContainer(Main, {
     User: () => Relay.QL`
       fragment on User {
         username,
-        images(first: 1000) {
+        images(first: 100) {
           edges {
             node {
               url,

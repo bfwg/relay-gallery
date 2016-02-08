@@ -1,8 +1,6 @@
 "use strict";
 const React = require('react');
 const LinkedStateMixin = require('react-addons-linked-state-mixin');
-const {SERVER_HOST} = require('../config');
-const axios = require('axios');
 const {
   TextField,
   RaisedButton,
@@ -25,60 +23,22 @@ const Login = React.createClass({
 
   getDefaultProps() {
     return {
-      redirectRoute: '/business',
     };
   },
 
   getInitialState: function() {
     return {
-      pending: false,
       email: '',
       password: '',
-      error: '',
-      isLogin: false,
     };
   },
 
 
   onFormSubmit(e) {
     e.preventDefault();
+    let userData = `${this.state.email}:${this.state.password}`;
 
-    let email = this.state.email;
-    let password = this.state.password;
-    // let loginFlag = false;
-    let resEmail = '';
-
-    this.setState({
-      pending: true,
-    });
-
-
-    axios({
-      method: 'post',
-      data: {email: email, password: password},
-      url: `${SERVER_HOST}/login`,
-      withCredentials: true,
-    })
-    .then(response => {
-        resEmail = response.data;
-        this.props.submit(resEmail);
-        // loginFlag = true;//mercy
-    })
-    .catch(error => {
-      console.log(error);
-      this.setState({
-        error: error.data,
-        pending: false,
-      });
-    });
-
-    //will change this in the future
-    //due to dropzone bug
-    //https://github.com/paramaggarwal/react-dropzone/issues/122
-    // setTimeout(() => {
-      // if(loginFlag)
-        // this.props.submit(resEmail);
-    // }, 750);
+    this.props.submit(userData);
   },
 
 
@@ -130,10 +90,10 @@ const Login = React.createClass({
       <div style={styles.root}>
         <div style={styles.card}>
           <form onSubmit={this.onFormSubmit}>
-            <fieldset disabled={this.state.pending} style={styles.fieldset}>
+            <fieldset disabled={this.props.pending} style={styles.fieldset}>
               <CardTitle title="Login to Upload" />
-              {this.state.error &&
-                <div style={styles.error}>{this.state.error}</div>
+              {this.props.error &&
+                <div style={styles.error}>{this.props.error}</div>
               }
               <TextField
                 floatingLabelText="Username"
@@ -148,7 +108,7 @@ const Login = React.createClass({
               <div style={styles.buttons}>
                 <CardActions>
                   <RaisedButton
-                    disabled={this.state.pending}
+                    disabled={this.props.pending}
                     label="Login!"
                     secondary={true}
                     type="submit" />

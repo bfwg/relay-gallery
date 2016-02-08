@@ -12,7 +12,7 @@ export default class ChangeUserStatusMutation extends Relay.Mutation {
   // of this mutation, and specify it here in the fat query.
   getFatQuery() {
     return Relay.QL`
-      fragment on UpdateUsernamePayload {
+      fragment on UpdateUserStatusPayload {
         User {
           username,
         },
@@ -22,20 +22,17 @@ export default class ChangeUserStatusMutation extends Relay.Mutation {
 
   getVariables() {
     return {
-      id: this.props.user.id,
-      username: this.props.username,
+      userData: this.props.userData,
     };
   }
 
   getMutation() {
-    return Relay.QL`mutation{ changeUsername }`;
+    return Relay.QL`mutation{ changeUserStatus }`;
   }
 
   getConfigs() {
     return [{
       type: 'FIELDS_CHANGE',
-      // Correlate the `updatedDocument` field in the response
-      // with the DataID of the record we would like updated.
       fieldIDs: {
         User: this.props.user.id,
       },

@@ -23,9 +23,9 @@ MyImages.prototype.getById = function(index) {
   .then(res => JSON.parse(res));
 };
 
-MyImages.prototype.pop = function() {
-  return this.rpopAsync(this.namespace)
-  .then(res => JSON.parse(res));
+MyImages.prototype.rewind = function() {
+  this.rpop(this.namespace);
+  this.decr(this.IDCountPrefix);
 };
 
 MyImages.prototype.add = function(imageName) {
