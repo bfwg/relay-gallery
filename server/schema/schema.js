@@ -147,14 +147,16 @@ var imageMutation = Relay.mutationWithClientMutationId({
   },
   mutateAndGetPayload: (input) => {
     //break the names to array.
-    let imageNameAndformat = input.imageName.split('.');
-    let imageName;
+
+    let imageName = input.imageName.substring(0, input.imageName.lastIndexOf('.'));
+    let mimeType = input.imageName.substring(input.imageName.lastIndexOf('.'));
+
     //find next id for hash
     return (new MyImages())
     .peekNextImgID(input.imageName)
     .then(id => {
-      imageName = md5(imageNameAndformat[0]+ (parseInt(id) + 1).toString()) + '.' + imageNameAndformat[1] || '.jpeg';
-      // console.log(imageName);
+      imageName = md5(imageName + id) + mimeType || '.jpeg';
+      console.log(imageName);
       // insert image
       return (new MyImages())
       .add(imageName);

@@ -45,7 +45,7 @@ MyImages.prototype.peekNextImgID = function() {
   return (
     this.getAsync(this.IDCountPrefix)
     .then(id => {
-      return id || 1;
+      return (id + 1) || 1;
     })
   );
 };
