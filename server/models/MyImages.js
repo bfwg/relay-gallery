@@ -41,4 +41,12 @@ MyImages.prototype.add = function(imageName) {
     }));
 };
 
+MyImages.prototype.peekNextImgID = function() {
+  return (
+    this.getAsync(this.IDCountPrefix)
+    .then(id => {
+      return id || 1;
+    })
+  );
+};
 module.exports = MyImages;

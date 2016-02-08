@@ -34,6 +34,7 @@
     "express-session": "^1.12.1",
     "graphql": "^0.4.7",
     "graphql-relay": "^0.3.4",
+    "md5": "^2.0.0",
     "multer": "^1.1.0",
     "redis": "^2.2.3",
     "webpack": "^1.10.5"

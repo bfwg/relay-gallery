@@ -6,7 +6,7 @@ const MyImages = require('../models/MyImages');
 const Promise = require("bluebird");
 const fs = require('fs');
 const uploadAuth = require('../middleware/uploadAuth');
-
+const md5 = require('md5');
 
 
 const nodeDefinition = Relay.nodeDefinitions(
@@ -103,7 +103,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
         //test first file
         var file = options.rootValue.request.file;
 
-        var filename = file.originalname;
+        var filename = payload.imgNmae;
         // var filetype = file.mimetype;
         // console.log("Uploading: " + filename + " type: " + filetype);
         //check if user has the Authtifcation to upload
@@ -147,10 +147,22 @@ var imageMutation = Relay.mutationWithClientMutationId({
   },
   mutateAndGetPayload: (input) => {
     //break the names to array.
-    return (new MyImages()).add(input.imageName)
-    .then((id) => {
+    let imageNameAndformat = input.imageName.split('.');
+    let imageName;
+    //find next id for hash
+    return (new MyImages())
+    .peekNextImgID(input.imageName)
+    .then(id => {
+      imageName = md5(imageNameAndformat[0]+ (parseInt(id) + 1).toString()) + '.' + imageNameAndformat[1] || '.jpeg';
+      // console.log(imageName);
+      // insert image
+      return (new MyImages())
+      .add(imageName);
+    })
+    .then(id => {
       return {
         insertId: id,
+        imgNmae: imageName,
       };
     });
   },

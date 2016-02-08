@@ -29,20 +29,20 @@ app.use(bodyParser.json());
   // });
 // });
 
-app.post('/login', (req, res) => {
-  let email = req.body.email;
-  let pass = req.body.password;
-  (new User()).login(email, pass)
-  .then(response => {
-    if (response) {
-      // res.cookie('mp', email, { expires: new Date(Date.now() + 900000), httpOnly: true });
-      req.session.username = email;
-      res.send(email);
-    } else {
-      res.status(503).send('Incorrect Username or Password').end();
-    }
-  });
-});
+// app.post('/login', (req, res) => {
+  // let email = req.body.email;
+  // let pass = req.body.password;
+  // (new User()).login(email, pass)
+  // .then(response => {
+    // if (response) {
+      // // res.cookie('mp', email, { expires: new Date(Date.now() + 900000), httpOnly: true });
+      // req.session.username = email;
+      // res.send(email);
+    // } else {
+      // res.status(503).send('Incorrect Username or Password').end();
+    // }
+  // });
+// });
 
 //test
 
