@@ -104,8 +104,8 @@ var imageMutation = Relay.mutationWithClientMutationId({
         var file = options.rootValue.request.file;
 
         var filename = payload.imgNmae;
-        // var filetype = file.mimetype;
-        // console.log("Uploading: " + filename + " type: " + filetype);
+        var filetype = file.mimetype;
+        console.log("Uploading: " + filename + " type: " + filetype);
         //check if user has the Authtifcation to upload
         if (!uploadAuth(options.rootValue.request)) {
           (new MyImages()).rewind();
@@ -119,7 +119,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
             (new MyImages()).rewind();
             throw err;
           }
-          // console.log('File saved.');
+          console.log('File saved.');
         });
 
         //prepare for update view
