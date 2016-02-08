@@ -89,9 +89,9 @@ const Main = React.createClass({
 
     let onSuccess = () => {
       this.setState({
-        loginDialogOpenFlag: false,
-        loginPending: false,
         loginError: '',
+        loginPending: false,
+        loginDialogOpenFlag: false,
       });
       this.refs.dropzone.open();
       console.log('Login successful!');

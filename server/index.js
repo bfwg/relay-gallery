@@ -28,7 +28,7 @@ app.use(session({
 }));
 
 
-app.listen(PORT, () => {
+app.listen(PORT, '192.168.1.66', () => {
   console.log('node ' + process.version + ' listen on port ' + PORT + '(' + process.env.NODE_ENV + ')');
 });
 

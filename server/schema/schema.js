@@ -109,6 +109,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
         //check if user has the Authtifcation to upload
         if (!uploadAuth(options.rootValue.request)) {
           (new MyImages()).rewind();
+          console.log("Upload Access Denined");
           throw Error('Upload Access Denined');
         }
 
@@ -150,6 +151,8 @@ var imageMutation = Relay.mutationWithClientMutationId({
 
     let imageName = input.imageName.substring(0, input.imageName.lastIndexOf('.'));
     let mimeType = input.imageName.substring(input.imageName.lastIndexOf('.'));
+    console.log({imageName});
+    console.log({mimeType});
 
     //find next id for hash
     return (new MyImages())
@@ -171,6 +174,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
 });
 
 
+/* User Auth */
 var userStatucMutation = Relay.mutationWithClientMutationId({
   name: 'UpdateUserStatus',
   inputFields: {
@@ -183,16 +187,12 @@ var userStatucMutation = Relay.mutationWithClientMutationId({
       type: UserType,
       resolve: (payload, args, options) => {
         //if pass auth put username into session
-        console.log(payload);
-        // if (payload.username) {
-          options.rootValue.request.session.username = payload.username;
-          return {username: payload.username};
-        // } else {
-          // throw Error('Incorrect Username or Password');
-        // }
+        options.rootValue.request.session.username = payload.username;
+        return {username: payload.username};
       },
     }
   },
+
   mutateAndGetPayload: (input) => {
     let userDataArray = input.userData.split(':');
     let username = userDataArray[0];

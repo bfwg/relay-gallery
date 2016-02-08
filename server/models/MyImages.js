@@ -19,8 +19,13 @@ MyImages.prototype.getAll = function() {
 };
 
 MyImages.prototype.getById = function(index) {
-  return this.lindexAsync(this.namespace, index - 1)
-  .then(res => JSON.parse(res));
+  return this.lrangeAsync(this.namespace, 0, -1)
+  .then(arr => {
+    return arr.reduce((pre, ele) => {
+      if (JSON.parse(ele).id === index)
+        return JSON.parse(ele);
+    }, null);
+  });
 };
 
 MyImages.prototype.rewind = function() {
