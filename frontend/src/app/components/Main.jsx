@@ -143,7 +143,6 @@ const Main = React.createClass({
             textAlign: 'center',
           }}
           onRequestClose={this.onLoginCanel}
-          underlineShow={false}
           autoScrollBodyContent={true}>
           <Login
             pending={this.state.loginPending}

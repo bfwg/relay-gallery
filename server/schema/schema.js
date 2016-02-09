@@ -7,6 +7,9 @@ const Promise = require("bluebird");
 const fs = require('fs');
 const uploadAuth = require('../middleware/uploadAuth');
 const md5 = require('md5');
+const ExifImage = require('exif').ExifImage;
+const uploadFile = require('../models/uploadImage');
+
 
 
 const nodeDefinition = Relay.nodeDefinitions(
@@ -105,6 +108,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
 
         var filename = payload.imgNmae;
         var filetype = file.mimetype;
+        const filePath = __dirname + '/../static/images/' + filename;
         console.log("Uploading: " + filename + " type: " + filetype);
         //check if user has the Authtifcation to upload
         if (!uploadAuth(options.rootValue.request)) {
@@ -113,31 +117,32 @@ var imageMutation = Relay.mutationWithClientMutationId({
           throw Error('Upload Access Denined');
         }
 
-        fs.writeFile(__dirname + '/../static/images/' + filename, file.buffer, function (err) {
-          //if somehow the file upload files we
-          //remove the img from database
-          if (err) {
-            (new MyImages()).rewind();
-            throw err;
-          }
-          console.log('File saved.');
-        });
+        //if no errors we need to make usre
+        //the orientataion is correct
+        //iphone images has orientataion problems
+
+
 
         //prepare for update view
-        return Promise.all(
-          [(new MyImages()).getAll(),
-            (new MyImages()).getById(payload.insertId)])
-        .spread((allImages, newImage) => {
-          var newImageStr = JSON.stringify(newImage);
-          var offset = allImages.reduce((pre, ele, idx) => {
-            if (JSON.stringify(ele) === newImageStr)
-              return idx;
-          }, -1);
+        return new Promise(resolve => {
+          uploadFile(file.buffer, filePath, filename, resolve);
+        })
+        .then(() => {
+          return Promise.all(
+            [(new MyImages()).getAll(),
+              (new MyImages()).getById(payload.insertId)])
+          .spread((allImages, newImage) => {
+            var newImageStr = JSON.stringify(newImage);
+            var offset = allImages.reduce((pre, ele, idx) => {
+              if (JSON.stringify(ele) === newImageStr)
+                return idx;
+            }, -1);
 
-          return {
-            cursor: offset !== -1 ? Relay.offsetToCursor(offset) : null,
-            node: newImage,
-          };
+            return {
+              cursor: offset !== -1 ? Relay.offsetToCursor(offset) : null,
+              node: newImage,
+            };
+          });
         });
       }
     },
