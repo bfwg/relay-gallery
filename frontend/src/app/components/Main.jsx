@@ -187,7 +187,7 @@ const Main = React.createClass({
             lineHeight={styles.imageWH}
             imgIdx={idx}
             imgList={this.props.User.images.edges}
-            img={`${SERVER_HOST}/images/` + ele.node.url} />
+            img={`${SERVER_HOST}/images/${ele.node.url}?w=500&q=70`} />
           );
         })}
 
@@ -317,6 +317,9 @@ const Main = React.createClass({
       avatarContainerWhenMedium: {
         padding: '24px',
         paddingTop: '48px',
+      },
+      imageResize: {
+        wh: imageWH,
       },
       imgContainer: {
         paddingRight: imageContainerPadding,

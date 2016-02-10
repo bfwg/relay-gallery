@@ -1,6 +1,6 @@
 "use strict";
 const React = require('react');
-const {FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
+const {CircularProgress, FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
 
 let {StylePropable, StyleResizable} = Mixins;
 let {Colors, Spacing, Transitions, Typography} = Styles;
@@ -37,18 +37,19 @@ let MyCard = React.createClass({
       leftNav: false,
       rigthNav: false,
       zDepth: 0,
+      pending: true,
     };
   },
 
+  componentWillMount() {
+
+    // this.checkLeftNav(0);
+    // this.checkRightNav(0);
+  },
   componentDidMount() {
 
     // this.checkLeftNav(0);
     // this.checkRightNav(0);
-
-
-    this.setState({
-      currentImage: this.props.img,
-    });
   },
 
   _onMouseEnter() {
@@ -66,7 +67,7 @@ let MyCard = React.createClass({
   onImageCanel: function() {
     this.setState({
       imageDialogOpenFlag: false,
-      currentImage: this.props.img,
+      currentImage: this.props.img.substring(0, this.props.img.lastIndexOf('?')),
       offset: 0,
     });
   },
@@ -150,18 +151,44 @@ let MyCard = React.createClass({
 
   render() {
     let styles = this.getStyles();
+    console.log(this.state.currentImage);
 
     return (
       <div>
         <Dialog
           open={this.state.imageDialogOpenFlag}
-          contentStyle={{width: "100%", textAlign: 'center'}}
-          bodyStyle={{padding: '0px'}}
+          contentStyle={{
+            width: "100%",
+            textAlign: 'center',
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+          bodyStyle={{
+            padding: '0px',
+            backgroundColor: 'black',
+          }}
           onRequestClose={this.onImageCanel}>
           {this._getNavButton('left')}
           <img style={this.mergeStyles(
-            styles.image,
-            {maxHeight: window.innerHeight - 200})} src={this.state.currentImage} />
+            styles.image,{
+              maxHeight: window.innerHeight - 200,
+            })}
+            onLoad={() => {
+              this.setState({
+                pending: false,
+              });
+            }}
+            src={this.state.currentImage} />
+          {this.state.pending &&
+            <div style={{
+              backgroundColor: 'black',
+              padding: 100,
+              textAlign: 'center',
+            }}>
+              <CircularProgress size={2} />
+            </div> }
           {this._getNavButton('right')}
         </Dialog>
         <Paper
@@ -171,6 +198,11 @@ let MyCard = React.createClass({
           onTouchTap={this.props.onClick || function(){
             this.setState({
               imageDialogOpenFlag: true,
+            });
+
+            //we set for 10 millisecond for it to response to the progress
+            this.setState({
+              currentImage: this.props.img.substring(0, this.props.img.lastIndexOf('?')),
             });
           }.bind(this)}
           style={this.mergeStyles(

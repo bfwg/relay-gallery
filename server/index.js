@@ -14,6 +14,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const multer = require('multer');
+
+
 //mercy due to issue https://github.com/graphql/express-graphql/issues/40
 
 app.use(cors());
@@ -28,7 +30,7 @@ app.use(session({
 }));
 
 
-app.listen(PORT, '192.168.1.66', () => {
+app.listen(PORT, () => {
   console.log('node ' + process.version + ' listen on port ' + PORT + '(' + process.env.NODE_ENV + ')');
 });
 
