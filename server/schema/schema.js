@@ -4,10 +4,8 @@ const Relay = require('graphql-relay');
 const User = require('../models/User');
 const MyImages = require('../models/MyImages');
 const Promise = require("bluebird");
-const fs = require('fs');
 const uploadAuth = require('../middleware/uploadAuth');
 const md5 = require('md5');
-const ExifImage = require('exif').ExifImage;
 const uploadFile = require('../models/uploadImage');
 
 
