@@ -27,6 +27,7 @@ module.exports = function(buffer, path, filename, resolve) {
       console.log('File saved.');
       resolve();
     } else {
+      console.log(err);
       (new MyImages()).rewind();
       throw err;
     }
