@@ -1,7 +1,7 @@
 "use strict";
 const gm = require('gm');
 const fs = require('fs');
-const ExifImage = require('exif').ExifImage;
+// const ExifImage = require('exif').ExifImage;
 const MyImages = require('../models/MyImages');
 
 // path is the path to your image
