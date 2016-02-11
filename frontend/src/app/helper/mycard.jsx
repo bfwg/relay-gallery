@@ -167,6 +167,8 @@ let MyCard = React.createClass({
           }}
           bodyStyle={{
             padding: '0px',
+            minHeight: '300px',
+            lineHeight: '300px',
             backgroundColor: 'black',
           }}
           onRequestClose={this.onImageCanel}>
@@ -183,11 +185,14 @@ let MyCard = React.createClass({
             src={this.state.currentImage} />
           {this.state.pending &&
             <div style={{
-              backgroundColor: 'black',
-              padding: 100,
-              textAlign: 'center',
+              top: '50%',
+              left: '50%',
+              marginTop: '-70px',
+              marginLeft: '-70px',
+              position: 'absolute',
+              lineHeight: '20px',
             }}>
-              <CircularProgress size={2} />
+              <CircularProgress color={Colors.grey50} size={2} />
             </div> }
           {this._getNavButton('right')}
         </Dialog>
@@ -262,6 +267,7 @@ let MyCard = React.createClass({
         position: 'absolute',
         top: '50%',
         marginTop: '-17px',
+        lineHeight: '20px',
       },
     };
 
