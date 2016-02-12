@@ -1,4 +1,8 @@
 {
-  "breakConfig": true,
-  "stage": 1,
+  "passPerPreset": true,
+  "presets": [
+    "react",
+    "es2015",
+    "stage-0"
+  ]
 }
