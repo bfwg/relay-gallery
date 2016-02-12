@@ -156,10 +156,11 @@ const Main = React.createClass({
 
   _getAvatar: function() {
     let styles = this.getStyles();
-    let myAvatar = "images/me.jpg";
+    let myAvatar = `${SERVER_HOST}/images/me.jpg`;
     let myTitle = "Hi, My name is <span style='color: purple;'>Fan Jin</span> I make things for the web and designs awesome user experiences that enrich people's lives";
     return  <FullWidthSection style={styles.avatarContainer} useContent={false}>
         <MyCard
+          avatar={true}
           style={styles.bigPic}
           imgStyle={{width: '100%', maxWidth: '420px'}}
           onClick={() => {
@@ -176,7 +177,14 @@ const Main = React.createClass({
     return <FullWidthSection style={styles.imgContainer}>
         <div>
           <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
-          <img src="images/gallery.png" />
+          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
+            <MyCard
+              avatar={true}
+              onClick={this.onUpload}
+              style={{backgroundImage: 'none'}}
+              imgStyle={{maxHeight: '100%'}}
+              img={`${SERVER_HOST}/images/upload.png`}/>
+          </Dropzone>
         </div>
         {this.props.User.images.edges.map((ele, idx) => {
           return (
@@ -184,21 +192,12 @@ const Main = React.createClass({
             key={idx}
             style={styles.smallPic}
             imgStyle={{maxHeight: '100%'}}
-            lineHeight={styles.imageWH}
             imgIdx={idx}
             imgList={this.props.User.images.edges}
             img={`${SERVER_HOST}/images/${ele.node.url}?w=500&q=70`} />
           );
         })}
 
-        <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
-          <MyCard
-            onClick={this.onUpload}
-            style={styles.smallPic}
-            imgStyle={{maxHeight: '100%'}}
-            lineHeight={styles.imageWH}
-            img="images/upload.png"/>
-        </Dropzone>
       </FullWidthSection>;
   },
 
@@ -286,12 +285,14 @@ const Main = React.createClass({
   getStyles() {
     let iconSize = 48;
     let windowWidth = window.innerWidth - 16;
-    let imageMargin = 6;
+    let imageMargin = 4;
     let imageWH;
     let imageContainerPadding = Spacing.desktopGutter * 4;
-    if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
-        this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-        imageWH = 200;
+    if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
+        imageWH = 206;
+    } else if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM)) {
+        imageContainerPadding = 0;
+        imageWH = windowWidth / 3 - imageMargin * 3;
     } else {
         imageContainerPadding = 0;
         imageWH = windowWidth / 2 - imageMargin * 2;
@@ -331,25 +332,32 @@ const Main = React.createClass({
         float: 'left',
         width: imageWH + 'px',
         height: imageWH + 'px',
-        lineHeight: imageWH + 'px',
+        lineHeight: imageWH - 4 + 'px',
         marginLeft: imageMargin + 'px',
         marginRight: imageMargin + 'px',
       },
       bigPic: {
         width: '100%',
-        maxWidth: '600px',
+        maxWidth: '420px',
         marginRight: 'auto',
         padding: '0px',
+        backgroundImage: 'none',
       },
       bigPicWhenMedium: {
-        width: '33%',
+        // width: '33%',
         maxWidth: '420px',
       },
       addImage: {
-        float: 'none',
+        // float: 'none',
+        display: 'inline-block',
+        borderStyle: 'none',
+        width: imageWH + 'px',
+        height: imageWH + 'px',
+        lineHeight: imageWH - 4 + 'px',
+        marginBottom: '20px',
       },
       addImageWhenMedium: {
-        float: 'left',
+        // float: 'left',
       },
       footer: {
         paddingTop: '10px',
@@ -397,7 +405,7 @@ module.exports = Relay.createContainer(Main, {
     User: () => Relay.QL`
       fragment on User {
         username,
-        images(first: 100) {
+        images(first: 30) {
           edges {
             node {
               url,

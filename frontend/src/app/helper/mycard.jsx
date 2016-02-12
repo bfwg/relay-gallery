@@ -36,7 +36,7 @@ let MyCard = React.createClass({
       offset: 0,
       leftNav: false,
       rigthNav: false,
-      zDepth: 0,
+      zDepth: 1,
       pending: true,
     };
   },
@@ -54,13 +54,13 @@ let MyCard = React.createClass({
 
   _onMouseEnter() {
     this.setState({
-      zDepth: 4,
+      zDepth: 5,
     });
   },
 
   _onMouseLeave() {
     this.setState({
-      zDepth: 0,
+      zDepth: 1,
     });
   },
 
@@ -88,9 +88,9 @@ let MyCard = React.createClass({
     // console.log(this.props.imgIdx + offset);
     // console.log(this.props.imgList && this.props.imgList.length - 1);
     if (this.props.imgList && this.props.imgIdx + offset !== this.props.imgList.length - 1) {
-      this.setState({
-        rightNav: true,
-      });
+      // this.setState({
+        // rightNav: true,
+      // });
     } else {
       this.setState({
         rightNav: false,
@@ -107,6 +107,7 @@ let MyCard = React.createClass({
     if (this.props.imgList && this.props.imgList[index]) {
       this.setState({
         currentImage: `${SERVER_HOST}/images/` + this.props.imgList[index].node.url,
+        pending: true,
       });
       // this.checkLeftNav(this.state.offset - 1);
       // this.checkRightNav(this.state.offset - 1);
@@ -122,6 +123,7 @@ let MyCard = React.createClass({
     if (this.props.imgList && this.props.imgList[index]) {
       this.setState({
         currentImage: `${SERVER_HOST}/images/` + this.props.imgList[index].node.url,
+        pending: true,
       });
       // this.checkLeftNav(this.state.offset + 1);
       // this.checkRightNav(this.state.offset + 1);
@@ -142,7 +144,7 @@ let MyCard = React.createClass({
     }
     return <FloatingActionButton mini={true} linkButton={true}
             style={this.mergeStyles(styles.navButton, nav)}
-            backgroundColor={Colors.grey700}
+            backgroundColor={'#4E69A2'}
             disabled={this.state.leftNav}
             onTouchTap={getImage} >
             {Icon}
@@ -151,10 +153,10 @@ let MyCard = React.createClass({
 
   render() {
     let styles = this.getStyles();
-    console.log(this.state.currentImage);
 
     return (
-      <div>
+      <div onMouseEnter={function() {
+        console.log('mouse Enter'); }}>
         <Dialog
           open={this.state.imageDialogOpenFlag}
           contentStyle={{
@@ -192,7 +194,7 @@ let MyCard = React.createClass({
               position: 'absolute',
               lineHeight: '20px',
             }}>
-              <CircularProgress color={Colors.grey50} size={2} />
+              <CircularProgress color={'#4E69A2'} size={2} />
             </div> }
           {this._getNavButton('right')}
         </Dialog>
@@ -210,12 +212,11 @@ let MyCard = React.createClass({
               currentImage: this.props.img.substring(0, this.props.img.lastIndexOf('?')),
             });
           }.bind(this)}
-          style={this.mergeStyles(
-            styles.root,
-            this.props.lastChild && styles.rootWhenLastChild)}>
-          <img style={this.mergeStyles(
+          style={this.mergeStyles(styles.root,
+                this.props.style)}>
+          {this.props.avatar && <img style={this.mergeStyles(
             styles.image,
-            this.props.imgStyle)} src={this.props.img} />
+            this.props.imgStyle)} src={this.props.img} />}
             {this.props.heading && <h3 style={styles.heading} dangerouslySetInnerHTML={{__html: this.props.heading}}></h3>}
         </Paper>
       </div>
@@ -229,13 +230,20 @@ let MyCard = React.createClass({
     let styles = {
       root: {
         transition: Transitions.easeOut(),
-        margin: '0 auto ' + desktopGutter + 'px auto',
+        backgroundImage: `url(${this.props.img})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'noRepeat',
+        backgroundPosition: '50% 25%',
+        // margin: '0 auto ' + desktopGutter + 'px auto',
+        margin: '0 auto ' + 4 + 'px auto',
       },
       rootWhenMedium: {
       },
       image: {
         verticalAlign: "middle",
         maxWidth: "100%",
+        transitionDuration: '2s',
+        transitionProperty: 'width, height',
         //Not sure why this is needed but it fixes a display
         //issue in chrome
         // marginBottom: -6,
@@ -267,11 +275,11 @@ let MyCard = React.createClass({
         position: 'absolute',
         top: '50%',
         marginTop: '-17px',
+        //need a line height because the dialog line height is set to 300
         lineHeight: '20px',
       },
     };
 
-    styles.root = this.mergeStyles(styles.root, this.props.style);
 
 
     return styles;

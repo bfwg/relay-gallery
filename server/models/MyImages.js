@@ -11,7 +11,8 @@ var MyImages = function() {
 MyImages.prototype = RedisClient;
 
 MyImages.prototype.getAll = function() {
-  return this.lrangeAsync(this.namespace, 0, -1)
+  return this.lrangeAsync(this.namespace, -40, -1)
+  .then(arr => arr.reverse())
   .map((res) => {
     return JSON.parse(res);
   });
@@ -41,6 +42,9 @@ MyImages.prototype.add = function(imageName) {
       obj.id = id;
       obj.url = imageName;
       obj.createTime = Date.now();
+      // flag 1 means show
+      // for futrue delete purpose
+      obj.flag = 1;
       this.rpush(this.namespace, JSON.stringify(obj));
       return id;
     }));
