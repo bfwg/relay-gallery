@@ -3,7 +3,9 @@
 Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook Frontend 3 broad axes).
 
 
-> There's not much documents on how Relay deal with login or file upload. This project is a > Demo gallery site which user can login and upload images to the gallery. From here we can > learn how Relay mutations really work.
+> There's not much documents on how Relay deal with login or file upload. This project is a 
+> Demo gallery site which user can login and upload images to the gallery. From here we can 
+> learn how Relay mutations really work.
 
 
 
