@@ -1,6 +1,6 @@
 import Relay from 'react-relay';
 
-export default class AddImageMutation extends Relay.Mutation {
+class AddImageMutation extends Relay.Mutation {
 
   static fragments = {
     images: () => Relay.QL`
@@ -57,3 +57,5 @@ export default class AddImageMutation extends Relay.Mutation {
   }
 
 }
+
+module.exports = AddImageMutation;

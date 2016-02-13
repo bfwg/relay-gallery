@@ -1,6 +1,6 @@
 import Relay from 'react-relay';
 
-export default class ChangeUserStatusMutation extends Relay.Mutation {
+class ChangeUserStatusMutation extends Relay.Mutation {
   // This mutation declares a dependency on a document's ID
   static fragments = {
     user: () => Relay.QL`
@@ -40,3 +40,5 @@ export default class ChangeUserStatusMutation extends Relay.Mutation {
   }
   /* ... */
 }
+
+module.exports = ChangeUserStatusMutation;

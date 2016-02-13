@@ -155,8 +155,7 @@ let MyCard = React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div onMouseEnter={function() {
-        console.log('mouse Enter'); }}>
+      <div onMouseEnter={function() {console.log('mouse Enter'); }}>
         <Dialog
           open={this.state.imageDialogOpenFlag}
           contentStyle={{
@@ -214,7 +213,8 @@ let MyCard = React.createClass({
           }.bind(this)}
           style={this.mergeStyles(styles.root,
                 this.props.style)}>
-          {this.props.avatar && <img style={this.mergeStyles(
+          {this.props.avatar &&
+            <img style={this.mergeStyles(
             styles.image,
             this.props.imgStyle)} src={this.props.img} />}
             {this.props.heading && <h3 style={styles.heading} dangerouslySetInnerHTML={{__html: this.props.heading}}></h3>}
