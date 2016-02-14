@@ -15,17 +15,12 @@ let MyCard = React.createClass({
   mixins: [StylePropable, StyleResizable],
 
   propTypes: {
-    firstChild: React.PropTypes.bool,
     heading: React.PropTypes.string,
     img: React.PropTypes.string,
-    lastChild: React.PropTypes.bool,
-    route: React.PropTypes.string,
   },
 
   getDefaultProps() {
     return {
-      firstChild: false,
-      lastChild: false,
     };
   },
 
@@ -144,7 +139,6 @@ let MyCard = React.createClass({
     }
     return <FloatingActionButton mini={true} linkButton={true}
             style={this.mergeStyles(styles.navButton, nav)}
-            backgroundColor={'#4E69A2'}
             disabled={this.state.leftNav}
             onTouchTap={getImage} >
             {Icon}
@@ -193,7 +187,7 @@ let MyCard = React.createClass({
               position: 'absolute',
               lineHeight: '20px',
             }}>
-              <CircularProgress color={'#4E69A2'} size={2} />
+              <CircularProgress size={2} />
             </div> }
           {this._getNavButton('right')}
         </Dialog>
@@ -260,16 +254,6 @@ let MyCard = React.createClass({
         padding: '0px 10px 10px 10px',
         paddingTop: 19,
         lineHeight: desktopKeylineIncrement - 15 + 'px',
-      },
-      rootWhenLastChild: {
-        marginBottom: '0px',
-      },
-      rootWhenMediumAndLastChild: {
-        marginRight: '0px',
-        marginBottom: '0px',
-      },
-      rootWhenMediumAndFirstChild: {
-        marginLeft: '0px',
       },
       navButton: {
         position: 'absolute',

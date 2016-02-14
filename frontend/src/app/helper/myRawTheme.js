@@ -7,7 +7,7 @@ module.exports = {
   spacing: Spacing,
   fontFamily: 'Monospace',
   palette: {
-      primary1Color: Colors.cyan500,
+      primary1Color: '#800080',
       primary2Color: Colors.cyan700,
       primary3Color: Colors.lightBlack,
       accent1Color: Colors.pinkA200,

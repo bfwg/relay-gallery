@@ -16,7 +16,6 @@ const RedisStore = require('connect-redis')(session);
 const multer = require('multer');
 
 
-//mercy due to issue https://github.com/graphql/express-graphql/issues/40
 
 app.use(cors());
 app.use(cookieParser());
@@ -35,7 +34,6 @@ app.listen(PORT, () => {
 });
 
 
-// app.use(API);
 
 var storage = multer.memoryStorage();
 app.use('/graphql', multer({ storage }).single('file'));
@@ -53,12 +51,4 @@ app.use('/graphql', graphQLHTTP(req => {
 
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.static(path.join(__dirname, '/../frontend/build')));
-
-// (new MyImages()).add('abc.jpeg')
-// .then(res => {
-  // console.log(res);
-// });
-//
-//testj
-
 

@@ -1,18 +1,18 @@
 "use strict";
 const React = require('react');
 const Relay = require('react-relay');
-const Dialog = require('material-ui/lib/dialog');
 const ThemeManager = require('material-ui/lib/styles/theme-manager');
 const Colors = require('material-ui/lib/styles/colors');
-const Dropzone = require('react-dropzone');
-const AddImageMutation  = require('../mutation/AddImageMutation');
 const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
-const {IconButton, Mixins, Styles} = require('material-ui');
+const {Dialog, IconButton, Mixins, Styles} = require('material-ui');
 const {Spacing} = Styles;
 const {StylePropable, StyleResizable} = Mixins;
-const {FullWidthSection, MyCard, MyRawTheme} = require('../helper');
+const {FullWidthSection, MyRawTheme} = require('../helper');
 const {GitHubIcon, FaceBook, Linkedin} = require('../svgIcons');
 const Login = require('./Login');
+const AddImageMutation  = require('../mutation/AddImageMutation');
+const Dropzone = require('react-dropzone');
+const MyCard = require('./MyCard');
 const {SERVER_HOST} = require('../config');
 
 
