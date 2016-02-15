@@ -23,6 +23,7 @@ module.exports = function(buffer, path, filename, resolve) {
   gm(buffer, filename)
   .autoOrient()
   .write(path, function (err) {
+    console.log(err);
     if (!err) {
       console.log('File saved.');
       resolve();
