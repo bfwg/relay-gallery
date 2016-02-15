@@ -1,11 +1,14 @@
 "use strict";
-const gm = require('gm');
+const gm = require('gm').subClass({ imageMagick: true });;
+const Promise = require('bluebird');
+Promise.promisifyAll(gm.prototype);
+
 const fs = require('fs');
 // const ExifImage = require('exif').ExifImage;
 const MyImages = require('../models/MyImages');
 
 // path is the path to your image
-module.exports = function(buffer, path, filename, resolve) {
+module.exports = function(buffer, path, filename) {
 
 
     // try {
@@ -20,17 +23,16 @@ module.exports = function(buffer, path, filename, resolve) {
       // console.log('Error: ' + error.message);
     // }
 
-  gm(buffer, filename)
+  return gm(buffer, filename)
   .autoOrient()
-  .write(path, function (err) {
-    if (!err) {
-      console.log('File saved.');
-      resolve();
-    } else {
-      console.log(err);
-      (new MyImages()).rewind();
-      throw err;
-    }
+  .writeAsync(path)
+  .then(() => {
+    console.log('File saved.');
+  })
+  .catch(err => {
+    console.log(err);
+    (new MyImages()).rewind();
+    throw err;
   });
 
 

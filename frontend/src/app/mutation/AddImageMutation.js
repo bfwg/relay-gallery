@@ -5,7 +5,7 @@ class AddImageMutation extends Relay.Mutation {
   static fragments = {
     images: () => Relay.QL`
       fragment on User {
-        id
+        id,
       }`,
   };
 
@@ -29,10 +29,12 @@ class AddImageMutation extends Relay.Mutation {
     return Relay.QL`
       fragment on IntroduceImagePayload {
         User {
-          images(first: 100) {
+          images(first: 30) {
             edges {
               node {
+                id,
                 url,
+                createTime,
               }
             }
           }
@@ -51,7 +53,6 @@ class AddImageMutation extends Relay.Mutation {
       edgeName: 'newImageEdge',
       rangeBehaviors: {
         '': 'append',
-        'orderby(oldest)': 'prepend',
       },
     }];
   }

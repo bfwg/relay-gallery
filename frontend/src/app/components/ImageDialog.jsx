@@ -39,11 +39,12 @@ let ImageDialog = React.createClass({
   },
 
   onImageCanel: function() {
+    /* reset current image and offset of dialog */
     this.setState({
       currentImage: this.props.imgUrl.substring(0, this.props.imgUrl.lastIndexOf('?')),
       offset: 0,
     });
-    this.props.onImageCanel;
+    this.props.onImageCanel();
   },
 
   checkLeftNav: function(offset) {
@@ -93,12 +94,13 @@ let ImageDialog = React.createClass({
   },
 
   getPreImg: function() {
-    console.log(this.context);
     this.setState({
       offset: this.state.offset - 1,
     });
 
-    let index = (this.props.imgIdx + this.state.offset - 1 + this.context.imageList.length) % this.context.imageList.length;
+    let index = (this.props.imgIdx + this.state.offset - 1 + this.context.imageList.length)
+    % this.context.imageList.length;
+    console.log(index);
     if (this.context.imageList && this.context.imageList[index]) {
       this.setState({
         currentImage: `${SERVER_HOST}/images/` + this.context.imageList[index].node.url,
@@ -157,7 +159,7 @@ let ImageDialog = React.createClass({
           lineHeight: '300px',
           backgroundColor: 'black',
         }}
-        onRequestClose={this.props.onImageCanel}>
+        onRequestClose={this.onImageCanel}>
         {this._getNavButton('left')}
         <img style={this.mergeStyles(
           this.props.imageStyle,{

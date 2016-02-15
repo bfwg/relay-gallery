@@ -1,6 +1,6 @@
 "use strict";
 const React = require('react');
-const {CircularProgress, FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
+const {FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
 
 const {StylePropable, StyleResizable} = Mixins;
 const {Colors, Spacing, Transitions, Typography} = Styles;

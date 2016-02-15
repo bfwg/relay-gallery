@@ -2,7 +2,7 @@ const React = require('react');
 const Relay = require('react-relay');
 const {Colors, getMuiTheme} = require('material-ui/lib/styles');
 const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
-const {Dialog, IconButton, Mixins, Styles} = require('material-ui');
+const {CircularProgress, Dialog, IconButton, Mixins, Styles} = require('material-ui');
 const {Spacing} = Styles;
 const {StylePropable, StyleResizable} = Mixins;
 const {FullWidthSection, MyRawTheme} = require('../helper');
@@ -73,6 +73,9 @@ const Main = React.createClass({
         let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
         console.log(error);
       };
+      /*
+       * TODO fire mutliple mutations triggars warnings
+       */
       files.forEach((file)=> {
         Relay.Store.commitUpdate(
           new AddImageMutation({
@@ -103,7 +106,7 @@ const Main = React.createClass({
 
     let onFailure = (transaction) => {
       let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
-      console.log(transaction.getError().source.errors[0].message);
+      console.log(error);
       this.setState({
         loginError: error,
         loginPending: false,
@@ -198,12 +201,14 @@ const Main = React.createClass({
         </div>
         {this.props.User.images.edges.map((ele, idx) => {
           return (
-          <MyCard
-            key={idx}
-            style={styles.smallPic}
-            imgStyle={{maxHeight: '100%'}}
-            imgIdx={idx}
-            img={`${SERVER_HOST}/images/${ele.node.url}?w=300&q=70`} />
+            ele.node.url === 'loading' ?
+              <CircularProgress size={2} /> :
+              <MyCard
+                key={ele.node.id}
+                style={styles.smallPic}
+                imgStyle={{maxHeight: '100%'}}
+                imgIdx={idx}
+                img={`${SERVER_HOST}/images/${ele.node.url}?w=300&q=70`} />
           );
         })}
 
@@ -389,8 +394,10 @@ const Main = React.createClass({
 
 
   render() {
+    console.log(this.props.User.images);
 
     let styles = this.getStyles();
+    // console.log(this.props);
 
     return (
       <div style={styles.containerStyle}>
@@ -415,6 +422,7 @@ module.exports = Relay.createContainer(Main, {
         images(first: 30) {
           edges {
             node {
+              id,
               url,
               createTime,
             }

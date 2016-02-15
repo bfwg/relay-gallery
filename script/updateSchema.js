@@ -8,30 +8,7 @@ const introspectionQuery = graphqlUtilities.introspectionQuery;
 const printSchema = graphqlUtilities.printSchema;
 
 // Save JSON of full schema introspection for Babel Relay Plugin to use
-// graphql(schema, introspectionQuery).then(result => {
-  // if (result.errors) {
-    // console.error(
-      // 'ERROR introspecting schema: ',
-      // JSON.stringify(result.errors, null, 2)
-    // );
-  // } else {
-    // fs.writeFileSync(
-      // path.join(__dirname, '../../frontend/schema/schema.json'),
-      // JSON.stringify(result, null, 2)
-    // );
-  // }
-// });
-
-// // Save user readable type system shorthand of schema
-// fs.writeFileSync(
-  // path.join(__dirname, '../../frontend/schema/schema.graphql'),
-  // printSchema(schema)
-// );
-
-
-// Save JSON of full schema introspection for Babel Relay Plugin to use
-(async () => {
-  var result = await (graphql(schema, introspectionQuery));
+graphql(schema, introspectionQuery).then(result => {
   if (result.errors) {
     console.error(
       'ERROR introspecting schema: ',
@@ -39,14 +16,16 @@ const printSchema = graphqlUtilities.printSchema;
     );
   } else {
     fs.writeFileSync(
-      path.join(__dirname, '../../frontend/schema/schema.json'),
+      path.join(__dirname, '../frontend/schema/schema.json'),
       JSON.stringify(result, null, 2)
     );
   }
-})();
+});
 
 // Save user readable type system shorthand of schema
 fs.writeFileSync(
-  path.join(__dirname, '../../frontend/schema/schema.graphql'),
+  path.join(__dirname, '../frontend/schema/schema.graphql'),
   printSchema(schema)
 );
+
+

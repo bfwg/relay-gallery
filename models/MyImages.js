@@ -20,11 +20,12 @@ MyImages.prototype.getAll = function() {
 };
 
 MyImages.prototype.getById = function(index) {
-  return this.lrangeAsync(this.namespace, 0, -1)
+  return this.lrangeAsync(this.namespace, -40, -1)
   .then(arr => {
     return arr.reduce((pre, ele) => {
       if (JSON.parse(ele).id === index)
         return JSON.parse(ele);
+      return pre;
     }, null);
   });
 };

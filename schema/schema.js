@@ -122,35 +122,34 @@ var imageMutation = Relay.mutationWithClientMutationId({
 
 
         //prepare for update view
-        return new Promise(resolve => {
-          uploadFile(file.buffer, filePath, filename, resolve);
-        })
+        return uploadFile(file.buffer, filePath, filename)
         .then(() => {
           return Promise.all(
             [(new MyImages()).getAll(),
               (new MyImages()).getById(payload.insertId)])
           .spread((allImages, newImage) => {
-            var newImageStr = JSON.stringify(newImage);
-            var offset = allImages.reduce((pre, ele, idx) => {
-              if (JSON.stringify(ele) === newImageStr)
+            let newImageStr = JSON.stringify(newImage);
+            let offset = allImages.reduce((pre, ele, idx) => {
+              if (JSON.stringify(ele) === newImageStr) {
                 return idx;
+              }
+              return pre;
             }, -1);
+
+            console.log(offset);
 
             return {
               cursor: offset !== -1 ? Relay.offsetToCursor(offset) : null,
               node: newImage,
             };
-          })
-          .catch((err) => {
-            console.log("Error:", err);
-          })
+          });
         });
       }
     },
     User: {
       type: UserType,
-      resolve: () => (new MyImages()).getAll()
-    }
+      resolve: () => (new MyImages()).getAll(),
+    },
   },
   mutateAndGetPayload: (input) => {
     //break the names to array.
