@@ -1,4 +1,3 @@
-"use strict";
 const React = require('react');
 const LinkedStateMixin = require('react-addons-linked-state-mixin');
 const {
@@ -15,11 +14,16 @@ const {StyleResizable, StylePropable} = Mixins;
 
 const Login = React.createClass({
 
-  mixins: [StyleResizable, StylePropable, LinkedStateMixin],
+  displayName: 'Login',
 
   propTypes: {
-    redirectRoute: React.PropTypes.string,
+    error: React.PropTypes.string,
+    onCancel: React.PropTypes.func,
+    pending: React.PropTypes.bool,
+    submit: React.PropTypes.func,
   },
+
+  mixins: [StyleResizable, StylePropable, LinkedStateMixin],
 
   getDefaultProps() {
     return {
@@ -41,10 +45,6 @@ const Login = React.createClass({
     this.props.submit(userData);
   },
 
-
-  redirectAfterLogin() {
-    //TODO
-  },
 
   getStyles() {
     const styles = {
@@ -91,33 +91,33 @@ const Login = React.createClass({
         <div style={styles.card}>
           <form onSubmit={this.onFormSubmit}>
             <fieldset disabled={this.props.pending} style={styles.fieldset}>
-              <CardTitle title="Login to Upload" />
+              <CardTitle title='Login to Upload' />
               {this.props.error &&
                 <div style={styles.error}>{this.props.error}</div>
               }
               <TextField
-                floatingLabelText="Username"
+                floatingLabelText='Username'
                 underlineShow={false}
-                name="email"
+                name='email'
                 style={styles.textField}
                 valueLink={this.linkState('email')} />
               <TextField
-                floatingLabelText="Password"
-                name="password"
-                type="password"
+                floatingLabelText='Password'
+                name='password'
+                type='password'
                 valueLink={this.linkState('password')} />
               <div style={styles.buttons}>
                 <CardActions>
                   <RaisedButton
                     disabled={this.props.pending}
-                    label="Login!"
+                    label='Login!'
                     secondary={true}
-                    type="submit" />
+                    type='submit' />
                 </CardActions>
                 <CardActions>
                   <RaisedButton
                     onTouchTap={this.props.onCancel}
-                    label="Cancel"
+                    label='Cancel'
                     secondary={false} />
                 </CardActions>
               </div>

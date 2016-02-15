@@ -35,7 +35,7 @@ http://redis.io/
 
 After clone the repo
 ```sh
-$ cd server && npm install
+$ npm install
 $ npm start
 ```
 Now the server is running on port `3000`
@@ -60,14 +60,14 @@ Any issue with build or development please fire a issue.
 Want to contribute? Great!
 Open your favorite Terminal and run these commands.
 
-First Tab:
+First Tab: (frontend at port default:3001)
 ```sh
 $ cd frontent && npm start
 ```
 
-Second Tab:
+Second Tab: (server at port default:3000)
 ```sh
-$ cd server && npm start
+$ npm start
 ```
 
 

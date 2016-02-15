@@ -1,8 +1,6 @@
-"use strict";
 const React = require('react');
 const Relay = require('react-relay');
-const ThemeManager = require('material-ui/lib/styles/theme-manager');
-const Colors = require('material-ui/lib/styles/colors');
+const {Colors, getMuiTheme} = require('material-ui/lib/styles');
 const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
 const {Dialog, IconButton, Mixins, Styles} = require('material-ui');
 const {Spacing} = Styles;
@@ -24,11 +22,23 @@ Relay.injectNetworkLayer(
 
 const Main = React.createClass({
 
+  displayName: 'Main',
+
+  propTypes: {
+    User: React.PropTypes.object,
+  },
+
+  childContextTypes: {
+    muiTheme: React.PropTypes.object,
+    imageList: React.PropTypes.array,
+  },
+
+
   mixins: [StylePropable, StyleResizable],
 
   getInitialState () {
     return {
-      muiTheme: ThemeManager.getMuiTheme(MyRawTheme),
+      muiTheme: getMuiTheme(),
       files: null,
       selectedImageIdx: null,
       loginDialogOpenFlag: false,
@@ -37,26 +47,20 @@ const Main = React.createClass({
     };
   },
 
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
   getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
+      imageList: this.props.User.images.edges,
     };
   },
 
   componentWillMount() {
-    let newMuiTheme = ThemeManager.modifyRawThemePalette(this.state.muiTheme, {
-      accent1Color: Colors.deepOrange500,
+    this.setState({
+      muiTheme: this.state.muiTheme,
     });
-
-    this.setState({muiTheme: newMuiTheme});
   },
 
   onDrop: function (files) {
-    console.log(arguments.length);
     if (this.props.User.username === 'Guest') {
       this.setState({
         loginDialogOpenFlag: true,
@@ -157,7 +161,13 @@ const Main = React.createClass({
   _getAvatar: function() {
     let styles = this.getStyles();
     let myAvatar = `${SERVER_HOST}/images/me.jpg`;
-    let myTitle = "Hi, My name is <span style='color: purple;'>Fan Jin</span> I make things for the web and designs awesome user experiences that enrich people's lives";
+    /* I have no idea why do I have to give this array a key
+      Issue: https://github.com/facebook/react/issues/6038
+      Put 6666 for now  */
+    let myTitle = ["Hi, My name is ",
+      <span key={6666} style={{color: 'purple'}}>Fan Jin</span>,
+        ". I make things for the web and designs awesome user experiences that enrich people's lives"];
+
     return  <FullWidthSection style={styles.avatarContainer} useContent={false}>
         <MyCard
           avatar={true}
@@ -177,7 +187,7 @@ const Main = React.createClass({
     return <FullWidthSection style={styles.imgContainer}>
         <div>
           <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
-          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
+          <Dropzone disableClick={true} style={styles.addImage} ref='dropzone' onDrop={this.onDrop}>
             <MyCard
               avatar={true}
               onClick={this.onUpload}
@@ -193,8 +203,7 @@ const Main = React.createClass({
             style={styles.smallPic}
             imgStyle={{maxHeight: '100%'}}
             imgIdx={idx}
-            imgList={this.props.User.images.edges}
-            img={`${SERVER_HOST}/images/${ele.node.url}?w=500&q=70`} />
+            img={`${SERVER_HOST}/images/${ele.node.url}?w=300&q=70`} />
           );
         })}
 
@@ -222,7 +231,7 @@ const Main = React.createClass({
         <p style={this.prepareStyles(styles.p)}>
           {'Hand crafted with love by Fan Jin'}
         </p>
-        <a href="https://github.com/bfwg">
+        <a href='https://github.com/bfwg'>
           <GitHubIcon style={{
             color: Colors.grey400,
             width: footerIconSize,
@@ -240,14 +249,14 @@ const Main = React.createClass({
         <IconButton
           iconStyle={styles.icon}
           style={styles.iconStyle}
-          href="https://www.facebook.com/people/Fan-Jin/100008957509461"
+          href='https://www.facebook.com/people/Fan-Jin/100008957509461'
           linkButton={true}
           touch={true} >
           <FaceBook/>
         </IconButton>
         <IconButton
           iconStyle={styles.icon}
-          href="https://github.com/bfwg"
+          href='https://github.com/bfwg'
           linkButton={true}
           style={styles.iconStyle}
           touch={true} >
@@ -256,7 +265,7 @@ const Main = React.createClass({
         <IconButton
           iconStyle={styles.icon}
           style={styles.iconStyle}
-          href="https://ca.linkedin.com/in/fan-jin-a65b03a0"
+          href='https://ca.linkedin.com/in/fan-jin-a65b03a0'
           linkButton={true}
           touch={true} >
           <Linkedin/>
@@ -266,21 +275,6 @@ const Main = React.createClass({
 
   },
 
-  render() {
-
-    let styles = this.getStyles();
-
-    return (
-      <div style={styles.containerStyle}>
-        {this._getLoginDialog()}
-        {this._getAvatar()}
-        {this._getSeparator()}
-        {this._getImages()}
-        {this._getSeparator()}
-        {this._getFooter()}
-      </div>
-    );
-  },
 
   getStyles() {
     let iconSize = 48;
@@ -394,7 +388,20 @@ const Main = React.createClass({
   },
 
 
-  _handleTouchTap() {
+  render() {
+
+    let styles = this.getStyles();
+
+    return (
+      <div style={styles.containerStyle}>
+        {this._getLoginDialog()}
+        {this._getAvatar()}
+        {this._getSeparator()}
+        {this._getImages()}
+        {this._getSeparator()}
+        {this._getFooter()}
+      </div>
+    );
   },
 
 });

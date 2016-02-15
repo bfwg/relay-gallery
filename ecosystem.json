@@ -1,0 +1,27 @@
+{
+  apps : [
+
+    // First application
+    {
+      "name"      : "fanjin-web",
+      "script"    : "index.js",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "env_production" : {
+        "NODE_ENV": "production"
+      }
+    },
+  ],
+
+  deploy : {
+    "production" : {
+      "user" : "root",
+      "host" : "159.203.31.187",
+      "ref"  : "origin/master",
+      "repo" : "git@github.com:bfwg/mypage.git",
+      "path" : "/var/www/production",
+      "post-deploy" : "source /root/.nvm/nvm.sh && pm2 restart all"
+    },
+  }
+}
