@@ -140,7 +140,10 @@ var imageMutation = Relay.mutationWithClientMutationId({
               cursor: offset !== -1 ? Relay.offsetToCursor(offset) : null,
               node: newImage,
             };
-          });
+          })
+          .catch((err) => {
+            console.log("Error:", err);
+          })
         });
       }
     },
