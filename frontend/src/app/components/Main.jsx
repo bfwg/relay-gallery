@@ -325,15 +325,6 @@ const Main = React.createClass({
         width: imgContainerWidth,
         marginLeft: (windowWidth - imgContainerWidth) / 2,
       },
-      smallPicLoadingSpinner: {
-        float: 'left',
-        width: imageWH + 'px',
-        height: imageWH + 'px',
-        lineHeight: imageWH - 4 + 'px',
-        marginLeft: imageMargin + 'px',
-        marginRight: imageMargin + 'px',
-        backgroundImage: 'none',
-      },
       smallPic: {
         float: 'left',
         width: imageWH + 'px',

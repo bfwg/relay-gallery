@@ -55,15 +55,15 @@ class AddImageMutation extends Relay.Mutation {
     }];
   }
 
-  // getOptimisticResponse() {
-    // return {
-      // newImageEdge: {
-        // node: {
-          // url: 'upload.png',
-        // },
-      // },
-    // };
-  // }
+  getOptimisticResponse() {
+    return {
+      newImageEdge: {
+        node: {
+          url: null,
+        },
+      },
+    };
+  }
 
 }
 
