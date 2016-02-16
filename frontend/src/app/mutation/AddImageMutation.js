@@ -33,8 +33,6 @@ class AddImageMutation extends Relay.Mutation {
             edges {
               node {
                 id,
-                url,
-                createTime,
               }
             }
           }
@@ -56,6 +54,16 @@ class AddImageMutation extends Relay.Mutation {
       },
     }];
   }
+
+  // getOptimisticResponse() {
+    // return {
+      // newImageEdge: {
+        // node: {
+          // url: 'upload.png',
+        // },
+      // },
+    // };
+  // }
 
 }
 

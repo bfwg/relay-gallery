@@ -208,7 +208,8 @@ const Main = React.createClass({
                 style={styles.smallPic}
                 imgStyle={{maxHeight: '100%'}}
                 imgIdx={idx}
-                img={`${SERVER_HOST}/images/${ele.node.url}?w=300&q=70`} />
+                img={`${SERVER_HOST}/images/${ele.node.url ?
+                  ele.node.url + '?w=300&q=70' : 'loading.gif'}`} />
           );
         })}
 
@@ -394,7 +395,6 @@ const Main = React.createClass({
 
 
   render() {
-    console.log(this.props.User.images);
 
     let styles = this.getStyles();
     // console.log(this.props);

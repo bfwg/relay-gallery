@@ -98,7 +98,6 @@ const Login = React.createClass({
               }
               <TextField
                 floatingLabelText='Username'
-                underlineShow={false}
                 name='email'
                 style={styles.textField}
                 valueLink={this.linkState('email')} />

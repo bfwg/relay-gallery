@@ -121,22 +121,22 @@ var imageMutation = Relay.mutationWithClientMutationId({
 
 
 
-        //prepare for update view
+        //prepare for update image
         return uploadFile(file.buffer, filePath, filename)
         .then(() => {
+          /* Find the offset for new edge*/
           return Promise.all(
             [(new MyImages()).getAll(),
               (new MyImages()).getById(payload.insertId)])
           .spread((allImages, newImage) => {
             let newImageStr = JSON.stringify(newImage);
+            /* If edge is in list return index */
             let offset = allImages.reduce((pre, ele, idx) => {
               if (JSON.stringify(ele) === newImageStr) {
                 return idx;
               }
               return pre;
             }, -1);
-
-            console.log(offset);
 
             return {
               cursor: offset !== -1 ? Relay.offsetToCursor(offset) : null,
@@ -156,15 +156,15 @@ var imageMutation = Relay.mutationWithClientMutationId({
 
     let imageName = input.imageName.substring(0, input.imageName.lastIndexOf('.'));
     let mimeType = input.imageName.substring(input.imageName.lastIndexOf('.'));
-    console.log({imageName});
-    console.log({mimeType});
+    // console.log({imageName});
+    // console.log({mimeType});
 
     //find next id for hash
     return (new MyImages())
     .peekNextImgID(input.imageName)
     .then(id => {
       imageName = md5(imageName + id) + mimeType || '.jpeg';
-      console.log(imageName);
+      // console.log(imageName);
       // insert image
       return (new MyImages())
       .add(imageName);
