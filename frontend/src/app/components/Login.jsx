@@ -40,7 +40,7 @@ const Login = React.createClass({
 
   onFormSubmit(e) {
     e.preventDefault();
-    let userData = `${this.state.email}:${this.state.password}`;
+    const userData = `${this.state.email}:${this.state.password}`;
 
     this.props.submit(userData);
   },
@@ -52,7 +52,7 @@ const Login = React.createClass({
         textAlign: 'center',
       },
       card: {
-        maxWidth: "100%",
+        maxWidth: '100%',
       },
       cardWhenMedium: {
         maxWidth: Spacing.desktopKeylineIncrement * 7,
@@ -77,8 +77,9 @@ const Login = React.createClass({
     };
 
     if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM) ||
-        this.isDeviceSize(StyleResizable.statics.Sizes.LARGE))
+        this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
       styles.card = this.mergeStyles(styles.card, styles.cardWhenMedium);
+    }
 
     return styles;
   },

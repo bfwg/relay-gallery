@@ -3,7 +3,7 @@
   "presets": [
     {
       "plugins": [
-        "./plugins/babelRelayPlugin"
+        "./frontend/plugins/babelRelayPlugin"
       ]
     },
     "react",

@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
-const buildPath = path.resolve(__dirname, 'build');
-const nodeModulesPath = path.resolve(__dirname, 'node_modules');
+const buildPath = path.resolve(__dirname, '../frontend/build');
+const nodeModulesPath = path.resolve(__dirname, '../node_modules');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 const config = {
-  entry: [path.join(__dirname, '/src/app/app.jsx')],
+  entry: [path.join(__dirname, '../frontend/src/app/app.jsx')],
   resolve: {
     //When require, do not have to add these extensions to file's name
     extensions: ["", ".js", ".jsx"],
@@ -31,14 +31,14 @@ const config = {
     //Transfer Files
     new TransferWebpackPlugin([
       {from: 'www'},
-    ], path.resolve(__dirname,"src")),
+    ], path.resolve(__dirname,"../frontend/src")),
   ],
   module: {
     preLoaders: [
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
-        include: [path.resolve(__dirname, "src/app")],
+        include: [path.resolve(__dirname, "../frontend/src/app")],
         exclude: [nodeModulesPath],
       },
     ],
