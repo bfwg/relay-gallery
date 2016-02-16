@@ -1,6 +1,6 @@
 "use strict";
 const React = require('react');
-const {FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
+const {CircularProgress, FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
 
 const {StylePropable, StyleResizable} = Mixins;
 const {Colors, Spacing, Transitions, Typography} = Styles;
@@ -21,6 +21,7 @@ let MyCard = React.createClass({
     img: React.PropTypes.string,
     imgIdx: React.PropTypes.number,
     imgStyle: React.PropTypes.object,
+    loading: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     style: React.PropTypes.object,
   },
@@ -119,6 +120,10 @@ let MyCard = React.createClass({
 
     let styles = this.getStyles();
 
+    /*
+      * if avatar is true means that we not using background image
+      * if img from props is missing it means that we are using progress spinner
+    * */
     return (
       <div onMouseEnter={function() {console.log('mouse Enter'); }}>
         <ImageDialog
@@ -135,10 +140,6 @@ let MyCard = React.createClass({
             this.setState({
               imageDialogOpenFlag: true,
             });
-
-            this.setState({
-              currentImage: this.props.img.substring(0, this.props.img.lastIndexOf('?')),
-            });
           }.bind(this)}
           style={this.mergeStyles(styles.root,
                 this.props.style)}>
@@ -146,6 +147,9 @@ let MyCard = React.createClass({
             <img style={this.mergeStyles(
             styles.image,
             this.props.imgStyle)} src={this.props.img} />}
+          {this.props.loading &&
+            <CircularProgress size={1} /> }
+
           {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
         </Paper>
       </div>

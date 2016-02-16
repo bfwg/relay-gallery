@@ -8,6 +8,7 @@
       "env": {
         "COMMON_VARIABLE": "true"
       },
+      "ignore_watch"     : ["[\\/\\\\]\\./", "node_modules", "static"],
       "env_production" : {
         "NODE_ENV": "production"
       }
@@ -17,7 +18,7 @@
   deploy : {
     "production" : {
       "user" : "root",
-      "host" : "159.203.31.187",
+      "host" : "107.170.192.73",
       "ref"  : "origin/master",
       "repo" : "git@github.com:bfwg/mypage.git",
       "path" : "/var/www/production",

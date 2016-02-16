@@ -21,7 +21,7 @@
     "deploy": "pm2 deploy ecosystem.json production update",
     "test": "echo \"Error: no test specified\" && exit 1",
     "update-schema": "babel-node ./script/updateSchema.js",
-    "build": "webpack --config ./config/webpack-production.config.js --progress --colors && cp -R frontend/build/* static/"
+    "build": "webpack --config ./config/webpack-production.config.js --progress --colors"
   },
   "dependencies": {
     "bluebird": "^2.10.2",

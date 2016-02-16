@@ -164,8 +164,7 @@ const Main = React.createClass({
   _getAvatar: function() {
     let styles = this.getStyles();
     let myAvatar = `${SERVER_HOST}/images/me.jpg`;
-    /* I have no idea why do I have to give this array a key
-      Issue: https://github.com/facebook/react/issues/6038
+    /* Issue: https://github.com/facebook/react/issues/6038
       Put 6666 for now  */
     let myTitle = ["Hi, My name is ",
       <span key={6666} style={{color: 'purple'}}>Fan Jin</span>,
@@ -201,15 +200,13 @@ const Main = React.createClass({
         </div>
         {this.props.User.images.edges.map((ele, idx) => {
           return (
-            ele.node.url === 'loading' ?
-              <CircularProgress size={2} /> :
-              <MyCard
-                key={ele.node.id}
-                style={styles.smallPic}
-                imgStyle={{maxHeight: '100%'}}
-                imgIdx={idx}
-                img={`${SERVER_HOST}/images/${ele.node.url ?
-                  ele.node.url + '?w=300&q=70' : 'loading.gif'}`} />
+            <MyCard
+              key={ele.node.id}
+              loading={!ele.node.url}
+              style={styles.smallPic}
+              imgStyle={{maxHeight: '100%'}}
+              imgIdx={idx}
+              img={`${SERVER_HOST}/images/${ele.node.url}?w=300&q=70`} />
           );
         })}
 
@@ -327,6 +324,15 @@ const Main = React.createClass({
         paddingLeft: imageContainerPadding,
         width: imgContainerWidth,
         marginLeft: (windowWidth - imgContainerWidth) / 2,
+      },
+      smallPicLoadingSpinner: {
+        float: 'left',
+        width: imageWH + 'px',
+        height: imageWH + 'px',
+        lineHeight: imageWH - 4 + 'px',
+        marginLeft: imageMargin + 'px',
+        marginRight: imageMargin + 'px',
+        backgroundImage: 'none',
       },
       smallPic: {
         float: 'left',
