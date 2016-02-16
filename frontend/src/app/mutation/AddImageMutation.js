@@ -50,7 +50,7 @@ class AddImageMutation extends Relay.Mutation {
       connectionName: 'images',
       edgeName: 'newImageEdge',
       rangeBehaviors: {
-        '': 'append',
+        '': 'prepend',
       },
     }];
   }
