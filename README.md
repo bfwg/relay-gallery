@@ -42,13 +42,11 @@ Now the server is running on port `3000`
 
 If you want to develop frontend
 ```sh
-$ cd frontent && npm install
-$ npm start
+$ npm dev-server
 ```
 
 Build frontend to production
 ```sh
-$ cd frontent && npm install
 $ npm run build
 ```
 
@@ -62,7 +60,7 @@ Open your favorite Terminal and run these commands.
 
 First Tab: (frontend at port default:3001)
 ```sh
-$ cd frontent && npm start
+$ npm run dev-server
 ```
 
 Second Tab: (server at port default:3000)
