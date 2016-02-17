@@ -3,7 +3,7 @@ const GraphQL = require('graphql');
 const Relay = require('graphql-relay');
 const User = require('../models/User');
 const MyImages = require('../models/MyImages');
-const Promise = require("bluebird");
+const Promise = require('bluebird');
 const uploadAuth = require('../middleware/uploadAuth');
 const md5 = require('md5');
 const uploadFile = require('../models/uploadImage');
@@ -35,7 +35,7 @@ var ImageType = new GraphQL.GraphQLObjectType({
     createTime: {
       type: GraphQL.GraphQLString,
       description: 'The date image is created',
-    }
+    },
   }),
   interfaces: [nodeDefinition.nodeInterface],
 });
@@ -57,7 +57,7 @@ var UserType = new GraphQL.GraphQLObjectType({
       resolve: (user) => {
         // console.log(user.username);
         return user.username;
-      }
+      },
     },
     images: {
       type: ImageConnectionType,
@@ -80,10 +80,11 @@ const queryType = new GraphQL.GraphQLObjectType({
       type: UserType,
       description: 'A User',
       resolve: (rootValue) => {
-        if (rootValue.request.session && rootValue.request.session.username)
+        if (rootValue.request.session && rootValue.request.session.username) {
           return {username: rootValue.request.session.username};
-        else
+        } else {
           return {username: 'Guest'};
+        }
       },
     },
     node: nodeDefinition.nodeField,
@@ -107,11 +108,11 @@ var imageMutation = Relay.mutationWithClientMutationId({
         var filename = payload.imgNmae;
         var filetype = file.mimetype;
         const filePath = __dirname + '/../static/images/' + filename;
-        console.log("Uploading: " + filename + " type: " + filetype);
+        console.log('Uploading: ' + filename + ' type: ' + filetype);
         //check if user has the Authtifcation to upload
         if (!uploadAuth(options.rootValue.request)) {
           (new MyImages()).rewind();
-          console.log("Upload Access Denined");
+          console.log('Upload Access Denined');
           throw Error('Upload Access Denined');
         }
 
@@ -129,9 +130,9 @@ var imageMutation = Relay.mutationWithClientMutationId({
             [(new MyImages()).getAll(),
               (new MyImages()).getById(payload.insertId)])
           .spread((allImages, newImage) => {
-            let newImageStr = JSON.stringify(newImage);
+            const newImageStr = JSON.stringify(newImage);
             /* If edge is in list return index */
-            let offset = allImages.reduce((pre, ele, idx) => {
+            const offset = allImages.reduce((pre, ele, idx) => {
               if (JSON.stringify(ele) === newImageStr) {
                 return idx;
               }
@@ -144,7 +145,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
             };
           });
         });
-      }
+      },
     },
     User: {
       type: UserType,
@@ -155,7 +156,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
     //break the names to array.
 
     let imageName = input.imageName.substring(0, input.imageName.lastIndexOf('.'));
-    let mimeType = input.imageName.substring(input.imageName.lastIndexOf('.'));
+    const mimeType = input.imageName.substring(input.imageName.lastIndexOf('.'));
     // console.log({imageName});
     // console.log({mimeType});
 
@@ -184,7 +185,7 @@ var userStatucMutation = Relay.mutationWithClientMutationId({
   name: 'UpdateUserStatus',
   inputFields: {
     userData: {
-      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLString)
+      type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLString),
     },
   },
   outputFields: {
@@ -195,13 +196,13 @@ var userStatucMutation = Relay.mutationWithClientMutationId({
         options.rootValue.request.session.username = payload.username;
         return {username: payload.username};
       },
-    }
+    },
   },
 
   mutateAndGetPayload: (input) => {
-    let userDataArray = input.userData.split(':');
-    let username = userDataArray[0];
-    let pass = userDataArray[1];
+    const userDataArray = input.userData.split(':');
+    const username = userDataArray[0];
+    const pass = userDataArray[1];
     return (new User()).login(username, pass)
     .then(response => {
       if (response) {
@@ -210,7 +211,7 @@ var userStatucMutation = Relay.mutationWithClientMutationId({
         throw Error('Incorrect Username or Password');
       }
     });
-  }
+  },
 });
 
 var mutationType = new GraphQL.GraphQLObjectType({
@@ -218,7 +219,7 @@ var mutationType = new GraphQL.GraphQLObjectType({
   fields: () => ({
     introduceImage: imageMutation,
     changeUserStatus: userStatucMutation,
-  })
+  }),
 });
 
 

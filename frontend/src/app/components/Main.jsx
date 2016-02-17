@@ -214,7 +214,7 @@ const Main = React.createClass({
   },
 
   _getSeparator: function() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
     return (
       <FullWidthSection useContent={false} style={this.mergeStyles(
                   styles.imgContainer, {
@@ -286,13 +286,13 @@ const Main = React.createClass({
     let imageWH;
     let imageContainerPadding = Spacing.desktopGutter * 4;
     if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-        imageWH = 206;
+      imageWH = 206;
     } else if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM)) {
-        imageContainerPadding = 0;
-        imageWH = windowWidth / 3 - imageMargin * 3;
+      imageContainerPadding = 0;
+      imageWH = windowWidth / 3 - imageMargin * 3;
     } else {
-        imageContainerPadding = 0;
-        imageWH = windowWidth / 2 - imageMargin * 2;
+      imageContainerPadding = 0;
+      imageWH = windowWidth / 2 - imageMargin * 2;
     }
     let imgContainerWidth = windowWidth - ((windowWidth - imageContainerPadding * 2) % (imageWH + imageMargin * 2));
     let styles = {
@@ -329,7 +329,6 @@ const Main = React.createClass({
         float: 'left',
         width: imageWH + 'px',
         height: imageWH + 'px',
-        lineHeight: imageWH - 4 + 'px',
         marginLeft: imageMargin + 'px',
         marginRight: imageMargin + 'px',
       },

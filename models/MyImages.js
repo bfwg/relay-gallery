@@ -1,10 +1,9 @@
-"use strict";
 const RedisClient = require('./redisClient');
 
-let MyImages = function() {
-  let myImages = this;
-  myImages.namespace = 'FanImageStorage';
-  myImages.IDCountPrefix = 'ImageIDCount';
+const MyImages = function() {
+  const myImages = this;
+  myImages.namespace = '1:gallery';
+  myImages.IDCountPrefix = 'imageIDCount';
 };
 
 
@@ -23,23 +22,30 @@ MyImages.prototype.getById = function(index) {
   return this.lrangeAsync(this.namespace, -40, -1)
   .then(arr => {
     return arr.reduce((pre, ele) => {
-      if (JSON.parse(ele).id === index)
+      if (JSON.parse(ele).id === index) {
         return JSON.parse(ele);
+      }
       return pre;
     }, null);
   });
 };
 
 MyImages.prototype.rewind = function() {
-  this.rpop(this.namespace);
-  this.decr(this.IDCountPrefix);
+  const multi = this.batch();
+  multi
+  .rpop(this.namespace)
+  .decr(this.IDCountPrefix)
+  .exeAsync();
+
+  // this.rpop(this.namespace);
+  // this.decr(this.IDCountPrefix);
 };
 
 MyImages.prototype.add = function(imageName) {
   return (
     this.incrAsync(this.IDCountPrefix)
     .then(id => {
-      let obj = {};
+      const obj = {};
       obj.id = id;
       obj.url = imageName;
       obj.createTime = Date.now();

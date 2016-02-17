@@ -98,7 +98,7 @@ let ImageDialog = React.createClass({
       offset: this.state.offset - 1,
     });
 
-    let index = (this.props.imgIdx + this.state.offset - 1 + this.context.imageList.length)
+    const index = Math.abs(this.props.imgIdx + this.state.offset - 1 + this.context.imageList.length)
     % this.context.imageList.length;
     console.log(index);
     if (this.context.imageList && this.context.imageList[index]) {

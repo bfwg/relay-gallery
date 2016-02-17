@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const React = require('react');
 const {CircularProgress, FloatingActionButton, Dialog, Paper, Mixins, Styles} = require('material-ui');
 
@@ -11,7 +11,7 @@ const {SERVER_HOST} = require('../config');
 const ImageDialog = require('./ImageDialog');
 
 
-let MyCard = React.createClass({
+const MyCard = React.createClass({
 
   displayName: 'MyCard',
 
@@ -75,10 +75,9 @@ let MyCard = React.createClass({
 
 
   getStyles() {
-    let desktopGutter = Spacing.desktopGutter;
-    let desktopKeylineIncrement = Spacing.desktopKeylineIncrement;
+    const desktopKeylineIncrement = Spacing.desktopKeylineIncrement;
 
-    let styles = {
+    const styles = {
       root: {
         transition: Transitions.easeOut(),
         backgroundImage: `url(${this.props.img})`,
@@ -91,8 +90,8 @@ let MyCard = React.createClass({
       rootWhenMedium: {
       },
       image: {
-        verticalAlign: "middle",
-        maxWidth: "100%",
+        verticalAlign: 'middle',
+        maxWidth: '100%',
         //Not sure why this is needed but it fixes a display
         //issue in chrome
         // marginBottom: -6,
@@ -118,11 +117,12 @@ let MyCard = React.createClass({
 
   render() {
 
-    let styles = this.getStyles();
+    const styles = this.getStyles();
 
     /*
+     * props:
       * if avatar is true means that we not using background image
-      * if img from props is missing it means that we are using progress spinner
+      * if loading is true it means that we are using progress spinner
     * */
     return (
       <div onMouseEnter={function() {console.log('mouse Enter'); }}>
@@ -136,7 +136,7 @@ let MyCard = React.createClass({
           zDepth={this.state.zDepth}
           onMouseEnter={this._onMouseEnter}
           onMouseLeave={this._onMouseLeave}
-          onTouchTap={this.props.onClick || function(){
+          onTouchTap={this.props.onClick || function() {
             this.setState({
               imageDialogOpenFlag: true,
             });
@@ -148,8 +148,7 @@ let MyCard = React.createClass({
             styles.image,
             this.props.imgStyle)} src={this.props.img} />}
           {this.props.loading &&
-            <CircularProgress size={1} /> }
-
+            <CircularProgress style={{ top: '50%', transform: 'translateY(-100%)' }} size={1.5} /> }
           {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
         </Paper>
       </div>
