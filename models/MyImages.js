@@ -31,14 +31,8 @@ MyImages.prototype.getById = function(index) {
 };
 
 MyImages.prototype.rewind = function() {
-  const multi = this.batch();
-  multi
-  .rpop(this.namespace)
-  .decr(this.IDCountPrefix)
-  .exeAsync();
-
-  // this.rpop(this.namespace);
-  // this.decr(this.IDCountPrefix);
+  this.rpop(this.namespace);
+  this.decr(this.IDCountPrefix);
 };
 
 MyImages.prototype.add = function(imageName) {

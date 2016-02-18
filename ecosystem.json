@@ -17,8 +17,8 @@
 
   deploy : {
     "production" : {
-      "user" : "root",
-      "host" : "107.170.192.73",
+      "user" : "fan",
+      "host" : "104.236.136.179:10098",
       "ref"  : "origin/master",
       "repo" : "git@github.com:bfwg/mypage.git",
       "path" : "/var/www/production",
