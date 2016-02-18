@@ -18,10 +18,10 @@
   deploy : {
     "production" : {
       "user" : "fan",
-      "host" : "104.236.136.179:10098",
+      "host" : "104.236.136.179 -p10098",
       "ref"  : "origin/master",
-      "repo" : "git@github.com:bfwg/mypage.git",
-      "path" : "/var/www/production",
+      "repo" : "git@github.com:bfwg/relay-gallery.git",
+      "path" : "~/relay-gallery/www/production",
       "post-deploy" : "source /root/.nvm/nvm.sh && pm2 restart all"
     },
   }

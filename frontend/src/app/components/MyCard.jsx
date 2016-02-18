@@ -80,7 +80,7 @@ const MyCard = React.createClass({
     const styles = {
       root: {
         transition: Transitions.easeOut(),
-        backgroundImage: `url(${this.props.img})`,
+        backgroundImage: this.props.loading ? 'none' : `url(${this.props.img})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'noRepeat',
         backgroundPosition: '50% 25%',
@@ -125,7 +125,7 @@ const MyCard = React.createClass({
       * if loading is true it means that we are using progress spinner
     * */
     return (
-      <div onMouseEnter={function() {console.log('mouse Enter'); }}>
+      <div>
         <ImageDialog
           imageDialogOpenFlag={this.state.imageDialogOpenFlag}
           onImageCanel={this.onImageCanel}
