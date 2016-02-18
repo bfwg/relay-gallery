@@ -22,6 +22,7 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:bfwg/relay-gallery.git",
       "path" : "~/relay-gallery/www/production",
+      "post-deploy": "echo Done"
     },
   }
 }
