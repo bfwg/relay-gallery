@@ -22,7 +22,7 @@
       "ref"  : "origin/master",
       "repo" : "git@github.com:bfwg/relay-gallery.git",
       "path" : "~/relay-gallery/www/production",
-      "post-deploy": "pm2 restart index.js --node-args="--harmony""
+      "post-deploy": 'pm2 restart index.js --node-args="--harmony"'
     },
   }
 }
