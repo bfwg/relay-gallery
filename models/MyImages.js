@@ -1,6 +1,7 @@
 'use strict';
 const RedisClient = require('./redisClient');
 
+
 const MyImages = function() {
   const myImages = this;
   myImages.namespace = '1:gallery';

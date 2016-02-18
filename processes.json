@@ -1,0 +1,11 @@
+{
+    "apps" : [{
+        "name" : "relay-gallery",
+        "script" : "index.js",
+        "watch" : true,
+        "ignore_watch"     : ["[\\/\\\\]\\./", "node_modules", "static"],
+        "env_production" : {
+            "NODE_ENV": "production"
+        }
+    }]
+}
