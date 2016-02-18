@@ -1,0 +1,27 @@
+{
+  apps : [
+
+    // First application
+    {
+      "name"      : "fanjin-web",
+      "script"    : "index.js",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "ignore_watch"     : ["[\\/\\\\]\\./", "node_modules", "static"],
+      "env_production" : {
+        "NODE_ENV": "production"
+      }
+    },
+  ],
+
+  deploy : {
+    "production" : {
+      "user" : "fan",
+      "host" : "104.236.136.179 -p10098",
+      "ref"  : "origin/master",
+      "repo" : "git@github.com:bfwg/relay-gallery.git",
+      "path" : "~/relay-gallery/www/production",
+    },
+  }
+}
