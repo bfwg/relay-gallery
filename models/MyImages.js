@@ -1,3 +1,4 @@
+'use strict';
 const RedisClient = require('./redisClient');
 
 const MyImages = function() {

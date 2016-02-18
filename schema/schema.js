@@ -1,3 +1,4 @@
+'use strict';
 const GraphQL = require('graphql');
 const Relay = require('graphql-relay');
 const User = require('../models/User');
