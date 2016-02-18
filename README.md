@@ -8,7 +8,7 @@ Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook 
 > learn how Relay mutations really work.
 
 ### Live Demo
-http://159.203.31.187/
+http://107.170.192.73/
 
 ### Version
 0.6.0
@@ -42,13 +42,11 @@ Now the server is running on port `3000`
 
 If you want to develop frontend
 ```sh
-$ cd frontent && npm install
-$ npm start
+$ npm dev-server
 ```
 
 Build frontend to production
 ```sh
-$ cd frontent && npm install
 $ npm run build
 ```
 
@@ -62,7 +60,7 @@ Open your favorite Terminal and run these commands.
 
 First Tab: (frontend at port default:3001)
 ```sh
-$ cd frontent && npm start
+$ npm run dev-server
 ```
 
 Second Tab: (server at port default:3000)
