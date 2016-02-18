@@ -1,4 +1,3 @@
-"use strict";
 /*
  * Make sure user is login to upload
  * */

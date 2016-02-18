@@ -1,4 +1,3 @@
-"use strict";
 const gm = require('gm').subClass({ imageMagick: true });;
 const Promise = require('bluebird');
 Promise.promisifyAll(gm.prototype);

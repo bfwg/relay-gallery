@@ -1,4 +1,3 @@
-"use strict";
 const RedisClient = require('./redisClient');
 
 var User = function() {};

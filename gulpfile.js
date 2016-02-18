@@ -1,4 +1,3 @@
-"use strict";
 var gulp = require('gulp'),
   nodemon = require('nodemon'),
   shell = require('gulp-shell');
