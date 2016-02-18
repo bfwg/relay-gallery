@@ -8,7 +8,8 @@ Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook 
 > learn how Relay mutations really work.
 
 ### Live Demo
-http://107.170.192.73/
+
+More details coming soon.
 
 ### Version
 0.6.0
