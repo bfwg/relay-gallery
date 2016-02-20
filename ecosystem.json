@@ -1,13 +1,13 @@
 {
   apps : [
 
-    // First application
     {
       "name"      : "fanjin-web",
       "script"    : "index.js",
       "env": {
         "COMMON_VARIABLE": "true"
       },
+      "watch" : true,
       "ignore_watch"     : ["[\\/\\\\]\\./", "node_modules", "static"],
       "env_production" : {
         "NODE_ENV": "production"
