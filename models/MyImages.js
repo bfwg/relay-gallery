@@ -2,16 +2,16 @@
 const RedisClient = require('./redisClient');
 
 
-const MyImages = function() {
+const myImages = function() {
   const myImages = this;
   myImages.namespace = '1:gallery';
   myImages.IDCountPrefix = 'imageIDCount';
 };
 
 
-MyImages.prototype = RedisClient;
+myImages.prototype = RedisClient;
 
-MyImages.prototype.getAll = function() {
+myImages.prototype.getAll = function() {
   return this.lrangeAsync(this.namespace, -40, -1)
   .then(arr => arr.reverse())
   .map((res) => {
@@ -20,11 +20,11 @@ MyImages.prototype.getAll = function() {
 
 };
 
-MyImages.prototype.getById = function(index) {
+myImages.prototype.getById = function(id) {
   return this.lrangeAsync(this.namespace, -40, -1)
   .then(arr => {
     return arr.reduce((pre, ele) => {
-      if (JSON.parse(ele).id === index) {
+      if (JSON.parse(ele).id === id) {
         return JSON.parse(ele);
       }
       return pre;
@@ -32,12 +32,12 @@ MyImages.prototype.getById = function(index) {
   });
 };
 
-MyImages.prototype.rewind = function() {
+myImages.prototype.rewind = function() {
   this.rpop(this.namespace);
   this.decr(this.IDCountPrefix);
 };
 
-MyImages.prototype.add = function(imageName) {
+myImages.prototype.add = function(imageName) {
   return (
     this.incrAsync(this.IDCountPrefix)
     .then(id => {
@@ -53,7 +53,7 @@ MyImages.prototype.add = function(imageName) {
     }));
 };
 
-MyImages.prototype.peekNextImgID = function() {
+myImages.prototype.peekNextImgID = function() {
   return (
     this.getAsync(this.IDCountPrefix)
     .then(id => {
@@ -61,4 +61,4 @@ MyImages.prototype.peekNextImgID = function() {
     })
   );
 };
-module.exports = MyImages;
+module.exports = myImages;

@@ -2,7 +2,7 @@
 const GraphQL = require('graphql');
 const Relay = require('graphql-relay');
 const User = require('../models/User');
-const MyImages = require('../models/MyImages');
+const myImages = require('../models/myImages');
 const Promise = require('bluebird');
 const uploadAuth = require('../middleware/uploadAuth');
 const md5 = require('md5');
@@ -14,7 +14,7 @@ const nodeDefinition = Relay.nodeDefinitions(
   (globalId) => {
     const target = Relay.fromGlobalId(globalId);
     if (target.type === 'Image') {
-      return (new MyImages()).getById(target.id);
+      return (new myImages()).getById(target.id);
     } else {
       return null;
     }
@@ -64,7 +64,7 @@ var UserType = new GraphQL.GraphQLObjectType({
       description: 'A collection of images',
       args: Relay.connectionArgs,
       resolve: (_, args) => Relay.connectionFromPromisedArray(
-        (new MyImages()).getAll(),
+        (new myImages()).getAll(),
         args
       ),
     },
@@ -111,7 +111,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
         console.log('Uploading: ' + filename + ' type: ' + filetype);
         //check if user has the Authtifcation to upload
         if (!uploadAuth(options.rootValue.request)) {
-          (new MyImages()).rewind();
+          (new myImages()).rewind();
           console.log('Upload Access Denined');
           throw Error('Upload Access Denined');
         }
@@ -127,8 +127,8 @@ var imageMutation = Relay.mutationWithClientMutationId({
         .then(() => {
           /* Find the offset for new edge*/
           return Promise.all(
-            [(new MyImages()).getAll(),
-              (new MyImages()).getById(payload.insertId)])
+            [(new myImages()).getAll(),
+              (new myImages()).getById(payload.insertId)])
           .spread((allImages, newImage) => {
             const newImageStr = JSON.stringify(newImage);
             /* If edge is in list return index */
@@ -149,7 +149,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
     },
     User: {
       type: UserType,
-      resolve: () => (new MyImages()).getAll(),
+      resolve: () => (new myImages()).getAll(),
     },
   },
   mutateAndGetPayload: (input) => {
@@ -161,13 +161,13 @@ var imageMutation = Relay.mutationWithClientMutationId({
     // console.log({mimeType});
 
     //find next id for hash
-    return (new MyImages())
+    return (new myImages())
     .peekNextImgID(input.imageName)
     .then(id => {
       imageName = md5(imageName + id) + mimeType || '.jpeg';
       // console.log(imageName);
       // insert image
-      return (new MyImages())
+      return (new myImages())
       .add(imageName);
     })
     .then(id => {
