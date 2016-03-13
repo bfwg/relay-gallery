@@ -5,7 +5,7 @@ Promise.promisifyAll(gm.prototype);
 
 const fs = require('fs');
 // const ExifImage = require('exif').ExifImage;
-const MyImages = require('../models/MyImages');
+const MyImages = require('../models/myImages');
 
 // path is the path to your image
 module.exports = function(buffer, path, filename) {
