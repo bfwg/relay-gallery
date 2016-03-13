@@ -4,7 +4,7 @@ const {StylePropable, StyleResizable} = Mixins;
 const {LeftArrow, RightArrow} = require('../svgIcons');
 const {SERVER_HOST} = require('../config');
 
-let ImageDialog = React.createClass({
+const ImageDialog = React.createClass({
 
   displayName: 'ImageDialog',
 
@@ -75,16 +75,21 @@ let ImageDialog = React.createClass({
 
   _getNavButton: function(leftOrRight) {
     let styles = this.getStyles();
-    let Icon, nav = {}, getImage;
+    let Icon, nav = {}, getImage = function() {};
     if (leftOrRight === 'left') {
       Icon = <LeftArrow />;
       nav.left = 0;
-      getImage = this.getPreImg;
+      if (this.context.imageList.length > 1) {
+        getImage = this.getPreImg;
+      }
     } else {
       Icon = <RightArrow />;
       nav.right = 0;
-      getImage = this.getNextImg;
+      if (this.context.imageList.length > 1) {
+        getImage = this.getNextImg;
+      }
     }
+
     return <FloatingActionButton mini={true} linkButton={true}
             style={this.mergeStyles(styles.navButton, nav)}
             disabled={this.state.leftNav}
@@ -117,6 +122,7 @@ let ImageDialog = React.createClass({
       offset: this.state.offset + 1,
     });
     let index = (this.props.imgIdx + this.state.offset + 1) % this.context.imageList.length;
+    console.log(index);
     if (this.context.imageList && this.context.imageList[index]) {
       this.setState({
         currentImage: `${SERVER_HOST}/images/` + this.context.imageList[index].node.url,
@@ -146,7 +152,7 @@ let ImageDialog = React.createClass({
       <Dialog
         open={this.props.imageDialogOpenFlag}
         contentStyle={{
-          width: "100%",
+          width: '100%',
           textAlign: 'center',
           position: 'absolute',
           left: '50%',
@@ -162,9 +168,9 @@ let ImageDialog = React.createClass({
         onRequestClose={this.onImageCanel}>
         {this._getNavButton('left')}
         <img style={this.mergeStyles(
-          this.props.imageStyle,{
+          this.props.imageStyle, {
             maxHeight: window.innerHeight - 200,
-            visibility: this.state.pending ? 'hidden' : 'visible',
+            display: this.state.pending ? 'none' : 'inline',
           })}
           onLoad={() => {
             this.setState({
