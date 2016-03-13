@@ -90,7 +90,7 @@ MIT
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-   [fanjin.computer] <http://fanjin.computer/>
+   [fanjin.computer]: <http://fanjin.computer/>
    [React]: <http://facebook.github.io/react/>
    [Relay]: <https://facebook.github.io/relay/>
    [Graphql]:  <https://github.com/facebook/graphql>
