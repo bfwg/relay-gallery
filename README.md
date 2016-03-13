@@ -9,7 +9,7 @@ Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook 
 
 ### Live Demo
 
-More details coming soon.
+fanjin.computer
 
 ### Version
 0.6.0
