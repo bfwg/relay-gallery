@@ -120,7 +120,7 @@ Use [ngx_http_image_filter_module] to make the image load faster!
 
  - Add delete pictures feature
  - Modularization
- - Add Code Comments
+ - Add more code comments
 
 License
 ----
