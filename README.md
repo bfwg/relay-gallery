@@ -1,5 +1,7 @@
 # Relay Gallery
 
+![alt tag](http://reactjscamp.com/images/roger-stack.png)
+
 Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook Frontend 3 broad axes).
 
 
@@ -9,7 +11,7 @@ Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook 
 
 ### Live Demo
 
-More details coming soon.
+[fanjin.computer]
 
 ### Version
 0.6.0
@@ -71,15 +73,54 @@ $ npm start
 
 
 ### NGINX config
+Use [ngx_http_image_filter_module] to make the image load faster!
 
-More details coming soon.
 
+ ```
+ server {
+        listen 3005;
+
+        root /xxx/xxx/projects/relay-gallery/static;
+
+        location / {
+                proxy_set_header x-forwarded-host $host;
+                proxy_set_header x-forwarded-server $host;
+                proxy_set_header x-forwarded-for $proxy_add_x_forwarded_for;
+                proxy_pass              http://localhost:3000;
+        }
+
+        location ~ /(graphql|login|upload) {
+              proxy_pass http://localhost:3000;
+        }
+
+
+
+        location ~ /images/(.*)$ {
+
+            set $width "-";
+            set $quality "75";
+            if ($arg_w != '')
+            {
+              set $width $arg_w;
+            }
+            if ($arg_q != '')
+            {
+              set $quality $arg_q;
+            }
+
+            image_filter resize $width -;
+            image_filter_jpeg_quality $quality;
+        }
+
+ }
+
+```
 
 ### Todos
 
  - Add delete pictures feature
  - Modularization
- - Add Code Comments
+ - Add more code comments
 
 License
 ----
@@ -90,7 +131,8 @@ MIT
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-
+   [ngx_http_image_filter_module]: <http://nginx.org/en/docs/http/ngx_http_image_filter_module.html>
+   [fanjin.computer]: <http://fanjin.computer/>
    [React]: <http://facebook.github.io/react/>
    [Relay]: <https://facebook.github.io/relay/>
    [Graphql]:  <https://github.com/facebook/graphql>
