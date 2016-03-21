@@ -125,7 +125,7 @@ const MyCard = React.createClass({
       * if loading is true it means that we are using progress spinner
     * */
     return (
-      <div>
+      <div style={{display: 'inline-block'}}>
         <ImageDialog
           imageDialogOpenFlag={this.state.imageDialogOpenFlag}
           onImageCanel={this.onImageCanel}

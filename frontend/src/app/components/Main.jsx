@@ -60,7 +60,7 @@ const Main = React.createClass({
     });
   },
 
-  onDrop: function (files) {
+  onDrop: function(files) {
     if (this.props.User.username === 'Guest') {
       this.setState({
         loginDialogOpenFlag: true,
@@ -94,7 +94,7 @@ const Main = React.createClass({
       loginPending: true,
     });
 
-    let onSuccess = () => {
+    const onSuccess = () => {
       this.setState({
         loginError: '',
         loginPending: false,
@@ -104,8 +104,8 @@ const Main = React.createClass({
       console.log('Login successful!');
     };
 
-    let onFailure = (transaction) => {
-      let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
+    const onFailure = (transaction) => {
+      const error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
       console.log(error);
       this.setState({
         loginError: error,
@@ -174,7 +174,7 @@ const Main = React.createClass({
         <MyCard
           avatar={true}
           style={styles.bigPic}
-          imgStyle={{width: '100%', maxWidth: '420px'}}
+          imgStyle={{width: '100%'}}
           onClick={() => {
             window.location.href = 'https://github.com/bfwg/mypage';
           }}
@@ -186,7 +186,7 @@ const Main = React.createClass({
 
   _getImages: function() {
     let styles = this.getStyles();
-    return <FullWidthSection style={styles.imgContainer}>
+    return <div style={styles.imgContainer}>
         <div>
           <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
           <Dropzone disableClick={true} style={styles.addImage} ref='dropzone' onDrop={this.onDrop}>
@@ -210,19 +210,19 @@ const Main = React.createClass({
           );
         })}
 
-      </FullWidthSection>;
+      </div>;
   },
 
   _getSeparator: function() {
     const styles = this.getStyles();
     return (
-      <FullWidthSection useContent={false} style={this.mergeStyles(
+      <div useContent={false} style={this.mergeStyles(
                   styles.imgContainer, {
                     paddingTop: '0px',
                     paddingBottom: '0px',
                 })}>
         <hr/>
-      </FullWidthSection>
+      </div>
     );
   },
 
@@ -280,9 +280,9 @@ const Main = React.createClass({
 
 
   getStyles() {
-    let iconSize = 48;
-    let windowWidth = window.innerWidth - 16;
-    let imageMargin = 4;
+    const iconSize = 48;
+    const windowWidth = window.innerWidth - 16;
+    const imageMargin = 4;
     let imageWH;
     let imageContainerPadding = Spacing.desktopGutter * 4;
     if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
@@ -294,8 +294,8 @@ const Main = React.createClass({
       imageContainerPadding = 0;
       imageWH = windowWidth / 2 - imageMargin * 2;
     }
-    let imgContainerWidth = windowWidth - ((windowWidth - imageContainerPadding * 2) % (imageWH + imageMargin * 2));
-    let styles = {
+    const imgContainerWidth = windowWidth - ((windowWidth - imageContainerPadding * 2) % (imageWH + imageMargin * 2));
+    const styles = {
       icon: {
         width: iconSize + 'px',
         height: iconSize + 'px',
@@ -320,13 +320,16 @@ const Main = React.createClass({
         wh: imageWH,
       },
       imgContainer: {
-        paddingRight: imageContainerPadding,
-        paddingLeft: imageContainerPadding,
+        display: 'inline-block',
+        // paddingRight: imageContainerPadding,
+        // paddingLeft: imageContainerPadding,
         width: imgContainerWidth,
-        marginLeft: (windowWidth - imgContainerWidth) / 2,
+        maxWidth: (imageWH + imageMargin * 2) * 5,
+        // marginLeft: (windowWidth - imgContainerWidth) / 2,
       },
       smallPic: {
-        float: 'left',
+        display: 'inline-block',
+        // float: 'left',
         width: imageWH + 'px',
         height: imageWH + 'px',
         marginLeft: imageMargin + 'px',
@@ -334,14 +337,14 @@ const Main = React.createClass({
       },
       bigPic: {
         width: '100%',
-        maxWidth: '420px',
+        maxWidth: '395px',
         marginRight: 'auto',
         padding: '0px',
         backgroundImage: 'none',
       },
       bigPicWhenMedium: {
         // width: '33%',
-        maxWidth: '420px',
+        maxWidth: '395px',
       },
       addImage: {
         // float: 'none',
