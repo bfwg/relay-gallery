@@ -168,7 +168,7 @@ const Main = React.createClass({
       Put 6666 for now  */
     let myTitle = ["Hi, My name is ",
       <span key={6666} style={{color: 'purple'}}>Fan Jin</span>,
-        ". I make things for the web and designs awesome user experiences that enrich people's lives"];
+        ". I make things for the web and design awesome user experiences that enrich people's lives"];
 
     return  <FullWidthSection style={styles.avatarContainer} useContent={false}>
         <MyCard
