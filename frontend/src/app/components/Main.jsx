@@ -310,7 +310,7 @@ const Main = React.createClass({
         // paddingTop: '50px',
       },
       avatarContainer: {
-        padding: '0px 0px 48px 0px !important',
+        padding: '0px 0px 0px 0px !important',
       },
       avatarContainerWhenMedium: {
         padding: '24px',
