@@ -170,7 +170,7 @@ const Main = React.createClass({
       <span key={6666} style={{color: 'purple'}}>Fan Jin</span>,
         ". I make things for the web and design awesome user experiences that enrich people's lives"];
 
-    return  <FullWidthSection style={styles.avatarContainer} useContent={false}>
+    return  <div style={styles.avatarContainer} useContent={false}>
         <MyCard
           avatar={true}
           style={styles.bigPic}
@@ -181,7 +181,7 @@ const Main = React.createClass({
           heading={myTitle}
           img={myAvatar} />
           {this._getLinkIconButtonGroup()}
-      </FullWidthSection>;
+      </div>;
   },
 
   _getImages: function() {
@@ -310,11 +310,10 @@ const Main = React.createClass({
         // paddingTop: '50px',
       },
       avatarContainer: {
-        padding: '0px 0px 0px 0px !important',
+        padding: '0px',
       },
       avatarContainerWhenMedium: {
         padding: '24px',
-        paddingTop: '48px',
       },
       imageResize: {
         wh: imageWH,
