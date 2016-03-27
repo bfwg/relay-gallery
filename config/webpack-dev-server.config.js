@@ -31,6 +31,11 @@ var config = {
     filename: 'app.js'
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
     //Enables Hot Modules Replacement
     new webpack.HotModuleReplacementPlugin(),
     //Allows error warnings but does not stop compiling. Will remove when eslint is added

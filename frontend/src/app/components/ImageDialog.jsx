@@ -2,7 +2,7 @@ const React = require('react');
 const {CircularProgress, FloatingActionButton, Dialog, Mixins} = require('material-ui');
 const {StylePropable, StyleResizable} = Mixins;
 const {LeftArrow, RightArrow} = require('../svgIcons');
-const {SERVER_HOST} = require('../config');
+// const {SERVER_HOST} = require('../config');
 
 const ImageDialog = React.createClass({
 
@@ -90,12 +90,14 @@ const ImageDialog = React.createClass({
       }
     }
 
-    return <FloatingActionButton mini={true} linkButton={true}
-            style={this.mergeStyles(styles.navButton, nav)}
-            disabled={this.state.leftNav}
-            onTouchTap={getImage} >
-            {Icon}
-          </FloatingActionButton>;
+    return (
+      <FloatingActionButton mini={true} linkButton={true}
+        style={this.mergeStyles(styles.navButton, nav)}
+        disabled={this.state.leftNav}
+        onTouchTap={getImage} >
+        {Icon}
+      </FloatingActionButton>
+    );
   },
 
   getPreImg: function() {
@@ -108,7 +110,7 @@ const ImageDialog = React.createClass({
     console.log(index);
     if (this.context.imageList && this.context.imageList[index]) {
       this.setState({
-        currentImage: `${SERVER_HOST}/images/` + this.context.imageList[index].node.url,
+        currentImage: '/images/' + this.context.imageList[index].node.url,
         pending: true,
       });
       // this.checkLeftNav(this.state.offset - 1);
@@ -125,7 +127,7 @@ const ImageDialog = React.createClass({
     console.log(index);
     if (this.context.imageList && this.context.imageList[index]) {
       this.setState({
-        currentImage: `${SERVER_HOST}/images/` + this.context.imageList[index].node.url,
+        currentImage: '/images/' + this.context.imageList[index].node.url,
         pending: true,
       });
       // this.checkLeftNav(this.state.offset + 1);
@@ -169,7 +171,7 @@ const ImageDialog = React.createClass({
         {this._getNavButton('left')}
         <img style={this.mergeStyles(
           this.props.imageStyle, {
-            maxHeight: window.innerHeight - 200,
+            maxHeight: 600,
             display: this.state.pending ? 'none' : 'inline',
           })}
           onLoad={() => {

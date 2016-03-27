@@ -19,19 +19,30 @@ const config = {
     filename: 'app.js',  //Name of output file
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
+    new webpack.optimize.DedupePlugin(),
     //Minify the bundle
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
       compress: {
         //supresses warnings, usually from module minification
         warnings: false,
+      },
+      output: {
+        comments: false,
       },
     }),
     //Allows error warnings but does not stop compiling. Will remove when eslint is added
     new webpack.NoErrorsPlugin(),
     //Transfer Files
     new TransferWebpackPlugin([
-      {from: 'www'},
-    ], path.resolve(__dirname,"../frontend/src")),
+      {from: 'images', to: 'images'},
+      {from: 'css', to: 'css'},
+    ], path.resolve(__dirname, '../frontend/src/www')),
   ],
   module: {
     preLoaders: [

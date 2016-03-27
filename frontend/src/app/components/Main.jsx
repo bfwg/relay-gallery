@@ -1,21 +1,20 @@
 const React = require('react');
 const Relay = require('react-relay');
-const {Colors, getMuiTheme} = require('material-ui/lib/styles');
-const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
-const {CircularProgress, Dialog, IconButton, Mixins, Styles} = require('material-ui');
-const {Spacing} = Styles;
+const CircularProgress = require('material-ui/lib/circular-progress');
+const Dialog = require('material-ui/lib/dialog');
+const IconButton = require('material-ui/lib/icon-button');
+const Styles = require('material-ui/lib/styles');
+
+const Mixins = require('material-ui/lib/mixins');
 const {StylePropable, StyleResizable} = Mixins;
+const {Colors, getMuiTheme} = require('material-ui/lib/styles');
+const {Spacing} = Styles;
 const {FullWidthSection, MyRawTheme} = require('../helper');
-const {GitHubIcon, FaceBook, Linkedin} = require('../svgIcons');
-const Login = require('./Login');
-const AddImageMutation  = require('../mutation/AddImageMutation');
-const Dropzone = require('react-dropzone');
-const MyCard = require('./MyCard');
-const {SERVER_HOST} = require('../config');
+// const {SERVER_HOST} = require('../config');
 
 
 Relay.injectNetworkLayer(
-  new Relay.DefaultNetworkLayer(`${SERVER_HOST}/graphql`, {
+  new Relay.DefaultNetworkLayer('/graphql', {
     credentials: 'same-origin',
   })
 );
@@ -60,228 +59,18 @@ const Main = React.createClass({
     });
   },
 
-  onDrop: function(files) {
-    if (this.props.User.username === 'Guest') {
-      this.setState({
-        loginDialogOpenFlag: true,
-      });
-    } else {
-      let onSuccess = () => {
-        console.log('Mutation successful!');
-      };
-      let onFailure = (transaction) => {
-        let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
-        console.log(error);
-      };
-      /*
-       * TODO fire mutliple mutations triggars warnings
-       */
-      files.forEach((file)=> {
-        Relay.Store.commitUpdate(
-          new AddImageMutation({
-            file,
-            images: this.props.User,
-          }),
-          {onSuccess, onFailure}
-        );
-      });
-    }
-  },
 
-  onSubmitLogin: function(userData) {
 
-    this.setState({
-      loginPending: true,
-    });
 
-    const onSuccess = () => {
-      this.setState({
-        loginError: '',
-        loginPending: false,
-        loginDialogOpenFlag: false,
-      });
-      this.refs.dropzone.open();
-      console.log('Login successful!');
-    };
 
-    const onFailure = (transaction) => {
-      const error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
-      console.log(error);
-      this.setState({
-        loginError: error,
-        loginPending: false,
-      });
-    };
 
-    Relay.Store.commitUpdate(
-      new ChangeUserStatusMutation({
-        userData,
-        user: this.props.User,
-      }),
-      {onSuccess, onFailure}
-    );
-  },
 
-  onLoginCanel: function() {
-    this.setState({
-      loginDialogOpenFlag: false,
-      loginPending: false,
-      loginError: '',
-    });
-  },
 
-  onUpload: function() {
-    if (this.props.User.username === 'Guest') {
-      this.setState({
-        loginDialogOpenFlag: true,
-      });
-    } else {
-      this.refs.dropzone.open();
-    }
-  },
-
-  _getLoginDialog: function() {
-    return (
-        <Dialog
-          open={this.state.loginDialogOpenFlag}
-          contentStyle={{
-            maxWidth: 430,
-            width: '100%',
-            textAlign: 'center',
-          }}
-          onRequestClose={this.onLoginCanel}
-          autoScrollBodyContent={true}>
-          <Login
-            pending={this.state.loginPending}
-            error={this.state.loginError}
-            submit={this.onSubmitLogin}
-            onCancel={this.onLoginCanel} />
-        </Dialog>
-
-    );
-  },
-
-  _getAvatar: function() {
-    let styles = this.getStyles();
-    let myAvatar = `${SERVER_HOST}/images/me.jpg`;
-    /* Issue: https://github.com/facebook/react/issues/6038
-      Put 6666 for now  */
-    let myTitle = ["Hi, My name is ",
-      <span key={6666} style={{color: 'purple'}}>Fan Jin</span>,
-        ". I make things for the web and design awesome user experiences that enrich people's lives"];
-
-    return  <div style={styles.avatarContainer} useContent={false}>
-        <MyCard
-          avatar={true}
-          style={styles.bigPic}
-          imgStyle={{width: '100%'}}
-          onClick={() => {
-            window.location.href = 'https://github.com/bfwg/mypage';
-          }}
-          heading={myTitle}
-          img={myAvatar} />
-          {this._getLinkIconButtonGroup()}
-      </div>;
-  },
-
-  _getImages: function() {
-    let styles = this.getStyles();
-    return <div style={styles.imgContainer}>
-        <div>
-          <h1 style={{fontFamily: 'Monospace'}}> Me and More! </h1>
-          <Dropzone disableClick={true} style={styles.addImage} ref='dropzone' onDrop={this.onDrop}>
-            <MyCard
-              avatar={true}
-              onClick={this.onUpload}
-              style={{backgroundImage: 'none'}}
-              imgStyle={{maxHeight: '100%'}}
-              img={`${SERVER_HOST}/images/upload.png`}/>
-          </Dropzone>
-        </div>
-        {this.props.User.images.edges.map((ele, idx) => {
-          return (
-            <MyCard
-              key={ele.node.id}
-              loading={!ele.node.url}
-              style={styles.smallPic}
-              imgStyle={{maxHeight: '100%'}}
-              imgIdx={idx}
-              img={`${SERVER_HOST}/images/${ele.node.url}?w=300&q=70`} />
-          );
-        })}
-
-      </div>;
-  },
-
-  _getSeparator: function() {
-    const styles = this.getStyles();
-    return (
-      <div useContent={false} style={this.mergeStyles(
-                  styles.imgContainer, {
-                    paddingTop: '0px',
-                    paddingBottom: '0px',
-                })}>
-        <hr/>
-      </div>
-    );
-  },
-
-  _getFooter: function() {
-    let footerIconSize = 38;
-    let styles = this.getStyles();
-    return (
-      <div style={styles.footer}>
-        <p style={this.prepareStyles(styles.p)}>
-          {'Hand crafted with love by Fan Jin'}
-        </p>
-        <a href='https://github.com/bfwg'>
-          <GitHubIcon style={{
-            color: Colors.grey400,
-            width: footerIconSize,
-            height: footerIconSize,
-          }}/>
-        </a>
-      </div>
-    );
-  },
-
-  _getLinkIconButtonGroup: function() {
-    let styles = this.getStyles();
-    return (
-      <div>
-        <IconButton
-          iconStyle={styles.icon}
-          style={styles.iconStyle}
-          href='https://www.facebook.com/people/Fan-Jin/100008957509461'
-          linkButton={true}
-          touch={true} >
-          <FaceBook/>
-        </IconButton>
-        <IconButton
-          iconStyle={styles.icon}
-          href='https://github.com/bfwg'
-          linkButton={true}
-          style={styles.iconStyle}
-          touch={true} >
-          <GitHubIcon/>
-        </IconButton>
-        <IconButton
-          iconStyle={styles.icon}
-          style={styles.iconStyle}
-          href='https://ca.linkedin.com/in/fan-jin-a65b03a0'
-          linkButton={true}
-          touch={true} >
-          <Linkedin/>
-        </IconButton>
-      </div>
-    );
-
-  },
 
 
   getStyles() {
     const iconSize = 48;
-    const windowWidth = window.innerWidth - 16;
+    const windowWidth = document.documentElement.clientWidth - 16;
     const imageMargin = 4;
     let imageWH;
     let imageContainerPadding = Spacing.desktopGutter * 4;
@@ -322,9 +111,12 @@ const Main = React.createClass({
         display: 'inline-block',
         // paddingRight: imageContainerPadding,
         // paddingLeft: imageContainerPadding,
-        width: imgContainerWidth,
+        width: '100%',
         maxWidth: (imageWH + imageMargin * 2) * 5,
         // marginLeft: (windowWidth - imgContainerWidth) / 2,
+      },
+      imgContainerWhenMedium: {
+        width: imgContainerWidth,
       },
       smallPic: {
         display: 'inline-block',
@@ -386,6 +178,10 @@ const Main = React.createClass({
         styles.avatarContainer,
         styles.avatarContainerWhenMedium
       );
+      styles.img = this.mergeStyles(
+        styles.imgContainer,
+        styles.imgContainerWhenMedium
+      );
 
     }
     return styles;
@@ -396,15 +192,13 @@ const Main = React.createClass({
 
     let styles = this.getStyles();
     // console.log(this.props);
+    // console.log(window.innerWidth - 16);
+    // console.log(document.documentElement.clientWidth - 16);
+
 
     return (
       <div style={styles.containerStyle}>
-        {this._getLoginDialog()}
-        {this._getAvatar()}
-        {this._getSeparator()}
-        {this._getImages()}
-        {this._getSeparator()}
-        {this._getFooter()}
+      abc
       </div>
     );
   },
@@ -426,8 +220,6 @@ module.exports = Relay.createContainer(Main, {
             }
           }
         }
-      ${AddImageMutation.getFragment('images')},
-      ${ChangeUserStatusMutation.getFragment('user')},
       }
     `,
   },

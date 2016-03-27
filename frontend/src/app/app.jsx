@@ -1,25 +1,39 @@
-let React = require('react');
-let ReactDOM = require('react-dom');
-let injectTapEventPlugin = require('react-tap-event-plugin');
-let Main = require('./components/Main'); // Our custom react component
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { useRouterHistory } from 'react-router';
+import AppRoutes from './AppRoutes';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { createHashHistory } from 'history';
+import IsomorphicRelay from 'isomorphic-relay';
+import IsomorphicRouter from 'isomorphic-relay-router';
 
-let Relay = require('react-relay');
-let UserRoute = require('./routes/UserRoute');
+//Needed for React Developer Tools
+window.React = React;
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
-//Check this repo:
-//https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-// Render the main app react component into the app div.
-// For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-// ReactDOM.render(<Main />, document.getElementById('app'));
+if (process.env.NODE_ENV === 'production') {
+  IsomorphicRelay.injectPreparedData(JSON.parse(document.getElementById('preload').textContent));
+}
 
+/**
+ * Render the main app component. You can read more about the react-router here:
+ */
 ReactDOM.render(
-  <Relay.RootContainer
-    Component={Main}
-    route={new UserRoute()}
-  />,
+  <IsomorphicRouter.Router
+    history={useRouterHistory(createHashHistory)({queryKey: false})}
+    onReadyStateChange={({ready, done}) => ready && done ? window.scrollTo(0, 0) : null}>
+    {AppRoutes}
+  </IsomorphicRouter.Router>,
   document.getElementById('app')
 );
+// ReactDOM.render(
+  // <RelayRouter
+    // history={useRouterHistory(createHashHistory)({queryKey: false})}
+    // onUpdate={() => window.scrollTo(0, 0)}>
+    // {AppRoutes}
+  // </RelayRouter>,
+  // document.getElementById('app')
+// );

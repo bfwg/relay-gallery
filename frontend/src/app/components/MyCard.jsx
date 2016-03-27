@@ -7,7 +7,6 @@ const {Colors, Spacing, Transitions, Typography} = Styles;
 
 const {LeftArrow, RightArrow} = require('../svgIcons');
 
-const {SERVER_HOST} = require('../config');
 const ImageDialog = require('./ImageDialog');
 
 
@@ -16,6 +15,7 @@ const MyCard = React.createClass({
   displayName: 'MyCard',
 
   propTypes: {
+    upload: React.PropTypes.bool,
     avatar: React.PropTypes.bool,
     heading: React.PropTypes.array,
     img: React.PropTypes.string,
@@ -125,33 +125,38 @@ const MyCard = React.createClass({
       * if loading is true it means that we are using progress spinner
     * */
     return (
-      <div style={{display: 'inline-block'}}>
+      <Paper
+        zDepth={this.state.zDepth}
+        onMouseEnter={this._onMouseEnter}
+        onMouseLeave={this._onMouseLeave}
+        onTouchTap={this.props.onClick || (!this.props.avatar && !this.props.upload && function() {
+          this.setState({
+            imageDialogOpenFlag: true,
+          });
+        }.bind(this))}
+        style={this.mergeStyles(styles.root, this.props.style)} >
+        {this.props.avatar && (
+          <a href="https://github.com/bfwg/mypage">
+            <img style={this.mergeStyles(
+            styles.image,
+            this.props.imgStyle)} src={this.props.img} />
+          </a>
+        )}
+        {this.props.upload && (
+          <img style={this.mergeStyles(
+          styles.image,
+          this.props.imgStyle)} src={this.props.img} />
+        )}
+        {this.props.loading &&
+          <CircularProgress style={{ top: '50%', transform: 'translateY(-100%)' }} size={1.5} /> }
+        {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
         <ImageDialog
           imageDialogOpenFlag={this.state.imageDialogOpenFlag}
           onImageCanel={this.onImageCanel}
           imgUrl={this.props.img}
           imageStyle={styles.image}
           imgIdx={this.props.imgIdx} />
-        <Paper
-          zDepth={this.state.zDepth}
-          onMouseEnter={this._onMouseEnter}
-          onMouseLeave={this._onMouseLeave}
-          onTouchTap={this.props.onClick || function() {
-            this.setState({
-              imageDialogOpenFlag: true,
-            });
-          }.bind(this)}
-          style={this.mergeStyles(styles.root,
-                this.props.style)}>
-          {this.props.avatar &&
-            <img style={this.mergeStyles(
-            styles.image,
-            this.props.imgStyle)} src={this.props.img} />}
-          {this.props.loading &&
-            <CircularProgress style={{ top: '50%', transform: 'translateY(-100%)' }} size={1.5} /> }
-          {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
-        </Paper>
-      </div>
+      </Paper>
     );
   },
 });

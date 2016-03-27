@@ -92,32 +92,32 @@ const Login = React.createClass({
         <div style={styles.card}>
           <form onSubmit={this.onFormSubmit}>
             <fieldset disabled={this.props.pending} style={styles.fieldset}>
-              <CardTitle title='Login to Upload' />
+              <CardTitle title="Login to Upload" />
               {this.props.error &&
                 <div style={styles.error}>{this.props.error}</div>
               }
               <TextField
-                floatingLabelText='Username'
-                name='email'
+                floatingLabelText="Username"
+                name="email"
                 style={styles.textField}
                 valueLink={this.linkState('email')} />
               <TextField
-                floatingLabelText='Password'
-                name='password'
-                type='password'
+                floatingLabelText="Password"
+                name="password"
+                type="password"
                 valueLink={this.linkState('password')} />
               <div style={styles.buttons}>
                 <CardActions>
                   <RaisedButton
                     disabled={this.props.pending}
-                    label='Login!'
+                    label="Login!"
                     secondary={true}
-                    type='submit' />
+                    type="submit" />
                 </CardActions>
                 <CardActions>
                   <RaisedButton
                     onTouchTap={this.props.onCancel}
-                    label='Cancel'
+                    label="Cancel"
                     secondary={false} />
                 </CardActions>
               </div>
