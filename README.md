@@ -11,24 +11,29 @@ Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook 
 
 ### Live Demo
 
-[fanjin.computer]
+[fanjin.computer](http://fanjin.computer/)
 
 ### Version
 0.6.0
 
-### Tech
+### Underlying technologies
 
-Relay Gallery uses a number of open source projects to work properly:
+| **Technology** | **Description**|
+|----------------|----------------|
+| [React](https://facebook.github.io/react/) | Library for building SPA. |
+| [Material UI](http://www.material-ui.com/) | Library for implementing Material Design in React. All user interface in this kit is built exclusively with Material UI components. |
+| [Relay](https://facebook.github.io/relay/) | A Javascript framework for building data-driven react applications. |
+| [GraphQL](https://facebook.github.io/graphql/) | A query language created by Facebook in 2012 for describing the capabilities and requirements of data models for client‐server applications. |
+| [Express GraphQL](https://github.com/graphql/express-graphql) | A Node.js express library that allows the creation of GraphQL servers. |
+| [Isomorphic Relay](https://github.com/denvned/isomorphic-relay) | Adds server side rendering support to React Relay. IMRSK fully utilizes this library, while waiting for [https://github.com/facebook/relay/issues/589](https://github.com/facebook/relay/issues/589). The eventual goal is to have full isomorphism with authentication. |
+| [Redis](http://redis.io/) | In-memory data structure store, used as database and cache. |
+| [React Helmet](https://github.com/nfl/react-helmet) | Reusable React component will manage all of your changes to the document head with support for document title, meta, link, script, and base tags. |
+| [ESLint](http://eslint.org/) | Pluggable linting utility for JavaScript and JSX. |
+| [Babel](http://babeljs.io) | Compiles ES6/ES7 to ES5. Allows using features from ES6 and ES7 today. |
+| [Webpack](http://webpack.github.io) | Bundles npm packages and the application Java Script into a single file. Includes hot reloading via [react-transform-hmr](https://www.npmjs.com/package/react-transform-hmr). Also, Webpack can bundle any required CSS. |
+| [Node.js](https://nodejs.org)| Event-driven, non-blocking I/O runtime based on JavaScript that is lightweight and efficient. |
+| [npm Scripts](https://docs.npmjs.com/misc/scripts)| Glues all this together in a handy automated build. |
 
-* [React] - js liberary
-* [Relay] - framework for react
-* [Graphql] - the future API
-* [Material-ui] - great UI for modern web apps
-* [Node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework
-* [Webpack] - module builder
-* [Babel] - es6 compiler
-* [Redis] - nosql database
 
 
 ### Installation
@@ -73,7 +78,7 @@ $ npm start
 
 
 ### NGINX config
-Use [ngx_http_image_filter_module] to make the image load faster!
+Use [ngx_http_image_filter_module](http://nginx.org/en/docs/http/ngx_http_image_filter_module.html) to make the image load faster!
 
 
  ```
@@ -129,19 +134,6 @@ MIT
 
 
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
-
-   [ngx_http_image_filter_module]: <http://nginx.org/en/docs/http/ngx_http_image_filter_module.html>
-   [fanjin.computer]: <http://fanjin.computer/>
-   [React]: <http://facebook.github.io/react/>
-   [Relay]: <https://facebook.github.io/relay/>
-   [Graphql]:  <https://github.com/facebook/graphql>
-   [Material-ui]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [Webpack]: <https://webpack.github.io/>
-   [Node.js]: <http://nodejs.org>
-   [Express]: <http://expressjs.com>
-   [Babel]: <https://babeljs.io/>
-   [Redis]: <http://redis.io//>
 
 
 
