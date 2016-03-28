@@ -24,7 +24,7 @@ const nodeDefinition = Relay.nodeDefinitions(
   }
 );
 
-var ImageType = new GraphQL.GraphQLObjectType({
+const ImageType = new GraphQL.GraphQLObjectType({
   name: 'Image',
   fields: () => ({
     id: Relay.globalIdField('Image'),
@@ -41,12 +41,12 @@ var ImageType = new GraphQL.GraphQLObjectType({
 });
 
 
-var _connectionDefinitions = Relay.connectionDefinitions({ name: 'Image', nodeType: ImageType });
+const _connectionDefinitions = Relay.connectionDefinitions({ name: 'Image', nodeType: ImageType });
 
-var ImageConnectionType = _connectionDefinitions.connectionType;
-var ImageEdge = _connectionDefinitions.edgeType;
+const ImageConnectionType = _connectionDefinitions.connectionType;
+const ImageEdge = _connectionDefinitions.edgeType;
 
-var UserType = new GraphQL.GraphQLObjectType({
+const UserType = new GraphQL.GraphQLObjectType({
   name: 'User',
   description: 'A User',
   fields: () => ({
@@ -91,7 +91,7 @@ const queryType = new GraphQL.GraphQLObjectType({
   }),
 });
 
-var imageMutation = Relay.mutationWithClientMutationId({
+const imageMutation = Relay.mutationWithClientMutationId({
   name: 'IntroduceImage',
   inputFields: {
     imageName: {
@@ -103,10 +103,10 @@ var imageMutation = Relay.mutationWithClientMutationId({
       type: ImageEdge,
       resolve: (payload, args, options) => {
         //test first file
-        var file = options.rootValue.request.file;
+        const file = options.rootValue.request.file;
 
-        var filename = payload.imgNmae;
-        var filetype = file.mimetype;
+        const filename = payload.imgNmae;
+        const filetype = file.mimetype;
         const filePath = __dirname + '/../static/images/' + filename;
         console.log('Uploading: ' + filename + ' type: ' + filetype);
         //check if user has the Authtifcation to upload
@@ -181,7 +181,7 @@ var imageMutation = Relay.mutationWithClientMutationId({
 
 
 /* User Auth */
-var userStatucMutation = Relay.mutationWithClientMutationId({
+const userStatucMutation = Relay.mutationWithClientMutationId({
   name: 'UpdateUserStatus',
   inputFields: {
     userData: {
@@ -214,7 +214,7 @@ var userStatucMutation = Relay.mutationWithClientMutationId({
   },
 });
 
-var mutationType = new GraphQL.GraphQLObjectType({
+const mutationType = new GraphQL.GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
     introduceImage: imageMutation,

@@ -70,7 +70,7 @@ const Main = React.createClass({
 
   getStyles() {
     const iconSize = 48;
-    const windowWidth = document.documentElement.clientWidth - 16;
+    const windowWidth = 1000;
     const imageMargin = 4;
     let imageWH;
     let imageContainerPadding = Spacing.desktopGutter * 4;

@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 /**
  * Render the main app component. You can read more about the react-router here:
  */
+
 ReactDOM.render(
   <IsomorphicRouter.Router
     history={useRouterHistory(createHashHistory)({queryKey: false})}
@@ -29,11 +30,3 @@ ReactDOM.render(
   </IsomorphicRouter.Router>,
   document.getElementById('app')
 );
-// ReactDOM.render(
-  // <RelayRouter
-    // history={useRouterHistory(createHashHistory)({queryKey: false})}
-    // onUpdate={() => window.scrollTo(0, 0)}>
-    // {AppRoutes}
-  // </RelayRouter>,
-  // document.getElementById('app')
-// );

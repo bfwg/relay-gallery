@@ -8,7 +8,7 @@ const config = {
   entry: [path.join(__dirname, '../frontend/src/app/app.jsx')],
   resolve: {
     //When require, do not have to add these extensions to file's name
-    extensions: ["", ".js", ".jsx"],
+    extensions: ['', '.js', '.jsx'],
     //node_modules: ["web_modules", "node_modules"]  (Default Settings)
   },
   //Render source-map file for final build
@@ -20,8 +20,10 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      process: {
+        env: {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        },
       },
     }),
     new webpack.optimize.DedupePlugin(),
@@ -49,7 +51,7 @@ const config = {
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
-        include: [path.resolve(__dirname, "../frontend/src/app")],
+        include: [path.resolve(__dirname, '../frontend/src/app')],
         exclude: [nodeModulesPath],
       },
     ],

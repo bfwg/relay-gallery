@@ -1,12 +1,13 @@
 'use strict';
 let React = require('react');
 const Relay = require('react-relay');
-let { SvgIcon } = require('material-ui');
-let { PureRenderMixin } = require('react-addons-pure-render-mixin');
 
 const Test = React.createClass({
 
   displayName: 'Test',
+
+  componentDidMount() {
+  },
 
   render() {
     return (
@@ -19,7 +20,6 @@ const Test = React.createClass({
 });
 
 module.exports = Relay.createContainer(Test, {
-
   fragments: {
     User: () => Relay.QL`
       fragment on User {
