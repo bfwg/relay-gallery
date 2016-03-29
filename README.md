@@ -51,7 +51,7 @@ Now the server is running on port `3000`
 
 If you want to develop frontend
 ```sh
-$ npm dev-server
+$ npm run dev-server
 ```
 
 Build frontend to production
