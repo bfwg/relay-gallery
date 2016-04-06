@@ -1,16 +1,20 @@
 const React = require('react');
 const Relay = require('react-relay');
-const CircularProgress = require('material-ui/lib/circular-progress');
-const Dialog = require('material-ui/lib/dialog');
-const IconButton = require('material-ui/lib/icon-button');
-const Styles = require('material-ui/lib/styles');
-
-const Mixins = require('material-ui/lib/mixins');
-const {StylePropable, StyleResizable} = Mixins;
+const Helmet = require('react-helmet');
 const {Colors, getMuiTheme} = require('material-ui/lib/styles');
+const ChangeUserStatusMutation  = require('../mutation/ChangeUserStatusMutation');
+const {CircularProgress, Dialog, IconButton, Mixins, Styles} = require('material-ui');
+const {StylePropable, StyleResizable} = Mixins;
 const {Spacing} = Styles;
 const {FullWidthSection, MyRawTheme} = require('../helper');
-// const {SERVER_HOST} = require('../config');
+const {GitHubIcon, FaceBook, Linkedin} = require('../svgIcons');
+const Login = require('./Login');
+const AddImageMutation  = require('../mutation/AddImageMutation');
+const Dropzone = require('react-dropzone');
+const MyCard = require('./MyCard');
+const Separator = require('./Separator');
+
+import { Link } from 'react-router';
 
 
 Relay.injectNetworkLayer(
@@ -59,31 +63,199 @@ const Main = React.createClass({
     });
   },
 
+  onDrop: function(files) {
+    if (this.props.User.username === 'Guest') {
+      this.setState({
+        loginDialogOpenFlag: true,
+      });
+    } else {
+      let onSuccess = () => {
+        console.log('Mutation successful!');
+      };
+      let onFailure = (transaction) => {
+        let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
+        console.log(error);
+      };
+      /*
+       * TODO fire mutliple mutations triggars warnings
+       */
+      files.forEach((file)=> {
+        Relay.Store.commitUpdate(
+          new AddImageMutation({
+            file,
+            images: this.props.User,
+          }),
+          {onSuccess, onFailure}
+        );
+      });
+    }
+  },
+
+  onSubmitLogin: function(userData) {
+    console.log(userData);
+
+    this.setState({
+      loginPending: true,
+    });
+
+    const onSuccess = () => {
+      this.setState({
+        loginError: '',
+        loginPending: false,
+        loginDialogOpenFlag: false,
+      });
+      this.refs.dropzone.open();
+      console.log('Login successful!');
+    };
+
+    const onFailure = (transaction) => {
+      const error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
+      console.log(error);
+      this.setState({
+        loginError: error,
+        loginPending: false,
+      });
+    };
+
+    Relay.Store.commitUpdate(
+      new ChangeUserStatusMutation({
+        userData,
+        user: this.props.User,
+      }),
+      {onSuccess, onFailure}
+    );
+  },
+
+  onLoginCanel: function() {
+    this.setState({
+      loginDialogOpenFlag: false,
+      loginPending: false,
+      loginError: '',
+    });
+  },
+
+  onUpload: function() {
+    if (this.props.User.username === 'Guest') {
+      this.setState({
+        loginDialogOpenFlag: true,
+      });
+    } else {
+      this.refs.dropzone.open();
+    }
+  },
+
+  _getLoginDialog: function() {
+    return (
+        <Dialog
+          open={this.state.loginDialogOpenFlag}
+          contentStyle={{
+            maxWidth: 430,
+            width: '100%',
+            textAlign: 'center',
+          }}
+          onRequestClose={this.onLoginCanel}
+          autoScrollBodyContent={true}>
+          <Login
+            pending={this.state.loginPending}
+            error={this.state.loginError}
+            submit={this.onSubmitLogin}
+            onCancel={this.onLoginCanel} />
+        </Dialog>
+
+    );
+  },
+
+  _getAvatar: function() {
+    let styles = this.getStyles();
+    let myAvatar = '/images/me.jpg';
+    /* Issue: https://github.com/facebook/react/issues/6038
+      Put 6666 for now  */
+    let myTitle = ['Hi, My name is ',
+      <span key={6666} style={{color: 'purple'}}>Fan Jin</span>,
+        '. I make things for the web and design awesome user experiences that enrich people\'s lives'];
+
+    return  (
+      <div style={styles.avatarContainer} useContent={false}>
+        <MyCard
+          avatar={true}
+          style={styles.bigPic}
+          imgStyle={{width: '100%'}}
+          heading={myTitle}
+          img={myAvatar} />
+          {this._getLinkIconButtonGroup()}
+      </div>
+    );
+  },
+
+  _getImages: function() {
+    let styles = this.getStyles();
+    return (
+      <div style={styles.imgContainer}>
+        <div>
+          <h1 style={{fontFamily: 'Monospace'}}><Link to={'/whatelse'}>What else?</Link></h1>
+          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
+            <MyCard
+              upload={true}
+              onClick={this.onUpload}
+              style={{backgroundImage: 'none'}}
+              imgStyle={{maxHeight: '100%'}}
+              img={'/images/upload.png'}/>
+          </Dropzone>
+        </div>
+        {this.props.User.images.edges.map((ele, idx) => {
+          return (
+            <MyCard
+              key={ele.node.id}
+              loading={!ele.node.url}
+              style={styles.smallPic}
+              imgIdx={idx}
+              img={`/images/${ele.node.url}?w=300&q=70`} />
+          );
+        })}
+
+      </div>
+    );
+  },
 
 
+  _getLinkIconButtonGroup: function() {
+    let styles = this.getStyles();
+    return (
+      <div>
+        <IconButton
+          iconStyle={styles.icon}
+          style={styles.iconStyle}
+          href="https://www.facebook.com/people/Fan-Jin/100008957509461"
+          linkButton={true}
+          touch={true} >
+          <FaceBook/>
+        </IconButton>
+        <IconButton
+          iconStyle={styles.icon}
+          href="https://github.com/bfwg"
+          linkButton={true}
+          style={styles.iconStyle}
+          touch={true} >
+          <GitHubIcon/>
+        </IconButton>
+        <IconButton
+          iconStyle={styles.icon}
+          style={styles.iconStyle}
+          href="https://ca.linkedin.com/in/fan-jin-a65b03a0"
+          linkButton={true}
+          touch={true} >
+          <Linkedin/>
+        </IconButton>
+      </div>
+    );
 
-
-
-
-
+  },
 
 
   getStyles() {
     const iconSize = 48;
-    const windowWidth = 1000;
     const imageMargin = 4;
-    let imageWH;
-    let imageContainerPadding = Spacing.desktopGutter * 4;
-    if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-      imageWH = 206;
-    } else if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM)) {
-      imageContainerPadding = 0;
-      imageWH = windowWidth / 3 - imageMargin * 3;
-    } else {
-      imageContainerPadding = 0;
-      imageWH = windowWidth / 2 - imageMargin * 2;
-    }
-    const imgContainerWidth = windowWidth - ((windowWidth - imageContainerPadding * 2) % (imageWH + imageMargin * 2));
+    let imageWH = 206;
     const styles = {
       icon: {
         width: iconSize + 'px',
@@ -99,32 +271,32 @@ const Main = React.createClass({
         // paddingTop: '50px',
       },
       avatarContainer: {
-        padding: '0px',
+        paddingTop: '0px',
       },
-      avatarContainerWhenMedium: {
-        padding: '24px',
-      },
-      imageResize: {
-        wh: imageWH,
+      avatarContainerWhenLarge: {
+        paddingTop: '64px',
       },
       imgContainer: {
         display: 'inline-block',
-        // paddingRight: imageContainerPadding,
-        // paddingLeft: imageContainerPadding,
         width: '100%',
-        maxWidth: (imageWH + imageMargin * 2) * 5,
-        // marginLeft: (windowWidth - imgContainerWidth) / 2,
       },
       imgContainerWhenMedium: {
-        width: imgContainerWidth,
+        // maxWidth: (imageWH + imageMargin * 2) * 5,
+        maxWidth: 1070,
       },
       smallPic: {
         display: 'inline-block',
         // float: 'left',
-        width: imageWH + 'px',
-        height: imageWH + 'px',
+        width: '46%',
+        height: 0,
+        paddingBottom: '46%',
+        maxWidth: '300px',
         marginLeft: imageMargin + 'px',
         marginRight: imageMargin + 'px',
+      },
+      smallPicWhenMedium: {
+        width: '206px',
+        paddingBottom: '206px',
       },
       bigPic: {
         width: '100%',
@@ -141,22 +313,11 @@ const Main = React.createClass({
         // float: 'none',
         display: 'inline-block',
         borderStyle: 'none',
-        width: imageWH + 'px',
-        height: imageWH + 'px',
-        lineHeight: imageWH - 4 + 'px',
+        width: '46%',
         marginBottom: '20px',
       },
       addImageWhenMedium: {
-        // float: 'left',
-      },
-      footer: {
-        paddingTop: '10px',
-        paddingBottom: '10px',
-        textAlign: 'center',
-      },
-      p: {
-        padding: 0,
-        color: Colors.grey600,
+        width: '206px',
       },
       a: {
         color: Colors.darkWhite,
@@ -174,15 +335,26 @@ const Main = React.createClass({
         styles.bigPic,
         styles.bigPicWhenMedium
       );
-      styles.avatarContainer = this.mergeStyles(
-        styles.avatarContainer,
-        styles.avatarContainerWhenMedium
-      );
-      styles.img = this.mergeStyles(
+      styles.imgContainer = this.mergeStyles(
         styles.imgContainer,
         styles.imgContainerWhenMedium
       );
+      styles.smallPic = this.mergeStyles(
+        styles.smallPic,
+        styles.smallPicWhenMedium
+      );
+      styles.addImage = this.mergeStyles(
+        styles.addImage,
+        styles.addImageWhenMedium
+      );
+    }
 
+
+    if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
+      styles.avatarContainer = this.mergeStyles(
+        styles.avatarContainer,
+        styles.avatarContainerWhenLarge
+      );
     }
     return styles;
   },
@@ -192,13 +364,20 @@ const Main = React.createClass({
 
     let styles = this.getStyles();
     // console.log(this.props);
-    // console.log(window.innerWidth - 16);
-    // console.log(document.documentElement.clientWidth - 16);
-
 
     return (
       <div style={styles.containerStyle}>
-      abc
+        <Helmet
+          htmlAttributes={{'lang': 'en', 'amp': undefined}} // amp takes no value
+          title="Fan Jin"
+          meta={[
+              {'name': 'description', 'content': 'This website is build by Fan Jin using React Graphql Relay Redis NodeJs Material-ui and etc'},
+              {'name': 'viewport', 'content': 'width=device-width, initial-scale=1, user-scalable=no'},
+          ]} />
+        {this._getLoginDialog()}
+        {this._getAvatar()}
+        <Separator />
+        {this._getImages()}
       </div>
     );
   },
@@ -220,6 +399,8 @@ module.exports = Relay.createContainer(Main, {
             }
           }
         }
+      ${AddImageMutation.getFragment('images')},
+      ${ChangeUserStatusMutation.getFragment('user')},
       }
     `,
   },

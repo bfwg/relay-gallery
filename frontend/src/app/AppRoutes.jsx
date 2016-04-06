@@ -5,18 +5,19 @@ import {Redirect, IndexRoute, IndexRedirect, Router, Route, Link} from 'react-ro
 const Relay = require('react-relay');
 
 const Main = require('./components/Main');
-const Main2 = require('./components/Main2');
-const Test = require('./components/Test');
+const Master = require('./components/Master');
+const Whatelse = require('./components/Whatelse');
 
 const UserQueries = {
   User: () => Relay.QL`query { User }`,
 };
 
 const AppRoutes = (
-  <Route path="/">
+  <Route path="/" component={Master}>
     <IndexRoute
-      component={Main2}
+      component={Main}
       queries={UserQueries} />
+    <Route path="/whatelse" component={Whatelse} />
     <Redirect from="*" to="/" />
   </Route>
 );

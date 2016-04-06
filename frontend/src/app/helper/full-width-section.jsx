@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const React = require('react');
 const {ClearFix, Mixins, Styles} = require('material-ui');
 let {StylePropable, StyleResizable} = Mixins;

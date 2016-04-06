@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports.GitHubIcon = require('./GitHubIcon');
 module.exports.LeftArrow = require('./LeftArrow');

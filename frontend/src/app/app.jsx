@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useRouterHistory } from 'react-router';
 import AppRoutes from './AppRoutes';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { createHashHistory } from 'history';
+import { browserHistory, useRouterHistory } from 'react-router';
 import IsomorphicRelay from 'isomorphic-relay';
 import IsomorphicRouter from 'isomorphic-relay-router';
+import { createHashHistory } from 'history';
 
 //Needed for React Developer Tools
 window.React = React;
@@ -14,7 +14,9 @@ window.React = React;
 //Can go away when react 1.0 release
 injectTapEventPlugin();
 
+let history = useRouterHistory(createHashHistory)({queryKey: false});
 if (process.env.NODE_ENV === 'production') {
+  history = browserHistory;
   IsomorphicRelay.injectPreparedData(JSON.parse(document.getElementById('preload').textContent));
 }
 
@@ -24,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 
 ReactDOM.render(
   <IsomorphicRouter.Router
-    history={useRouterHistory(createHashHistory)({queryKey: false})}
+    history={history}
     onReadyStateChange={({ready, done}) => ready && done ? window.scrollTo(0, 0) : null}>
     {AppRoutes}
   </IsomorphicRouter.Router>,

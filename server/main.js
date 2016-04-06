@@ -34,6 +34,7 @@ app.use(session({
 const storage = multer.memoryStorage();
 app.use('/graphql', multer({ storage }).single('file'));
 
+
 app.use('/graphql', graphQLHTTP(req => {
   return ({
     schema: querySchema,
@@ -50,6 +51,7 @@ app.use(express.static(path.join(__dirname, '../static')));
 
 // need for material-ui server-side-rendering
 app.get('/*', renderOnServer);
+
 
 app.listen(PORT, () => {
   console.log('node ' + process.version + ' listen on port ' + PORT + '(' + process.env.NODE_ENV + ')');

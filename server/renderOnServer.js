@@ -8,10 +8,13 @@ import {match} from 'react-router';
 import routes from '../frontend/src/app/AppRoutes';
 import Helmet from 'react-helmet';
 import Html from './Html';
+import seqqueue from 'seq-queue';
 
 const GRAPHQL_URL = 'http://localhost:3000/graphql';
+// Create a queue for isomorphic loading of pasges, because the GrapQL network layer
+// is a static
+const requestQueue = seqqueue.createQueue( 2000 );
 
-Relay.injectNetworkLayer(new Relay.DefaultNetworkLayer(GRAPHQL_URL));
 
 const renderPage = (data, props) => {
   const appHtml = ReactDOMServer.renderToString(
@@ -40,9 +43,15 @@ export default (req, res, next) => {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      IsomorphicRouter.prepareData(renderProps).then(({data, props}) => {
-        res.send(renderPage(data, props));
-      }, next);
+      requestQueue.push(queueTask => {
+        Relay.injectNetworkLayer(new Relay.DefaultNetworkLayer(GRAPHQL_URL, {
+          headers: req.headers,
+        }));
+        IsomorphicRouter.prepareData(renderProps).then(({data, props}) => {
+          res.send(renderPage(data, props));
+          queueTask.done();
+        }, next);
+      });
     } else {
       res.status(404).send('Not Found');
     }

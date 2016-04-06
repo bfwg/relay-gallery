@@ -80,14 +80,20 @@ const MyCard = React.createClass({
     const styles = {
       root: {
         transition: Transitions.easeOut(),
-        backgroundImage: this.props.loading ? 'none' : `url(${this.props.img})`,
+        backgroundImage: `url(${this.props.img})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'noRepeat',
         backgroundPosition: '50% 25%',
         // margin: '0 auto ' + desktopGutter + 'px auto',
         margin: '0 auto ' + 4 + 'px auto',
       },
-      rootWhenMedium: {
+      rootWhenLoading: {
+        transition: Transitions.easeOut(),
+        backgroundImage: 'url(/images/gsbig.gif)',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        // margin: '0 auto ' + desktopGutter + 'px auto',
+        margin: '0 auto ' + 4 + 'px auto',
       },
       image: {
         verticalAlign: 'middle',
@@ -124,6 +130,7 @@ const MyCard = React.createClass({
       * if avatar is true means that we not using background image
       * if loading is true it means that we are using progress spinner
     * */
+   let rootStyle = this.props.loading ? styles.rootWhenLoading : styles.root;
     return (
       <Paper
         zDepth={this.state.zDepth}
@@ -134,7 +141,7 @@ const MyCard = React.createClass({
             imageDialogOpenFlag: true,
           });
         }.bind(this))}
-        style={this.mergeStyles(styles.root, this.props.style)} >
+        style={this.mergeStyles(rootStyle, this.props.style)} >
         {this.props.avatar && (
           <a href="https://github.com/bfwg/mypage">
             <img style={this.mergeStyles(
@@ -147,8 +154,6 @@ const MyCard = React.createClass({
           styles.image,
           this.props.imgStyle)} src={this.props.img} />
         )}
-        {this.props.loading &&
-          <CircularProgress style={{ top: '50%', transform: 'translateY(-100%)' }} size={1.5} /> }
         {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
         <ImageDialog
           imageDialogOpenFlag={this.state.imageDialogOpenFlag}

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 let React = require('react');
 let { SvgIcon } = require('material-ui');
 

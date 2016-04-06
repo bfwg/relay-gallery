@@ -2,7 +2,6 @@ const React = require('react');
 const {CircularProgress, FloatingActionButton, Dialog, Mixins} = require('material-ui');
 const {StylePropable, StyleResizable} = Mixins;
 const {LeftArrow, RightArrow} = require('../svgIcons');
-// const {SERVER_HOST} = require('../config');
 
 const ImageDialog = React.createClass({
 
@@ -31,6 +30,7 @@ const ImageDialog = React.createClass({
       pending: true,
     };
   },
+
 
   componentWillMount() {
     this.setState({
@@ -124,7 +124,6 @@ const ImageDialog = React.createClass({
       offset: this.state.offset + 1,
     });
     let index = (this.props.imgIdx + this.state.offset + 1) % this.context.imageList.length;
-    console.log(index);
     if (this.context.imageList && this.context.imageList[index]) {
       this.setState({
         currentImage: '/images/' + this.context.imageList[index].node.url,
@@ -150,6 +149,11 @@ const ImageDialog = React.createClass({
   },
 
   render() {
+    let DialogImgHeight = 300;
+    // for server-side react toString
+    if (typeof window !== 'undefined') {
+      DialogImgHeight = window.innerHeight - 200;
+    }
     return (
       <Dialog
         open={this.props.imageDialogOpenFlag}
@@ -171,7 +175,7 @@ const ImageDialog = React.createClass({
         {this._getNavButton('left')}
         <img style={this.mergeStyles(
           this.props.imageStyle, {
-            maxHeight: 600,
+            maxHeight: DialogImgHeight,
             display: this.state.pending ? 'none' : 'inline',
           })}
           onLoad={() => {
