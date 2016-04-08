@@ -198,7 +198,6 @@ const Main = React.createClass({
               upload={true}
               onClick={this.onUpload}
               style={{backgroundImage: 'none'}}
-              imgStyle={{maxHeight: '100%'}}
               img={'/images/upload.png'}/>
           </Dropzone>
         </div>
@@ -254,8 +253,24 @@ const Main = React.createClass({
 
   getStyles() {
     const iconSize = 48;
+    let windowWidth;
     const imageMargin = 4;
-    let imageWH = 206;
+    let imageW;
+    let imageH;
+    if (typeof window !== 'undefined') {
+      if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
+          imageW = 206;
+          imageH = 206;
+      } else if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM)) {
+        windowWidth -= 16;
+        imageW = 'calc(33% - ' + (imageMargin * 6 - 4) + 'px)';
+        imageH = (window.innerWidth - 16) / 3 - imageMargin * 6;
+      } else {
+        windowWidth -= 16;
+        imageW = 'calc(50% - ' + (imageMargin * 4 - 4) + 'px)';
+        imageH = (window.innerWidth - 16) / 2 - imageMargin * 4;
+      }
+    }
     const styles = {
       icon: {
         width: iconSize + 'px',
@@ -286,17 +301,17 @@ const Main = React.createClass({
       },
       smallPic: {
         display: 'inline-block',
-        // float: 'left',
-        width: '46%',
-        height: 0,
-        paddingBottom: '46%',
+        // paddingBottom: '45%',
         maxWidth: '300px',
+        maxHeight: '300px',
+        width: imageW,
+        height: imageH,
         marginLeft: imageMargin + 'px',
         marginRight: imageMargin + 'px',
       },
       smallPicWhenMedium: {
-        width: '206px',
-        paddingBottom: '206px',
+        // height: '206px',
+        // paddingBottom: '0px',
       },
       bigPic: {
         width: '100%',
@@ -313,11 +328,11 @@ const Main = React.createClass({
         // float: 'none',
         display: 'inline-block',
         borderStyle: 'none',
-        width: '46%',
+        width: imageW,
+        height: imageH,
         marginBottom: '20px',
       },
       addImageWhenMedium: {
-        width: '206px',
       },
       a: {
         color: Colors.darkWhite,
