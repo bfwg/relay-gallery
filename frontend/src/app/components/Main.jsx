@@ -301,7 +301,6 @@ const Main = React.createClass({
       },
       smallPic: {
         display: 'inline-block',
-        // paddingBottom: '45%',
         maxWidth: '300px',
         maxHeight: '300px',
         width: imageW,
@@ -327,6 +326,8 @@ const Main = React.createClass({
       addImage: {
         // float: 'none',
         display: 'inline-block',
+        maxWidth: '300px',
+        maxHeight: '300px',
         borderStyle: 'none',
         width: imageW,
         height: imageH,
