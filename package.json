@@ -32,6 +32,7 @@
     "babel-relay-plugin": "^0.7.3",
     "bluebird": "^2.10.2",
     "body-parser": "~1.14.1",
+    "classnames": "^2.2.3",
     "connect-redis": "^3.0.2",
     "cookie-parser": "^1.4.0",
     "cookie-session": "^1.2.0",

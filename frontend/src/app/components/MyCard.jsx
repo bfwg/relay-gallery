@@ -8,6 +8,7 @@ const {Colors, Spacing, Transitions, Typography} = Styles;
 const {LeftArrow, RightArrow} = require('../svgIcons');
 
 const ImageDialog = require('./ImageDialog');
+const classNames = require('classnames');
 
 
 const MyCard = React.createClass({
@@ -141,12 +142,14 @@ const MyCard = React.createClass({
             imageDialogOpenFlag: true,
           });
         }.bind(this))}
+        className="maincssimgsize"
         style={this.mergeStyles(rootStyle, this.props.style)} >
         {this.props.avatar && (
           <a href="https://github.com/bfwg/mypage">
             <img style={this.mergeStyles(
             styles.image,
             this.props.imgStyle)} src={this.props.img} />
+            {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
           </a>
         )}
         {this.props.upload && (
@@ -154,7 +157,7 @@ const MyCard = React.createClass({
           styles.image,
           this.props.imgStyle)} src={this.props.img} />
         )}
-        {this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
+        {!this.props.avatar && this.props.heading && <h3 style={styles.heading}>{this.props.heading}</h3>}
         <ImageDialog
           imageDialogOpenFlag={this.state.imageDialogOpenFlag}
           onImageCanel={this.onImageCanel}

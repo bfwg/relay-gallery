@@ -193,13 +193,12 @@ const Main = React.createClass({
       <div style={styles.imgContainer}>
         <div>
           <h1 style={{fontFamily: 'Monospace'}}><Link to={'/whatelse'}>What else?</Link></h1>
-          <Dropzone disableClick={true} style={styles.addImage} ref="dropzone" onDrop={this.onDrop}>
-            <MyCard
-              upload={true}
-              onClick={this.onUpload}
-              style={{backgroundImage: 'none'}}
-              img={'/images/upload.png'}/>
-          </Dropzone>
+          <MyCard
+            upload={true}
+            onClick={this.onUpload}
+            style={styles.addImage}
+            img={'/images/upload.png'}/>
+          <Dropzone style={{disply: 'none'}} disableClick={true}  ref="dropzone" onDrop={this.onDrop}/>
         </div>
         {this.props.User.images.edges.map((ele, idx) => {
           return (
@@ -253,24 +252,23 @@ const Main = React.createClass({
 
   getStyles() {
     const iconSize = 48;
-    let windowWidth;
     const imageMargin = 4;
-    let imageW;
-    let imageH;
-    if (typeof window !== 'undefined') {
-      if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-          imageW = 206;
-          imageH = 206;
-      } else if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM)) {
-        windowWidth -= 16;
-        imageW = 'calc(33% - ' + (imageMargin * 6 - 4) + 'px)';
-        imageH = (window.innerWidth - 16) / 3 - imageMargin * 6;
-      } else {
-        windowWidth -= 16;
-        imageW = 'calc(50% - ' + (imageMargin * 4 - 4) + 'px)';
-        imageH = (window.innerWidth - 16) / 2 - imageMargin * 4;
-      }
-    }
+    // let imageW = 206;
+    // let imageH = 206;
+    // if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
+        // imageW = 206;
+        // imageH = 206;
+    // } else if (this.isDeviceSize(StyleResizable.statics.Sizes.MEDIUM)) {
+      // imageW = 'calc(33% - ' + (imageMargin * 6 - 4) + 'px)';
+      // if (typeof window !== 'undefined') {
+        // imageH = (window.innerWidth - 16) / 3 - imageMargin * 6;
+      // }
+    // } else {
+      // imageW = 'calc(50% - ' + (imageMargin * 4 - 4) + 'px)';
+      // if (typeof window !== 'undefined') {
+        // imageH = (window.innerWidth - 16) / 2 - imageMargin * 4;
+      // }
+    // }
     const styles = {
       icon: {
         width: iconSize + 'px',
@@ -301,10 +299,10 @@ const Main = React.createClass({
       },
       smallPic: {
         display: 'inline-block',
-        maxWidth: '300px',
-        maxHeight: '300px',
-        width: imageW,
-        height: imageH,
+        // maxWidth: '300px',
+        // maxHeight: '300px',
+        // width: imageW,
+        // height: imageH,
         marginLeft: imageMargin + 'px',
         marginRight: imageMargin + 'px',
       },
@@ -313,6 +311,7 @@ const Main = React.createClass({
         // paddingBottom: '0px',
       },
       bigPic: {
+        height: 'auto',
         width: '100%',
         maxWidth: '395px',
         marginRight: 'auto',
@@ -326,11 +325,11 @@ const Main = React.createClass({
       addImage: {
         // float: 'none',
         display: 'inline-block',
-        maxWidth: '300px',
-        maxHeight: '300px',
+        // maxWidth: '300px',
+        // maxHeight: '300px',
         borderStyle: 'none',
-        width: imageW,
-        height: imageH,
+        // width: imageW,
+        // height: imageH,
         marginBottom: '20px',
       },
       addImageWhenMedium: {

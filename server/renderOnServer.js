@@ -30,7 +30,7 @@ const renderPage = (data, props) => {
       bodyHtml={`<div id="app">${appHtml}</div>${preload}${scriptHtml}`}
       googleAnalyticsId={''}
       helmet={helmet}
-      isProduction={false}
+      isProduction={true}
     />
   );
   return `<!DOCTYPE html>${docHtml}`;
