@@ -51,10 +51,6 @@ body {
 a { color: inherit; text-decoration: none; }
 a:visited { color: #000000; }
 
-.avatarContainer {
-  padding-top: 64px;
-}
-
 .maincssimgsize {
   width: 206px;
   height: 206px;
@@ -62,8 +58,7 @@ a:visited { color: #000000; }
 
 .container {
   padding-top: 64px;
-  text-align: center;
-  width: 1070px;
+  max-width: 1070px;
   display: inline-block;
 }
 
@@ -74,12 +69,8 @@ a:visited { color: #000000; }
     padding-bottom: 47%;
     height: 0px;
   }
-  .avatarContainer {
-    padding-top: 0px;
-  }
   .container {
     padding-top: 0px;
-    text-align: center;
     display: inline-block;
     width: 100%;
   }
