@@ -13,6 +13,7 @@ const AddImageMutation  = require('../mutation/AddImageMutation');
 const Dropzone = require('react-dropzone');
 const MyCard = require('./MyCard');
 const Separator = require('./Separator');
+const classNames = require('classnames');
 
 import { Link } from 'react-router';
 
@@ -175,7 +176,7 @@ const Main = React.createClass({
         '. I make things for the web and design awesome user experiences that enrich people\'s lives'];
 
     return  (
-      <div style={styles.avatarContainer} useContent={false}>
+      <div useContent={false}>
         <MyCard
           avatar={true}
           style={styles.bigPic}
@@ -190,7 +191,7 @@ const Main = React.createClass({
   _getImages: function() {
     let styles = this.getStyles();
     return (
-      <div style={styles.imgContainer}>
+      <div>
         <div>
           <h1 style={{fontFamily: 'Monospace'}}><Link to={'/whatelse'}>What else?</Link></h1>
           <MyCard
@@ -279,24 +280,6 @@ const Main = React.createClass({
         height: iconSize * 2 + 'px',
         padding: iconSize / 2 + 'px',
       },
-      containerStyle: {
-        textAlign: 'center',
-        // paddingTop: '50px',
-      },
-      avatarContainer: {
-        paddingTop: '0px',
-      },
-      avatarContainerWhenLarge: {
-        paddingTop: '64px',
-      },
-      imgContainer: {
-        display: 'inline-block',
-        width: '100%',
-      },
-      imgContainerWhenMedium: {
-        // maxWidth: (imageWH + imageMargin * 2) * 5,
-        maxWidth: 1070,
-      },
       smallPic: {
         display: 'inline-block',
         // maxWidth: '300px',
@@ -305,10 +288,6 @@ const Main = React.createClass({
         // height: imageH,
         marginLeft: imageMargin + 'px',
         marginRight: imageMargin + 'px',
-      },
-      smallPicWhenMedium: {
-        // height: '206px',
-        // paddingBottom: '0px',
       },
       bigPic: {
         height: 'auto',
@@ -332,8 +311,6 @@ const Main = React.createClass({
         // height: imageH,
         marginBottom: '20px',
       },
-      addImageWhenMedium: {
-      },
       a: {
         color: Colors.darkWhite,
       },
@@ -350,27 +327,9 @@ const Main = React.createClass({
         styles.bigPic,
         styles.bigPicWhenMedium
       );
-      styles.imgContainer = this.mergeStyles(
-        styles.imgContainer,
-        styles.imgContainerWhenMedium
-      );
-      styles.smallPic = this.mergeStyles(
-        styles.smallPic,
-        styles.smallPicWhenMedium
-      );
-      styles.addImage = this.mergeStyles(
-        styles.addImage,
-        styles.addImageWhenMedium
-      );
     }
 
 
-    if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-      styles.avatarContainer = this.mergeStyles(
-        styles.avatarContainer,
-        styles.avatarContainerWhenLarge
-      );
-    }
     return styles;
   },
 
@@ -381,7 +340,7 @@ const Main = React.createClass({
     // console.log(this.props);
 
     return (
-      <div style={styles.containerStyle}>
+      <div className="container">
         <Helmet
           htmlAttributes={{'lang': 'en', 'amp': undefined}} // amp takes no value
           title="Fan Jin"

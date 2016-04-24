@@ -28,10 +28,6 @@ const Whatelse = React.createClass({
         boxSizing: 'border-box',
         marginBottom: 14,
       },
-      containerWhenLarge: {
-        marginTop: '64px',
-        maxWidth: 1070,
-      },
       p: {
         padding: '0px 10px 10px 10px',
         fontFamily: 'monospace',
@@ -94,19 +90,12 @@ const Whatelse = React.createClass({
       );
     }
 
-    if (this.isDeviceSize(StyleResizable.statics.Sizes.LARGE)) {
-      styles.container = this.mergeStyles(
-        styles.container,
-        styles.containerWhenLarge
-      );
-    }
-
     return styles;
   },
   render() {
     const styles = this.getStyles();
     return (
-      <div>
+      <div className="container">
         <div style={styles.container}>
           <Helmet
             title="What else?"

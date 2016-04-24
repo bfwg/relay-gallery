@@ -35,7 +35,7 @@ const Main = React.createClass({
     let footerIconSize = 38;
     let styles = this.getStyles();
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
         {this.props.children}
         <Separator />
         <div style={styles.footer}>
