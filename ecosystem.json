@@ -8,7 +8,7 @@
         "COMMON_VARIABLE": "true"
       },
       "watch" : true,
-      "ignore_watch"     : ["[\\/\\\\]\\./", "node_modules", "static"],
+      "ignore_watch"     : ["[\\/\\\\]\\./", "node_modules", "static", ".git"],
       "env_production" : {
         "NODE_ENV": "production"
       }
