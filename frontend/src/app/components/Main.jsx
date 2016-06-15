@@ -71,11 +71,11 @@ const Main = React.createClass({
       });
     } else {
       let onSuccess = () => {
-        console.log('Mutation successful!');
+        //console.log('Mutation successful!');
       };
       let onFailure = (transaction) => {
         let error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
-        console.log(error);
+        //console.log(error);
       };
       /*
        * TODO fire mutliple mutations triggars warnings
@@ -93,7 +93,6 @@ const Main = React.createClass({
   },
 
   onSubmitLogin: function(userData) {
-    console.log(userData);
 
     this.setState({
       loginPending: true,
@@ -106,12 +105,12 @@ const Main = React.createClass({
         loginDialogOpenFlag: false,
       });
       this.refs.dropzone.open();
-      console.log('Login successful!');
+      //console.log('Login successful!');
     };
 
     const onFailure = (transaction) => {
       const error = transaction.getError().source.errors[0].message || new Error('Mutation failed.');
-      console.log(error);
+      //console.log(error);
       this.setState({
         loginError: error,
         loginPending: false,
