@@ -1,6 +1,6 @@
 # Relay Gallery
 
-![alt tag](http://reactjscamp.com/images/roger-stack.png)
+![alt tag](http://fanjin.computer/images/0b60b3bb86521cc51c4633e06d72e9bd.png)
 
 Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook Frontend 3 broad axes).
 
