@@ -9,7 +9,6 @@ const querySchema = require('../schema/schema').schema;
 const cors = require('cors');
 
 const app = express();
-app.set('x-powered-by', false);
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
