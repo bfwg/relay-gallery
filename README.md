@@ -1,4 +1,7 @@
 # Relay Gallery
+[![Maintenance Status][status-image]][status-url]
+[status-image]: https://img.shields.io/badge/status-maintained-brightgreen.svg
+[status-url]: https://github.com/bfwg/relay-gallery
 
 ![alt tag](http://fanjin.computer/images/0b60b3bb86521cc51c4633e06d72e9bd.png)
 
