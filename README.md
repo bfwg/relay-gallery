@@ -13,16 +13,12 @@ Google can easily find Relay Gallery because it is using Isomorphic Relay for se
 > Demo gallery site which user can login and upload images to the gallery. From here we can
 > learn how Relay mutations really work.
 
-For more code/build structure info, please checkout:
-[material-ui-webpack-example](https://github.com/callemall/material-ui-webpack-example/tree/25938ac6f5db94645e6ea9f24a903792d3133c5d)
-[relay-examples](https://github.com/relayjs/relay-examples)
-
 ### Live Demo
 
 [fanjin.computer](http://fanjin.computer/)
 
 ### Version
-0.6.0
+1.0.0
 
 ### Underlying technologies
 
@@ -45,19 +41,7 @@ Nice table from [isomorphic-material-relay-starter-kit](https://github.com/codef
 
 
 
-### Installation
-
-The default database is using Redis so you need to install redis
-http://redis.io/
-```sh
-# start Redis server make sure it is running on port 6379
-$ redis-server
-# start Redis cli to enter a demo username/pass for app authentication
-$ redis-cli
-# set User
-# user1:123
-127.0.0.1:6379> set user1 "{ \"password\": \"123\"}"
-```
+## Quick Start
 
 ```sh
 # clone our repo
@@ -75,18 +59,29 @@ npm start
 
 # the frontent React/Relay app will be running on port 3001
 # the backend graphql server will be running on port 3000
-# using webpack-dev-server proxy requests to from port 3001 to 3000
+# webpack-dev-server proxy requests to from port 3001 to 3000
 
 # update graphql schema
 npm run update-schema
 ```
 
-Build and run app for production
+The default database is using Redis so you need to install redis
+http://redis.io/
 ```sh
-$ npm run build
-$ npm run server:prod
+# start Redis server make sure it is running on port 6379
+redis-server
+# start Redis cli and setup a username/password for image upload authentication
+redis-cli
+# set User
+# user1:123
+127.0.0.1:6379> set user1 "{ \"password\": \"123\"}"
 ```
 
+Build and run app for production
+```sh
+npm run build
+npm run server:prod
+```
 
 ### Trouble shooting
 Any issue with build or development please fire a issue.
@@ -95,8 +90,6 @@ Any issue with build or development please fire a issue.
 
 Want to contribute? Great!
 Create an issue or fork this repo and make a pull request.
-```
-
 
 
 ### NGINX config
@@ -144,11 +137,13 @@ Use [ngx_http_image_filter_module](http://nginx.org/en/docs/http/ngx_http_image_
 
 ```
 
-### Todos
+### More Info
 
- - Add delete pictures feature
- - Modularization
- - Add more code comments
+For more code, build folder structure info, please checkout the following:
+
+[material-ui-webpack-example](https://github.com/callemall/material-ui-webpack-example/tree/25938ac6f5db94645e6ea9f24a903792d3133c5d)
+
+[relay-examples](https://github.com/relayjs/relay-examples)
 
 License
 ----
