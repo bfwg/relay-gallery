@@ -19,7 +19,7 @@ var config = {
   //Server Configuration options
   devServer:{
     contentBase: '../frontend/src/www',  //Relative directory for base of server
-    proxy: {'/graphql': 'http://localhost:3000'},
+    proxy: {'/': 'http://localhost:3000'},
     devtool: 'eval',
     hot: true,        //Live-reload
     inline: true,

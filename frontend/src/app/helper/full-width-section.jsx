@@ -53,7 +53,7 @@ let FullWidthSection = React.createClass({
       useContent,
       contentType,
       contentStyle,
-      ...other,
+      ...other
     } = this.props;
 
     let styles = this.getStyles();

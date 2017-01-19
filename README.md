@@ -5,12 +5,17 @@
 
 ![alt tag](http://fanjin.computer/images/0b60b3bb86521cc51c4633e06d72e9bd.png)
 
-Relay Gallery is a demonstration of how to use React + Relay + Graphql(Facebook Frontend 3 broad axes).
+Relay Gallery is a demonstration of how to use React + Relay + Graphql.
 
+Google can easily find Relay Gallery because it is using Isomorphic Relay for server side rendering. Inspect into browser source for details.
 
 > There's not much documents on how Relay deal with login or file upload. This project is a
 > Demo gallery site which user can login and upload images to the gallery. From here we can
 > learn how Relay mutations really work.
+
+For more code/build structure info, please checkout:
+[material-ui-webpack-example](https://github.com/callemall/material-ui-webpack-example/tree/25938ac6f5db94645e6ea9f24a903792d3133c5d)
+[relay-examples](https://github.com/relayjs/relay-examples)
 
 ### Live Demo
 
@@ -44,23 +49,44 @@ Nice table from [isomorphic-material-relay-starter-kit](https://github.com/codef
 
 The default database is using Redis so you need to install redis
 http://redis.io/
-
-After clone the repo
 ```sh
-$ npm install
-$ npm start
-```
-Now the server is running on port `3000`
-
-If you want to develop frontend
-```sh
-$ npm run dev-server
+# start Redis server make sure it is running on port 6379
+$ redis-server
+# start Redis cli to enter a demo username/pass for app authentication
+$ redis-cli
+# set User
+# user1:123
+127.0.0.1:6379> set user1 "{ \"password\": \"123\"}"
 ```
 
-Build frontend to production
+```sh
+# clone our repo
+# --depth 1 removes all but one .git commit history
+git clone --depth 1 https://github.com/bfwg/relay-gallery.git
+
+# change directory to our repo
+cd relay-gallery
+
+# install the repo with npm
+npm install
+
+# start the app
+npm start
+
+# the frontent React/Relay app will be running on port 3001
+# the backend graphql server will be running on port 3000
+# using webpack-dev-server proxy requests to from port 3001 to 3000
+
+# update graphql schema
+npm run update-schema
+```
+
+Build and run app for production
 ```sh
 $ npm run build
+$ npm run server:prod
 ```
+
 
 ### Trouble shooting
 Any issue with build or development please fire a issue.
@@ -68,20 +94,13 @@ Any issue with build or development please fire a issue.
 ### Development
 
 Want to contribute? Great!
-Open your favorite Terminal and run these commands.
-
-First Tab: (frontend at port default:3001)
-```sh
-$ npm run dev-server
+Create an issue or fork this repo and make a pull request.
 ```
 
-Second Tab: (server at port default:3000)
-```sh
-$ npm start
-```
 
 
 ### NGINX config
+If you are using Nginx for your production server
 Use [ngx_http_image_filter_module](http://nginx.org/en/docs/http/ngx_http_image_filter_module.html) to make the image load faster!
 
 
@@ -134,7 +153,7 @@ Use [ngx_http_image_filter_module](http://nginx.org/en/docs/http/ngx_http_image_
 License
 ----
 
-MIT
+ [MIT](/LICENSE)
 
 
 
