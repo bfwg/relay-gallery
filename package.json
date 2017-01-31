@@ -3,17 +3,17 @@
   "version": "1.0.0",
   "description": "A gallery web page build using react, relay and graphql",
   "main": "index.js",
-  "private": true,
   "author": "Fan Jin",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/callemall/material-ui.git"
+    "url": "https://github.com/bfwg/relay-gallery"
   },
   "keywords": [
     "react",
     "relay",
-    "graphql"
+    "graphql",
+    "material-ui"
   ],
   "scripts": {
     "server:dev": "webpack-dev-server --config ./config/webpack-dev-server.config.js --progress --inline --colors",
