@@ -1,8 +1,7 @@
 # Relay Gallery
 [![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=1.0.0&x2=0)](https://www.npmjs.com/package/relay-gallery)
 [![Maintenance Status][status-image]][status-url]
-[status-image]: https://img.shields.io/badge/status-maintained-brightgreen.svg
-[status-url]: https://github.com/bfwg/relay-gallery
+[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bfwg/relay-gallery/blob/master/LICENSE)
 
 ![alt tag](http://fanjin.computer/images/0b60b3bb86521cc51c4633e06d72e9bd.png)
 
@@ -151,6 +150,8 @@ License
 
  [MIT](/LICENSE)
 
+[status-image]: https://img.shields.io/badge/status-maintained-brightgreen.svg
+[status-url]: https://github.com/bfwg/relay-gallery
 
 
 
