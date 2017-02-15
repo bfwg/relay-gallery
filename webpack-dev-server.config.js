@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
-var buildPath = path.resolve(__dirname, '../frontend/build');
-var nodeModulesPath = path.resolve(__dirname, '../node_modules');
+var buildPath = path.resolve(__dirname, './frontend/build');
+var nodeModulesPath = path.resolve(__dirname, './node_modules');
 var TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 var config = {
@@ -9,7 +9,7 @@ var config = {
   entry: [
     'webpack/hot/dev-server',
     'webpack/hot/only-dev-server',
-    path.join(__dirname, '../frontend/src/app/app.jsx')
+    path.join(__dirname, './frontend/src/app/app.jsx')
   ],
   //Config options on how to interpret requires imports
   resolve: {
@@ -18,8 +18,11 @@ var config = {
   },
   //Server Configuration options
   devServer:{
-    contentBase: '../frontend/src/www',  //Relative directory for base of server
-    proxy: {'/': 'http://localhost:3000'},
+    contentBase: './frontend/src/www',  //Relative directory for base of server
+    proxy: {
+      '/graphql': 'http://localhost:3000',
+      '/images': 'http://localhost:3000',
+    },
     devtool: 'eval',
     hot: true,        //Live-reload
     inline: true,
@@ -43,7 +46,7 @@ var config = {
     //Moves files
     new TransferWebpackPlugin([
       {from: 'www'}
-    ], path.resolve(__dirname, "../frontend/src"))
+    ], path.resolve(__dirname, "./frontend/src"))
   ],
   module: {
     //Loaders to interpret non-vanilla javascript code as well as most other extensions including images and text.
@@ -52,7 +55,7 @@ var config = {
         //Eslint loader
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
-        include: [path.resolve(__dirname, "../frontend/src/app")],
+        include: [path.resolve(__dirname, "./frontend/src/app")],
         exclude: [nodeModulesPath]
       },
     ],
