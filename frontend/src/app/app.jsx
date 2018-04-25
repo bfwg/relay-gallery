@@ -15,10 +15,10 @@ window.React = React;
 injectTapEventPlugin();
 
 let history = useRouterHistory(createHashHistory)({queryKey: false});
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
   history = browserHistory;
   IsomorphicRelay.injectPreparedData(JSON.parse(document.getElementById('preload').textContent));
-}
+// }
 
 /**
  * Render the main app component. You can read more about the react-router here:
